@@ -1,0 +1,15 @@
+{
+    "name": "cobisja/PBH",
+    "description": "PHP Bootstrap Helpers",
+    "license": "MIT",
+    "keywords": ["bootstrap"],
+    "authors": [
+        {
+            "name": "Jorge Cobis",
+            "email": "jcobis@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"PBH\\": "src/"}
+    }  
+}
