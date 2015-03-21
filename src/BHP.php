@@ -25,16 +25,16 @@
  * THE SOFTWARE.
  */
 
-namespace PBH;
+namespace BHP;
 
-use PBH\Helpers\ContentTag;
-use PBH\Helpers\LinkTo;
-use PBH\AlertBox;
+use BHP\Helpers\ContentTag;
+use BHP\Helpers\LinkTo;
+use BHP\AlertBox;
 
 /**
  * PHP Bootstrap Helper: Less code more beauty of Bootstrap's design.
  */
-abstract class PBH
+abstract class BHP
 {
     static public $dropdown_link = false;
     static public $alert_link = false;

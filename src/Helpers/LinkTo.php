@@ -26,10 +26,10 @@
  * THE SOFTWARE.
  */
 
-namespace PBH\Helpers;
+namespace BHP\Helpers;
 
-use PBH\PBH;
-use PBH\Helpers\Base;
+use BHP\BHP;
+use BHP\Helpers\Base;
 
 
 class LinkTo
@@ -46,7 +46,7 @@ class LinkTo
           $options = [];
       }
 
-      if(PBH::$dropdown_link) {
+      if(BHP::$dropdown_link) {
           $this->html = $this->content_tag(
                  'li',
                  ['role'=>'presentation'],
@@ -73,27 +73,27 @@ class LinkTo
 
       switch($num_args){
         case 1:
-            return PBH::content_tag('a', $block ? $block : $name, $options);
+            return BHP::content_tag('a', $block ? $block : $name, $options);
         case 2:
-            return PBH::content_tag('a', $name, $block ? $block : $options);
+            return BHP::content_tag('a', $name, $block ? $block : $options);
         default:
-            return PBH::content_tag('a', $name, $options, $block);
+            return BHP::content_tag('a', $name, $options, $block);
       }
     }
 
     private function select_link_class(&$options = [])
     {
-      if(PBH::$alert_link){
+      if(BHP::$alert_link){
           Base::append_class($options, 'alert-link');
       }
-      elseif(PBH::$navbar_vertical){
+      elseif(BHP::$navbar_vertical){
           Base::append_class($options, 'navbar-brand');
       }
-      elseif(PBH::$dropdown_link){
+      elseif(BHP::$dropdown_link){
           $options = array_merge($options, ['role'=>'menuitem', 'tabindex'=>'-1']);
       }
 
-      PBH::$alert_link = false;
+      BHP::$alert_link = false;
     }
 
     private function link_href($options = [])

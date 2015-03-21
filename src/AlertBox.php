@@ -1,7 +1,7 @@
 <?php
 
 /*
- * pbh
+ * BHP
  *
  * (The MIT License)
  *
@@ -26,10 +26,10 @@
  * THE SOFTWARE.
  */
 
-namespace PBH;
+namespace BHP;
 
-use PBH\PBH;
-use PBH\Helpers\Base;
+use BHP\BHP;
+use BHP\Helpers\Base;
 
 
 class AlertBox
@@ -44,8 +44,7 @@ class AlertBox
       if (3 > $num_args && is_callable(func_get_arg($num_args-1))) {
 
           $block = func_get_arg($num_args-1);
-
-          $this->html = $this->alert_string($this->capture_alert($block), is_null($message_or_options_with_block) ? [] : $message_or_options_with_block);
+          $this->html = $this->alert_string($this->capture_alert($block), is_null($message_or_options_with_block) || is_callable($message_or_options_with_block) ? [] : $message_or_options_with_block);
       }
       else {
           $this->html = $this->alert_string($message_or_options_with_block, is_null($options) ? [] : $options);
@@ -59,16 +58,23 @@ class AlertBox
 
     private function alert_string($message=null, $options=[])
     {
-        $dismissible = isset($options['dismissible']) || isset($options['priority']);
+        $dismissible = isset($options['dismissible']);
+        $context = isset($options['context']) ? $options['context'] : null;
 
         if ($dismissible) {
             $message = $this->add_dismiss_button_to($message);
+            unset($options['dismissible']);
+//            Base::append_class($options, 'alert-dismissible');
         }
 
-        $klass = $this->alert_class(isset($options['context']) ? $options['context'] : (isset($options['priority']) ? $options['priority'] : ''), $dismissible);
+        if (!is_null($context)) {
+            unset($options['context']);
+        }
+
+        $klass = $this->alert_class($context, $dismissible);
         Base::append_class($options, $klass);
 
-        return PBH::content_tag('div', $message, array_merge(['role'=>'alert'], $options));
+        return BHP::content_tag('div', $message, array_merge(['role'=>'alert'], $options));
     }
 
     private function alert_class($context=null, $dismissible=null)
@@ -82,24 +88,17 @@ class AlertBox
 
     private function add_dismiss_button_to($message)
     {
-        $options = ['type'=>'button', 'class'=>'close', 'data-dismiss'=>'alert'];
-        $dismiss_button = PBH::content_tag('button', $options,
-                function(){
-                  return join('', [
-                      PBH::content_tag('span', '&times', ['aria-hidden'=>true]),
-                      PBH::content_tag('span', 'Close', ['class'=>'sr-only']),
-                  ] );
-                }
-        );
+        $options = ['type'=>'button', 'class'=>'close', 'data-dismiss'=>'alert', 'aria-label'=>'Close'];
+        $dismiss_button = BHP::content_tag('button', BHP::content_tag('span', '&times;', ['aria-hidden'=>true]), $options);
 
         return join('', [$dismiss_button, $message]) . "\n";
     }
 
     private function capture_alert(callable $block)
     {
-        PBH::$alert_link = true;
+        BHP::$alert_link = true;
         $capture = call_user_func($block);
-        PBH::$alert_link = false;
+        BHP::$alert_link = false;
 
         return $capture;
     }

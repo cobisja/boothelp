@@ -26,7 +26,7 @@
  * THE SOFTWARE.
  */
 
-namespace PBH\Helpers;
+namespace BHP\Helpers;
 
 
 class Base
