@@ -10,6 +10,6 @@
         }
     ],
     "autoload": {
-        "psr-4": {"PBH\\": "src/"}
+        "psr-4": {"PBH\\": "src/", "PBH\\Helpers\\": "src/Helpers"}
     }  
 }
