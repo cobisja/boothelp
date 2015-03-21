@@ -1,6 +1,7 @@
 <?php
+
 /*
- * pbh
+ * bhp
  *
  * (The MIT License)
  *
@@ -27,49 +28,46 @@
 
 namespace BHP;
 
-use BHP\Helpers\ContentTag;
-use BHP\Helpers\LinkTo;
-use BHP\AlertBox;
-use BHP\Panel;
-use BHP\Icon;
+use BHP\BHP;
+use BHP\Helpers\Base;
 
-/**
- * PHP Bootstrap Helper: Less code more beauty of Bootstrap's design.
- */
-abstract class BHP
+
+class Icon
 {
-    static public $dropdown_link = false;
-    static public $alert_link = false;
-    static public $navbar_vertical = false;
+    private $html;
 
 
-    public static function content_tag($name, $content_or_options_with_block = null, $options = null, callable $block = null)
+    public function __construct($name = null, $options = [])
     {
-        return new ContentTag(
-            $name,
-            $content_or_options_with_block,
-            $options,
-            $block
-        );
+        !isset($options['library']) ? $options['library'] = 'glyphicons' : null;
+
+        $prefix = $this->library_prefix_for($options['library']);
+        unset($options['library']);
+
+        Base::append_class($options, $prefix);
+
+        if (!is_null($name)) {
+            $name = str_replace('_', '-', $name);
+            Base::append_class($options, "$prefix-$name");
+        }
+
+        $this->html = BHP::content_tag('span', '', $options);
     }
 
-    public static function link_to($name = null, $options = [], callable $block = null)
+    public function __toString()
     {
-        return new LinkTo($name, $options, $block);
+        return (string) $this->html;
     }
 
-    public static function alert_box($message_or_options_with_block = null, $options = null, $block=null)
+    private function library_prefix_for($name)
     {
-        return new AlertBox($message_or_options_with_block, $options, $block);
-    }
-
-    public static function panel($content_or_options_with_block = null, $options = null, $block = null)
-    {
-        return new Panel($content_or_options_with_block, $options, $block);
-    }
-
-    public static function icon($name = null, $options = [])
-    {
-        return new Icon($name, $options);
+        switch ($name){
+            case 'font-awesome': case 'font_awesome':
+                return 'fa';
+            case '': case 'glyphicons':
+                return 'glyphicon';
+            default:
+                return $name;
+        }
     }
 }

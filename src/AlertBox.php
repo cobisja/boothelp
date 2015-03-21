@@ -39,7 +39,7 @@ class AlertBox
 
     public function __construct($message_or_options_with_block = null, $options = null, $block=null)
     {
-      $num_args = count(array_filter(func_get_args(), function($item) { return !is_null($item); }));
+      $num_args = Base::get_function_num_args(func_get_args());
 
       if (3 > $num_args && is_callable(func_get_arg($num_args-1))) {
 
@@ -64,7 +64,6 @@ class AlertBox
         if ($dismissible) {
             $message = $this->add_dismiss_button_to($message);
             unset($options['dismissible']);
-//            Base::append_class($options, 'alert-dismissible');
         }
 
         if (!is_null($context)) {
