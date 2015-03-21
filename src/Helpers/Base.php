@@ -67,4 +67,9 @@ class Base
             !isset($options[$key]) && $options[$key] = $default;
         }
     }
+
+    public static function get_function_num_args($args=[])
+    {
+        return count(array_filter($args, function($item) { return !is_null($item); }));
+    }
 }
