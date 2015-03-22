@@ -28,41 +28,37 @@
 
 namespace BHP\Helpers;
 
-use BHP\BHP;
-use BHP\Helpers\Base;
+use BHP\Base;
+use BHP\Helpers\ContentTag;
 
 
-class LinkTo
+class LinkTo extends Base
 {
-    private $html;
-
-
     public function __construct($name = null, $options = [], callable $block = null)
     {
-      $num_args = count(array_filter(func_get_args(), function($item) { return !is_null($item); }));
-      $block = is_callable(func_get_arg($num_args-1)) ? func_get_arg($num_args-1) : null;
+        $html = '';
 
-      if(!is_array($options)){
-          $options = [];
-      }
+        $num_args = count(array_filter(func_get_args(), function($item) { return !is_null($item); }));
+        $block = is_callable(func_get_arg($num_args-1)) ? func_get_arg($num_args-1) : null;
 
-      if(BHP::$dropdown_link) {
-          $this->html = $this->content_tag(
-                 'li',
-                 ['role'=>'presentation'],
-                 function() use ($num_args, $name, $options, $block) {
-                      return $this->link_to_string($num_args, $name, $options, $block);
-                  }
-          );
-      }
-      else{
-          $this->html = $this->link_to_string($num_args, $name, $options, $block);
-      }
-    }
+        if(!is_array($options)){
+            $options = [];
+        }
 
-    public function __toString()
-    {
-        return (string)$this->html;
+        if($this->get_dropdown_link()) {
+            $html = new ContentTag(
+                   'li',
+                   ['role'=>'presentation'],
+                   function() use ($num_args, $name, $options, $block) {
+                        return $this->link_to_string($num_args, $name, $options, $block);
+                    }
+            );
+        }
+        else{
+            $html = $this->link_to_string($num_args, $name, $options, $block);
+        }
+
+        $this->set_html($html);
     }
 
     private function link_to_string($num_args, $name, $options, $block)
@@ -73,27 +69,27 @@ class LinkTo
 
       switch($num_args){
         case 1:
-            return BHP::content_tag('a', $block ? $block : $name, $options);
+            return new ContentTag('a', $block ? $block : $name, $options);
         case 2:
-            return BHP::content_tag('a', $name, $block ? $block : $options);
+            return new ContentTag('a', $name, $block ? $block : $options);
         default:
-            return BHP::content_tag('a', $name, $options, $block);
+            return new ContentTag('a', $name, $options, $block);
       }
     }
 
     private function select_link_class(&$options = [])
     {
-      if(BHP::$alert_link){
-          Base::append_class($options, 'alert-link');
+      if($this->get_alert_link()){
+          $this->append_class($options, 'alert-link');
       }
-      elseif(BHP::$navbar_vertical){
-          Base::append_class($options, 'navbar-brand');
+      elseif($this->get_navbar_vertical()){
+          $this->append_class($options, 'navbar-brand');
       }
-      elseif(BHP::$dropdown_link){
+      elseif($this->get_dropdown_link()){
           $options = array_merge($options, ['role'=>'menuitem', 'tabindex'=>'-1']);
       }
 
-      BHP::$alert_link = false;
+      Base::set_alert_link(false);
     }
 
     private function link_href($options = [])

@@ -28,30 +28,22 @@
 
 namespace BHP;
 
-use BHP\BHP;
-use BHP\Helpers\Base;
+use BHP\Base;
+use BHP\Helpers\ContentTag;
 
 
-class PanelRow
+class PanelRow extends Base
 {
-    private $html;
-
-
     public function __construct($options, $block = null)
     {
-        BHP::$panel_column_class = is_array($options) && isset($options['column_class']) ? $options['column_class'] : null;
-        $this->html = BHP::content_tag('div', call_user_func($block), $this->set_options($options));
+        Base::set_panel_column_class(is_array($options) && isset($options['column_class']) ? $options['column_class'] : null);
+        $this->set_html(new ContentTag('div', call_user_func($block), $this->set_panel_row_options($options)));
     }
 
-    public function __toString()
-    {
-        return (string) $this->html;
-    }
-
-    private function set_options($options)
+    private function set_panel_row_options($options)
     {
         if (isset($options['class'])) {
-            Base::append_class($options, 'row');
+            $this->append_class($options, 'row');
         }
 
         if (isset($options['column_class'])) {
