@@ -75,7 +75,13 @@ class Panel
 
         Base::append_class($options, $this->panel_class($context));
 
-        return BHP::content_tag($tag, $content, $options);
+        $panel_string = BHP::content_tag($tag, $content, $options);
+
+        if (!is_null(BHP::$panel_column_class)) {
+            $panel_string = BHP::content_tag('div', $panel_string, ['class'=>BHP::$panel_column_class]);
+        }
+
+        return $panel_string;
     }
 
     private function panel_class($context = null)
@@ -95,6 +101,7 @@ class Panel
     {
         if ( isset($options['title']) ) {
             $title = BHP::content_tag('h3', $options['title'], ['class' => 'panel-title']);
+            unset($options['title']);
         }
         elseif ( isset($options['heading'])) {
             $title = $options['heading'];

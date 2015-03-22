@@ -31,6 +31,7 @@ use BHP\Helpers\ContentTag;
 use BHP\Helpers\LinkTo;
 use BHP\AlertBox;
 use BHP\Panel;
+use BHP\PanelRow;
 use BHP\Icon;
 
 /**
@@ -41,6 +42,7 @@ abstract class BHP
     static public $dropdown_link = false;
     static public $alert_link = false;
     static public $navbar_vertical = false;
+    static public $panel_column_class;
 
 
     public static function content_tag($name, $content_or_options_with_block = null, $options = null, callable $block = null)
@@ -66,6 +68,11 @@ abstract class BHP
     public static function panel($content_or_options_with_block = null, $options = null, $block = null)
     {
         return new Panel($content_or_options_with_block, $options, $block);
+    }
+
+    public static function panel_row($options, $block = null)
+    {
+        return new PanelRow($options, $block);
     }
 
     public static function icon($name = null, $options = [])
