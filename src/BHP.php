@@ -33,18 +33,13 @@ use BHP\AlertBox;
 use BHP\Panel;
 use BHP\PanelRow;
 use BHP\Icon;
+use BHP\Modal;
 
 /**
  * PHP Bootstrap Helper: Less code more beauty of Bootstrap's design.
  */
 abstract class BHP
 {
-    static public $dropdown_link = false;
-    static public $alert_link = false;
-    static public $navbar_vertical = false;
-    static public $panel_column_class;
-
-
     public static function content_tag($name, $content_or_options_with_block = null, $options = null, callable $block = null)
     {
         return new ContentTag(
@@ -78,5 +73,10 @@ abstract class BHP
     public static function icon($name = null, $options = [])
     {
         return new Icon($name, $options);
+    }
+
+    public static function modal($content_or_options_with_block = null, $options = null, $block = null)
+    {
+        return new Modal($content_or_options_with_block, $options, $block);
     }
 }

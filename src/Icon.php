@@ -28,15 +28,12 @@
 
 namespace BHP;
 
-use BHP\BHP;
-use BHP\Helpers\Base;
+use BHP\Base;
+use BHP\Helpers\ContentTag;
 
 
-class Icon
+class Icon extends Base
 {
-    private $html;
-
-
     public function __construct($name = null, $options = [])
     {
         !isset($options['library']) ? $options['library'] = 'glyphicons' : null;
@@ -44,19 +41,14 @@ class Icon
         $prefix = $this->library_prefix_for($options['library']);
         unset($options['library']);
 
-        Base::append_class($options, $prefix);
+        $this->append_class($options, $prefix);
 
         if (!is_null($name)) {
             $name = str_replace('_', '-', $name);
-            Base::append_class($options, "$prefix-$name");
+            $this->append_class($options, "$prefix-$name");
         }
 
-        $this->html = BHP::content_tag('span', '', $options);
-    }
-
-    public function __toString()
-    {
-        return (string) $this->html;
+        $this->set_html(new ContentTag('span', '', $options));
     }
 
     private function library_prefix_for($name)

@@ -28,7 +28,9 @@
 
 namespace BHP\Helpers;
 
-class ContentTag
+use BHP\Base;
+
+class ContentTag extends Base
 {
     static $BOOLEAN_ATTRIBUTES = [
         'disabled', 'readonly', 'multiple', 'checked', 'autobuffer',
@@ -39,30 +41,26 @@ class ContentTag
         'truespeed', 'typemustmatch'
     ];
 
-    private $html;
-
 
     public function __construct($name, $content_or_options_with_block = null, $options = null, callable $block = null)
     {
-        $num_args = count(array_filter(func_get_args(), function($item) { return !is_null($item); }));
+        $html = '';
+        $num_args = $this->get_function_num_args(func_get_args());
 
         if(4 > $num_args && is_callable(func_get_arg($num_args-1))) {
-          $block = func_get_arg($num_args-1);
+            $block = func_get_arg($num_args-1);
 
-          if(is_array($content_or_options_with_block)){
-            $options = $content_or_options_with_block;
-          }
+            if(is_array($content_or_options_with_block)){
+                $options = $content_or_options_with_block;
+            }
 
-          $this->html = $this->content_tag_string($name, call_user_func($block), $options);
+            $html = $this->content_tag_string($name, call_user_func($block), $options);
         }
         else {
-            $this->html = $this->content_tag_string($name, $content_or_options_with_block, $options);
+            $html = $this->content_tag_string($name, $content_or_options_with_block, $options);
         }
-    }
 
-    public function __toString()
-    {
-        return (string) $this->html;
+        $this->set_html($html);
     }
 
     private function content_tag_string($name, $content, $options)

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * pbh
+ * bhp
  *
  * (The MIT License)
  *
@@ -26,11 +26,75 @@
  * THE SOFTWARE.
  */
 
-namespace BHP\Helpers;
-
+namespace BHP;
 
 class Base
 {
+    const TEMPLATES_PATH = 'src/Helpers/templates/';
+
+    private static $dropdown_link = false;
+    private static $alert_link = false;
+    private static $navbar_vertical = false;
+    private static $panel_column_class;
+
+    private $html;
+
+
+    public static function get_dropdown_link()
+    {
+        return self::$dropdown_link;
+    }
+
+    public static function get_alert_link()
+    {
+        return self::$alert_link;
+    }
+
+    public static function get_navbar_vertical()
+    {
+        return self::$navbar_vertical;
+    }
+
+    public static function get_panel_column_class()
+    {
+        return self::$panel_column_class;
+    }
+
+    public static function set_dropdown_link($dropdown_link)
+    {
+        self::$dropdown_link = $dropdown_link;
+    }
+
+    public static function set_alert_link($alert_link)
+    {
+        self::$alert_link = $alert_link;
+    }
+
+    public static function set_navbar_vertical($navbar_vertical)
+    {
+        self::$navbar_vertical = $navbar_vertical;
+    }
+
+    public static function set_panel_column_class($panel_column_class)
+    {
+        self::$panel_column_class = $panel_column_class;
+    }
+
+    public function set_html($html)
+    {
+        $this->html = $html;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->html;
+    }
+
+    public function get_templates_path()
+    {
+        return self::TEMPLATES_PATH;
+    }
+
     public static function append_class(&$hash, $new_class, $attribute = 'class')
     {
         $existing_class = isset($hash[$attribute]) ? $hash[$attribute] : null;
@@ -39,7 +103,7 @@ class Base
 
     public static function context_for($context, $options=[])
     {
-        switch($context){
+        switch ($context) {
             case 'notice':
                 $context = 'success';
                 break;
@@ -48,14 +112,14 @@ class Base
                 break;
         }
 
-        if( isset($options['valid']) && in_array($context, $options['valid'] )){
+        if (isset($options['valid']) && in_array($context, $options['valid'])) {
             return $context;
         }
 
-        elseif(isset($options['default'])){
+        elseif (isset($options['default'])) {
             return $options['default'];
         }
-        else{
+        else {
             return 'default';
         }
     }
@@ -68,7 +132,7 @@ class Base
         }
     }
 
-    public static function get_function_num_args($args=[])
+    public function get_function_num_args($args=[])
     {
         return count(array_filter($args, function($item) { return !is_null($item); }));
     }

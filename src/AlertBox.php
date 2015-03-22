@@ -28,32 +28,26 @@
 
 namespace BHP;
 
-use BHP\BHP;
-use BHP\Helpers\Base;
+use BHP\Base;
+use BHP\Helpers\ContentTag;
 
 
-class AlertBox
+class AlertBox extends Base
 {
-    private $html;
-
-
     public function __construct($message_or_options_with_block = null, $options = null, $block=null)
     {
-      $num_args = Base::get_function_num_args(func_get_args());
+        $html = '';
+        $num_args = $this->get_function_num_args(func_get_args());
 
-      if (3 > $num_args && is_callable(func_get_arg($num_args-1))) {
+        if (3 > $num_args && is_callable(func_get_arg($num_args-1))) {
+            $block = func_get_arg($num_args-1);
+            $html = $this->alert_string($this->capture_alert($block), is_null($message_or_options_with_block) || is_callable($message_or_options_with_block) ? [] : $message_or_options_with_block);
+        }
+        else {
+            $html = $this->alert_string($message_or_options_with_block, is_null($options) ? [] : $options);
+        }
 
-          $block = func_get_arg($num_args-1);
-          $this->html = $this->alert_string($this->capture_alert($block), is_null($message_or_options_with_block) || is_callable($message_or_options_with_block) ? [] : $message_or_options_with_block);
-      }
-      else {
-          $this->html = $this->alert_string($message_or_options_with_block, is_null($options) ? [] : $options);
-      }
-    }
-
-    public function __toString()
-    {
-        return (string) $this->html;
+        $this->set_html($html);
     }
 
     private function alert_string($message=null, $options=[])
@@ -71,15 +65,15 @@ class AlertBox
         }
 
         $klass = $this->alert_class($context, $dismissible);
-        Base::append_class($options, $klass);
+        $this->append_class($options, $klass);
 
-        return BHP::content_tag('div', $message, array_merge(['role'=>'alert'], $options));
+        return new ContentTag('div', $message, array_merge(['role'=>'alert'], $options));
     }
 
     private function alert_class($context=null, $dismissible=null)
     {
         $valid_contexts = ['success', 'info', 'warning', 'danger'];
-        $context = Base::context_for($context, ['default'=>'info', 'valid'=>$valid_contexts]);
+        $context = $this->context_for($context, ['default'=>'info', 'valid'=>$valid_contexts]);
         $dismissible_class = $dismissible ? 'alert-dismissible' : '';
 
         return rtrim("alert alert-$context $dismissible_class");
@@ -88,16 +82,16 @@ class AlertBox
     private function add_dismiss_button_to($message)
     {
         $options = ['type'=>'button', 'class'=>'close', 'data-dismiss'=>'alert', 'aria-label'=>'Close'];
-        $dismiss_button = BHP::content_tag('button', BHP::content_tag('span', '&times;', ['aria-hidden'=>true]), $options);
+        $dismiss_button = new ContentTag('button', new ContentTag('span', '&times;', ['aria-hidden'=>true]), $options);
 
         return join('', [$dismiss_button, $message]) . "\n";
     }
 
     private function capture_alert(callable $block)
     {
-        BHP::$alert_link = true;
+        Base::set_alert_link(true);
         $capture = call_user_func($block);
-        BHP::$alert_link = false;
+        Base::set_alert_link(false);
 
         return $capture;
     }

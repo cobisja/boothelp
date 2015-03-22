@@ -28,33 +28,28 @@
 
 namespace BHP;
 
-use BHP\BHP;
-use BHP\Helpers\Base;
+use BHP\Base;
+use BHP\Helpers\ContentTag;
 
-class Panel
+class Panel extends Base
 {
-    private $html;
-
-
     public function __construct($content_or_options_with_block = null, $options = null, $block = null)
     {
-      $num_args = Base::get_function_num_args(func_get_args());
+        $html = '';
+        $num_args = $this->get_function_num_args(func_get_args());
 
-      if ($num_args < 3 && is_callable(func_get_arg($num_args-1))) {
-          $block = func_get_arg($num_args-1);
-          $this->html = $this->panel_string(call_user_func($block), is_null($content_or_options_with_block) ? [] : $content_or_options_with_block);
-      }
-      elseif (is_array($content_or_options_with_block) && is_null($options)) {
-          $this->html = $this->panel_string(null, $content_or_options_with_block);
-      }
-      else {
-        $this->html = $this->panel_string($content_or_options_with_block, is_null($options) ? [] : $options);
-      }
-    }
+        if ($num_args < 3 && is_callable(func_get_arg($num_args-1))) {
+            $block = func_get_arg($num_args-1);
+            $html = $this->panel_string(call_user_func($block), is_null($content_or_options_with_block) ? [] : $content_or_options_with_block);
+        }
+        elseif (is_array($content_or_options_with_block) && is_null($options)) {
+            $html = $this->panel_string(null, $content_or_options_with_block);
+        }
+        else {
+          $html = $this->panel_string($content_or_options_with_block, is_null($options) ? [] : $options);
+        }
 
-    public function __toString()
-    {
-        return (string)$this->html;
+        $this->set_html($html);
     }
 
     private function panel_string($content = null, $options = [])
@@ -73,12 +68,12 @@ class Panel
             $context = null;
         }
 
-        Base::append_class($options, $this->panel_class($context));
+        $this->append_class($options, $this->panel_class($context));
 
-        $panel_string = BHP::content_tag($tag, $content, $options);
+        $panel_string = new ContentTag($tag, $content, $options);
 
-        if (!is_null(BHP::$panel_column_class)) {
-            $panel_string = BHP::content_tag('div', $panel_string, ['class'=>BHP::$panel_column_class]);
+        if (!is_null(Base::get_panel_column_class())) {
+            $panel_string = new ContentTag('div', $panel_string, ['class'=>Base::get_panel_column_class()]);
         }
 
         return $panel_string;
@@ -87,20 +82,20 @@ class Panel
     private function panel_class($context = null)
     {
         $valid_contexts = ['primary', 'success', 'info', 'warning', 'danger'];
-        $context = Base::context_for($context, ['valid' => $valid_contexts]);
+        $context = $this->context_for($context, ['valid' => $valid_contexts]);
 
         return "panel panel-$context";
     }
 
     private function prepend_body_to($content)
     {
-        return BHP::content_tag('div', $content, ['class' => 'panel-body']);
+        return new ContentTag('div', $content, ['class' => 'panel-body']);
     }
 
     private function prepend_optional_heading_to($content, &$options = [])
     {
         if ( isset($options['title']) ) {
-            $title = BHP::content_tag('h3', $options['title'], ['class' => 'panel-title']);
+            $title = new ContentTag('h3', $options['title'], ['class' => 'panel-title']);
             unset($options['title']);
         }
         elseif ( isset($options['heading'])) {
@@ -111,7 +106,7 @@ class Panel
             $title = null;
         }
 
-        $heading = !is_null(($title)) ? BHP::content_tag('div', $title, ['class' => 'panel-heading']) : null;
+        $heading = !is_null(($title)) ? new ContentTag('div', $title, ['class' => 'panel-heading']) : null;
 
         return join( '', array_filter( [$heading, $content], 'strlen' ) );
     }
@@ -127,7 +122,7 @@ class Panel
         }
 
         if ($footer) {
-            $footer = BHP::content_tag('div', $footer, ['class' => 'panel-footer']);
+            $footer = new ContentTag('div', $footer, ['class' => 'panel-footer']);
         }
 
         return join( '', array_filter( [$content, $footer], 'strlen' ) );
