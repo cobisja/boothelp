@@ -36,6 +36,8 @@ class Base
     private static $alert_link = false;
     private static $navbar_vertical = false;
     private static $panel_column_class;
+    private static $navbar_id = '';
+    private static $nav_link = false;
 
     private $html;
 
@@ -60,6 +62,16 @@ class Base
         return self::$panel_column_class;
     }
 
+    public static function get_navbar_id()
+    {
+        return self::$navbar_id;
+    }
+
+    public static function get_nav_link()
+    {
+        return self::$nav_link;
+    }
+
     public static function set_dropdown_link($dropdown_link)
     {
         self::$dropdown_link = $dropdown_link;
@@ -78,6 +90,16 @@ class Base
     public static function set_panel_column_class($panel_column_class)
     {
         self::$panel_column_class = $panel_column_class;
+    }
+
+    public static function set_navbar_id($navbar_id)
+    {
+        self::$navbar_id = $navbar_id;
+    }
+
+    public static function set_nav_link($nav_link)
+    {
+        self::$nav_link = $nav_link;
     }
 
     public function set_html($html)

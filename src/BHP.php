@@ -34,6 +34,7 @@ use BHP\Panel;
 use BHP\PanelRow;
 use BHP\Icon;
 use BHP\Modal;
+use BHP\Nav;
 
 /**
  * PHP Bootstrap Helper: Less code more beauty of Bootstrap's design.
@@ -78,5 +79,10 @@ abstract class BHP
     public static function modal($content_or_options_with_block = null, $options = null, $block = null)
     {
         return new Modal($content_or_options_with_block, $options, $block);
+    }
+
+    public static function nav($options = [], $block = null)
+    {
+        return new Nav($options, $block);
     }
 }
