@@ -115,7 +115,7 @@ class LinkTo extends Base
 
         return new ContentTag(
                'li',
-               ['class'=>trim($nav_item_class . ' ' . $disabled)] ,
+               is_null($nav_item_class) && is_null($disabled) ? [] : ['class'=>trim($nav_item_class . ' ' . $disabled)],
                function() use ($num_args, $name, $options, $block) {
                     return $this->link_to_string($num_args, $name, $options, $block);
                 }
