@@ -37,6 +37,7 @@ use BHP\Modal;
 use BHP\Nav;
 use BHP\Helpers\Vertical;
 use BHP\Helpers\Horizontal;
+use BHP\Dropdown;
 
 /**
  * PHP Bootstrap Helper: Less code more beauty of Bootstrap's design.
@@ -101,5 +102,10 @@ abstract class BHP
     public static function horizontal($content_or_options_with_block = null, $options = null, callable $block = null)
     {
         return new Horizontal($content_or_options_with_block, $options, $block);
+    }
+
+    public static function dropdown($caption, $options = [], $block = null)
+    {
+        return new Dropdown($caption, $options, $block);
     }
 }
