@@ -39,6 +39,7 @@ use BHP\Helpers\Vertical;
 use BHP\Helpers\Horizontal;
 use BHP\Dropdown;
 use BHP\ProgressBar;
+use BHP\Button;
 
 /**
  * PHP Bootstrap Helper: Less code more beauty of Bootstrap's design.
@@ -113,5 +114,10 @@ abstract class BHP
     public static function progress_bar($options = [], $container_options = [])
     {
         return new ProgressBar($options, $container_options);
+    }
+
+    public static function button($content_or_options_with_block = null, $options = null, $block = null)
+    {
+        return new Button($content_or_options_with_block, $options, $block);
     }
 }
