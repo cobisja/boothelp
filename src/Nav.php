@@ -75,6 +75,5 @@ class Nav extends Base
       }
 
       return $options;
-//      return isset($options['role']) ? [ 'role'=>$options['role'], 'class'=>$options['class'] ] : [ 'class'=>$options['class'] ];
     }
 }

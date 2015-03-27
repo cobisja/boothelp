@@ -1,5 +1,4 @@
 <?php
-
 /*
  * bhp
  *
@@ -26,32 +25,35 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+/**
+ * Sample file to show you how to use BHP - Bootstrap Helpers using PHP
+ *
+ * To get running this demo you have to download the followings pieces of software:
+ *
+ * - jQuery 1.9.x -> http://jquery.com
+ * - Bootsrap 3.3.x -> http://getbootstrap.com
+ *
+ * Then copy the followings files into specified locations:
+ *
+ * bootstrap css: 'bootstrap.min -> 'samples/css'.
+ * bootstrap fonts: 'bootstrap/fonts/*' -> 'samples/fonts'.
+ * jquery and bootstrap js: 'bootstrap.min.js and jquery.min.js -> 'samples/js'.
+ *
+ * Aditional css is required to use 'Font awesome'. You have to add a link to awesome.css:
+ * <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css" />
+ */
+require 'vendor/autoload.php';
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
-
-
-class PanelRow extends Base
-{
-    public function __construct($options, $block = null)
-    {
-        Base::set_panel_column_class(is_array($options) && isset($options['column_class']) ? $options['column_class'] : null);
-        $this->set_html(new ContentTag('div', call_user_func($block), $this->set_panel_row_options($options)));
-    }
-
-    private function set_panel_row_options($options)
-    {
-        if (isset($options['class'])) {
-            $this->append_class($options, $options['class']);
-        }
-
-        $this->append_class($options, 'row');
-
-        if (isset($options['column_class'])) {
-            unset($options['column_class']);
-        }
-
-        return $options;
-    }
-}
+include('samples/html/start_page.html');
+require('samples/overview.php');
+require('samples/alert.php');
+require('samples/button.php');
+require('samples/dropdown.php');
+require('samples/icon.php');
+require('samples/modal.php');
+require('samples/nav.php');
+require('samples/navbar.php');
+require('samples/panel.php');
+require('samples/panel_rows.php');
+require('samples/progress_bar.php');
+include('samples/html/end_page.html');

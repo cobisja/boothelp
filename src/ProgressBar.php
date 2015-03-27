@@ -72,45 +72,58 @@ class ProgressBar extends Base
         $attributes['aria-valuemin'] = 0;
         $attributes['aria-valuemax'] = 100;
 
+        $progress_label = $this->progress_bar_label($percentage, $options);
         $this->set_options($options, $attributes);
 
-        return new ContentTag('div', $this->progress_bar_label($percentage, $options), $attributes);
+        return new ContentTag('div', $progress_label, $attributes);
     }
 
-    private function progress_bar_label($percentage, $options = [])
+    private function progress_bar_label($percentage, &$options = [])
     {
-        $text1 = isset($options['context']) ? " ({$options['context']})" : null;
+        if (isset($options['context'])) {
+            $text1 = " ({$options['context']})";
+            unset($options['context']);
+        }
+        else {
+            $text1 = null;
+        }
+
+//        $text1 = isset($options['context']) ? " ({$options['context']})" : null;
         $text = "$percentage%" . $text1;
 
-        if (!isset($options['label'])) {
-            $options['label'] = false;
-        }
+        $label = isset($options['label']) ? $options['label'] : false;
 
-        if (is_string($options['label'])) {
-            return $options['label'];
-        }
 
-        switch ($options['label']) {
-            case true:
-                return $text;
-            case false:
-                return new ContentTag('span', $text, ['class'=>'sr-only']);
+        if (is_bool($label)) {
+            $label = $label ? $text : new ContentTag('span', $text, ['class'=>'sr-only']);
         }
+        unset($options['label']);
+
+        return $label;
     }
 
-    private function progress_bar_class($options = [])
+    private function progress_bar_class(&$options = [])
     {
+        $striped = null;
+        $animated = null;
         $valid_contexts = ['success', 'info', 'warning', 'danger'];
 
-        if (!isset($options['context'])) {
-            $options['context'] = null;
-        }
+//        if (!isset($options['context'])) {
+//            $options['context'] = null;
+//        }
 
-        $context = $this->context_for($options['context'], ['valid'=>$valid_contexts]);
+        $context = $this->context_for(!isset($options['context']) ? null : $options['context'], ['valid'=>$valid_contexts]);
         $context = in_array($context, $valid_contexts) ? "progress-bar-$context" : null;
 
-        $striped = isset($options['striped']) && $options['striped'] ? 'progress-bar-striped' : null;
-        $animated = isset($options['animated']) && $options['animated'] ? 'progress-bar-striped active' : null;
+        if (isset($options['striped']) && $options['striped']) {
+            $striped = 'progress-bar-striped';
+            unset($options['striped']);
+        }
+
+        if (isset($options['animated']) && $options['animated']) {
+            $striped = 'progress-bar-striped active';
+            unset($options['animated']);
+        }
 
         return  join( ' ', array_filter( ['progress-bar', $context, $striped, $animated], 'strlen' ) );
     }

@@ -43,6 +43,7 @@ class Navbar extends Base
         Base::set_navbar_id(!isset($options['id']) ? ('navbar-collapse-' . (string) (mt_rand(1, pow(10, 7)))) : $options['id']);
         $nav_tag = $this->navbar_string($options, $block);
         $html = join("\n", array_filter([$this->navbar_style_tag($options), $nav_tag], 'strlen'));
+        Base::set_navbar_id(false);
 
         $this->set_html($html);
     }
@@ -54,9 +55,12 @@ class Navbar extends Base
             $options = [];
         }
 
+        $this->append_class($options, $this->navbar_class($options));
+        $options['role'] = 'navigation';
+
         return new ContentTag(
             'nav',
-            ['role'=>'navigation', 'class'=>$this->navbar_class($options)], function() use ($options, $block){
+            $options, function() use ($options, $block){
                 return new ContentTag('div', ['class'=>$this->navbar_container_class($options)], $block);
             }
         );
@@ -79,7 +83,7 @@ class Navbar extends Base
         return isset($matches[1]) ? $matches[1] : '';
     }
 
-    private function navbar_class($options = [])
+    private function navbar_class(&$options = [])
     {
         $style = isset($options['inverted']) && $options['inverted'] ? 'inverse' : 'default';
         $position = isset($options['position']) ? $this->navbar_position_class_for($options['position']) : null;
@@ -89,9 +93,13 @@ class Navbar extends Base
 
         if ($position) {
           $this->append_class($options, "navbar-$position");
+          unset($options['position']);
         }
 
-        return $options['class'];
+        $class = $options['class'];
+        unset($options['class']);
+
+        return $class;
     }
 
     private function navbar_position_class_for($position)

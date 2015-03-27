@@ -58,7 +58,13 @@ class Panel extends Base
         $content = $this->prepend_optional_heading_to($content, $options);
         $content = $this->optional_footer_to($content, $options);
 
-        $tag = isset($options['tag']) ? $options['tag'] : 'div';
+        if (isset($options['tag'])) {
+            $tag = $options['tag'];
+            unset($options['tag']);
+        }
+        else {
+            $tag = 'div';
+        }
 
         if (isset($options['context'])) {
             $context = $options['context'];

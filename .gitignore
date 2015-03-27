@@ -1,10 +1,6 @@
-index.php
-
 nbproject/**/*
 vendor/**/*
-css/**/*
-js/**/*
-fonts/**/*
-html/**/*
-samples/**/*
-
+samples/css/bootstrap.min.css
+samples/fonts/**/*
+samples/js/bootstrap.min.js
+samples/js/jquery.min.js

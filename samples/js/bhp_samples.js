@@ -1,6 +1,4 @@
-<?php
-
-/*
+/* 
  * bhp
  *
  * (The MIT License)
@@ -26,32 +24,35 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
-
-use BHP\Base;
-use BHP\Helpers\ContentTag;
-
-
-class PanelRow extends Base
-{
-    public function __construct($options, $block = null)
-    {
-        Base::set_panel_column_class(is_array($options) && isset($options['column_class']) ? $options['column_class'] : null);
-        $this->set_html(new ContentTag('div', call_user_func($block), $this->set_panel_row_options($options)));
-    }
-
-    private function set_panel_row_options($options)
-    {
-        if (isset($options['class'])) {
-            $this->append_class($options, $options['class']);
+// navbar top toggler
+(function () {
+      $('.navbar-top-toggle').click(function () {
+        var shown = $(this).text() == "Hide the navbar";
+        if(shown) {
+          $("body").animate({paddingTop: "0px"});
+          $('[data-navbar="top"]').hide('slow');
+          $(this).text('Show the navbar');
+        } else {
+          $("body").animate({paddingTop: "70px"});
+          $('[data-navbar="top"]').show('slow');
+          $(this).text('Hide the navbar');
         }
+      })
+    })();
 
-        $this->append_class($options, 'row');
-
-        if (isset($options['column_class'])) {
-            unset($options['column_class']);
-        }
-
-        return $options;
+// navbar bottom toggler
+(function () {
+  $('.navbar-bottom-toggle').click(function () {
+    var shown = $(this).text() == "Hide the navbar";
+    if(shown) {
+      $("body").animate({paddingBottom: "0px"});
+      $('[data-navbar="bottom"]').hide('slow');
+      $(this).text('Show the navbar');
+    } else {
+      $("body").animate({paddingBottom: "100px"});
+      $('[data-navbar="bottom"]').show('slow');
+      $(this).text('Hide the navbar');
     }
-}
+  })
+})();
+
