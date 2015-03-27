@@ -1,0 +1,7 @@
+<h3 id="%sample_id%">%sample_name%</h3>
+%additional_sample_info%
+<p>%sample_description%</p>
+<pre><code data-lang="php">%php_code%</code></pre>
+<p>generates the following HTML:</p>
+<div class="bs-example">%result%</div>
+<div class="highlight"><pre><code data-lang="html">%html_code%</code></pre></div>

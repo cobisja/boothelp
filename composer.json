@@ -1,5 +1,5 @@
 {
-    "name": "cobisja/PBH",
+    "name": "cobisja/BHP",
     "description": "PHP Bootstrap Helpers",
     "license": "MIT",
     "keywords": ["bootstrap"],
@@ -10,6 +10,6 @@
         }
     ],
     "autoload": {
-        "psr-4": {"PBH\\": "src/"}
+        "psr-4": {"BHP\\": "src/", "BHP\\Helpers\\": "src/Helpers", "BHP\\Samples\\": "samples/"}
     }  
 }
