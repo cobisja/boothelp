@@ -1,5 +1,6 @@
 nbproject/**/*
 vendor/**/*
+coverage/**/*
 samples/css/bootstrap.min.css
 samples/fonts/**/*
 samples/js/bootstrap.min.js
