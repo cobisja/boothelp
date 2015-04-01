@@ -31,10 +31,20 @@ namespace BHP\Helpers;
 use BHP\Base;
 use BHP\Helpers\ContentTag;
 
-
+/**
+ * LinkTo: Generates a link tag.
+ */
 class LinkTo extends Base
 {
-    public function __construct($name = null, $options = [], callable $block = null)
+    /**
+     * Initializes the object and returns an instance holding the HTML code for
+     * a link tag.
+     *
+     * @param mixed $name link target.
+     * @param array $options link options.
+     * @param callable $block closure that generates the content to be surrounding to.
+     */
+    public function __construct($name, $options = [], callable $block = null)
     {
         $html = '';
 
@@ -47,31 +57,32 @@ class LinkTo extends Base
 
         if (Base::get_dropdown_link()) {
             $html = $this->build_dropdown_link($num_args, $name, $options, $block);
-        }
-        elseif (Base::get_nav_link()) {
+        } elseif (Base::get_nav_link()) {
             $html = $this->build_nav_link($num_args, $name, $options, $block);
-        }
-        else {
+        } else {
             $html = $this->link_to_string($num_args, $name, $options, $block);
         }
 
-        $this->set_html($html);
+        $this->set_html_object($html->get_html_object());
     }
 
     private function link_to_string($num_args, $name, $options, $block)
     {
       $this->select_link_class($options);
-
       $options['href'] = $this->link_href($options);
 
       switch($num_args){
         case 1:
-            return new ContentTag('a', $block ? $block : $name, $options);
+            $link = new ContentTag('a', $block ? $block : $name, $options);
+            break;
         case 2:
-            return new ContentTag('a', $name, $block ? $block : $options);
+            $link = new ContentTag('a', $name, $block ? $block : $options);
+            break;
         default:
-            return new ContentTag('a', $name, $options, $block);
+            $link = new ContentTag('a', $name, $options, $block);
       }
+
+      return $link;
     }
 
     private function select_link_class(&$options = [])

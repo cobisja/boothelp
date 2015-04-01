@@ -26,39 +26,16 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace Tests\Helpers;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+class CustomDom {
+    private $html;
+    private $dom;
 
+    public function __construct($html='') {
+        $this->html = $html;
 
-class Icon extends Base
-{
-    public function __construct($name = null, $options = []) {
-        !isset($options['library']) ? $options['library'] = 'glyphicons' : null;
-
-        $prefix = $this->library_prefix_for($options['library']);
-        unset($options['library']);
-
-        $this->append_class($options, $prefix);
-
-        if (!is_null($name)) {
-            $name = str_replace('_', '-', $name);
-            $this->append_class($options, "$prefix-$name");
-        }
-
-        $icon = new ContentTag('span', '', $options);
-        $this->set_html_object($icon->get_html_object());
-    }
-
-    private function library_prefix_for($name) {
-        switch ($name){
-            case 'font-awesome': case 'font_awesome':
-                return 'fa';
-            case '': case 'glyphicons':
-                return 'glyphicon';
-            default:
-                return $name;
-        }
+        $this->dom = new \DOMDocument;
+        $this->dom->loadHTML($html);
     }
 }

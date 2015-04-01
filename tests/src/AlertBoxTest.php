@@ -26,39 +26,19 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace Tests;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BHP\AlertBox;
 
+class AlertBoxTest  extends \PHPUnit_Framework_TestCase {
+    public function testWithNoAlertOptions() {
+        $html = '<div class="alert alert-info" role="alert">Hello world</div>';
+        $alert_box = new AlertBox('Hello world');
 
-class Icon extends Base
-{
-    public function __construct($name = null, $options = []) {
-        !isset($options['library']) ? $options['library'] = 'glyphicons' : null;
+        $alert_options = $alert_box->get_html_options();
 
-        $prefix = $this->library_prefix_for($options['library']);
-        unset($options['library']);
-
-        $this->append_class($options, $prefix);
-
-        if (!is_null($name)) {
-            $name = str_replace('_', '-', $name);
-            $this->append_class($options, "$prefix-$name");
-        }
-
-        $icon = new ContentTag('span', '', $options);
-        $this->set_html_object($icon->get_html_object());
+        $this->assertTrue(true);
     }
 
-    private function library_prefix_for($name) {
-        switch ($name){
-            case 'font-awesome': case 'font_awesome':
-                return 'fa';
-            case '': case 'glyphicons':
-                return 'glyphicon';
-            default:
-                return $name;
-        }
-    }
+
 }

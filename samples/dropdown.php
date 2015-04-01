@@ -35,13 +35,14 @@ $dropdowns = [
         [
             'name'=> 'Basic dropdowns',
             'description'=>'Use <code>dropdown</code> without options to display a button with the given caption and the included links in a dropdown menu.',
-            'php_code'=> "BHP::dropdown('Menu', function(){
-    return
-        BHP::link_to('Home') .
-        BHP::link_to('Users') .
-        BHP::link_to('Profile');
+            'php_code'=> "echo BHP::dropdown('Menu', function(){
+    return [
+        BHP::link_to('Home'),
+        BHP::link_to('Users'),
+        BHP::link_to('Profile')
+    ];
 });",
-            'result'=> BHP::dropdown('Menu', function(){return BHP::link_to('Home') . BHP::link_to('Users') . BHP::link_to('Profile');}),
+            'result'=> BHP::dropdown('Menu', function(){return [BHP::link_to('Home'), BHP::link_to('Users'), BHP::link_to('Profile')];}),
             'html_code'=>'<div class="btn-group">
   <button data-toggle="dropdown" id="label-dropdown-8291654764" type="button" class="dropdown-toggle btn btn-default" aria-expanded="false">
     Menu
@@ -58,12 +59,13 @@ $dropdowns = [
             'name'=> 'Right-aligned dropdowns',
             'description'=>'Use <code>dropdown</code> with the <code>["align"=> "right"]</code> option to align the dropdown to the rightmost side of the button.',
             'php_code'=> "BHP::dropdown('Menu', ['align'=>'right'], function(){
-    return
-        BHP::link_to('Home') .
-        BHP::link_to('Users') .
-        BHP::link_to('Profile');
+    return [
+        BHP::link_to('Home'),
+        BHP::link_to('Users'),
+        BHP::link_to('Profile')
+    ];
 });",
-            'result'=> BHP::dropdown('Menu', ['align'=>'right'], function(){return BHP::link_to('Home') . BHP::link_to('Users') . BHP::link_to('Profile');}),
+            'result'=> BHP::dropdown('Menu', ['align'=>'right'], function(){return [BHP::link_to('Home'), BHP::link_to('Users'), BHP::link_to('Profile')];}),
             'html_code'=>'<div class="btn-group">
   <button data-toggle="dropdown" id="label-dropdown-894474825" type="button" class="dropdown-toggle btn btn-default" aria-expanded="false">
     Menu
@@ -80,18 +82,20 @@ $dropdowns = [
             'name'=> 'Grouped dropdowns',
             'description'=> 'Use <code>dropdown</code> with the <code>["groupable"=> "true"]</code> option to have multiple dropdowns grouped on the same line, rather than stacked.',
             'php_code'=> "echo BHP::dropdown('Menu', ['groupable'=>true], function(){
-    return
-        BHP::link_to('Home') .
-        BHP::link_to('Users');
+    return [
+        BHP::link_to('Home'),
+        BHP::link_to('Users')
+    ];
 });
 echo BHP::dropdown('Profile', ['groupable'=>true], function(){
     return
         BHP::link_to('Edit profile');
 });",
             'result'=> BHP::dropdown('Menu', ['groupable'=>true], function(){
-    return
-        BHP::link_to('Home') .
-        BHP::link_to('Users');
+    return [
+        BHP::link_to('Home'),
+        BHP::link_to('Users')
+    ];
 }) .
 BHP::dropdown('Profile', ['groupable'=>true], function(){
     return
@@ -121,12 +125,13 @@ BHP::dropdown('Profile', ['groupable'=>true], function(){
             'name'=> 'Dropups',
             'description'=> 'Use <code>dropdown</code> with the <code>["direction"=> "up"]</code> option to show a dropup, that is, a menu that appears above the button.',
             'php_code'=> "echo BHP::dropdown('Menu', ['direction'=>'up'], function(){
-    return
-        BHP::link_to('Home') .
-        BHP::link_to('Users') .
-        BHP::link_to('Profile');
+    return [
+        BHP::link_to('Home'),
+        BHP::link_to('Users'),
+        BHP::link_to('Profile')
+    ];
 });",
-            'result'=> BHP::dropdown('Menu', ['direction'=>'up'], function(){return BHP::link_to('Home') . BHP::link_to('Users') . BHP::link_to('Profile');}),
+            'result'=> BHP::dropdown('Menu', ['direction'=>'up'], function(){return [BHP::link_to('Home'), BHP::link_to('Users'), BHP::link_to('Profile')];}),
             'html_code'=>'<div class="btn-group dropup">
   <button data-toggle="dropdown" id="label-dropdown-8750917493" type="button" class="dropdown-toggle btn btn-default" aria-expanded="false">
     Menu
@@ -144,11 +149,12 @@ BHP::dropdown('Profile', ['groupable'=>true], function(){
             'description'=>'Use <code>dropdown</code> with the <code>"context"</code> option to change the color (and semantic context) of the toggle button.
 Available contexts are <code>"default"</code> (default), <code>"primary"</code>, <code>"success"</code>, <code>"info"</code>, <code>"warning"</code> and <code>"danger"</code>.',
             'php_code'=> "echo BHP::dropdown('Menu', ['context'=>'info'], function(){
-    return
-        BHP::link_to('Home') .
-        BHP::link_to('Users');
+    return [
+        BHP::link_to('Home'),
+        BHP::link_to('Users')
+    ];
 });",
-            'result'=> BHP::dropdown('Menu', ['context'=>'info'], function(){return BHP::link_to('Home') . BHP::link_to('Users');}),
+            'result'=> BHP::dropdown('Menu', ['context'=>'info'], function(){return [BHP::link_to('Home'), BHP::link_to('Users')];}),
             'html_code'=>'<div class="btn-group">
   <button data-toggle="dropdown" id="label-dropdown-6808993477" type="button" class="dropdown-toggle btn btn-info">
     Menu
@@ -164,11 +170,12 @@ Available contexts are <code>"default"</code> (default), <code>"primary"</code>,
             'name'=> 'Dropdown with custom button size',
             'description'=>'Use <code>dropdown</code> with the <code>"size"</code> option to change the size of the toggle button.',
             'php_code'=> "echo BHP::dropdown('Menu', ['size'=>'extra_small'], function(){
-    return
-        BHP::link_to('Home') .
-        BHP::link_to('Users');
+    return [
+        BHP::link_to('Home'),
+        BHP::link_to('Users')
+    ];
 });",
-            'result'=> BHP::dropdown('Menu', ['size'=>'extra_small'], function(){return BHP::link_to('Home') . BHP::link_to('Users');}),
+            'result'=> BHP::dropdown('Menu', ['size'=>'extra_small'], function(){return [BHP::link_to('Home'), BHP::link_to('Users')];}),
             'html_code'=>'<div class="btn-group">
   <button data-toggle="dropdown" id="label-dropdown-2497444321" type="button" class="dropdown-toggle btn btn-default btn-xs">
     Menu
@@ -184,12 +191,13 @@ Available contexts are <code>"default"</code> (default), <code>"primary"</code>,
             'name'=> 'Dropdowns with split button',
             'description'=>'Use <code>dropdown</code> with the <code>["split"=> "true"]</code> option to show a split button that only toggles the dropdown when clicked on the right side.',
             'php_code'=> "echo BHP::dropdown('Menu', ['split'=>true], function(){
-    return
-        BHP::link_to('Home') .
-        BHP::link_to('Users') .
-        BHP::link_to('Profile');
+    return [
+        BHP::link_to('Home'),
+        BHP::link_to('Users'),
+        BHP::link_to('Profile')
+    ];
 });",
-            'result'=> BHP::dropdown('Menu', ['split'=>true], function(){return BHP::link_to('Home') . BHP::link_to('Users') . BHP::link_to('Profile');}),
+            'result'=> BHP::dropdown('Menu', ['split'=>true], function(){return [BHP::link_to('Home'), BHP::link_to('Users'), BHP::link_to('Profile')];}),
             'html_code'=>'<div class="btn-group">
   <button class="btn btn-default" type="button">Menu</button>
   <button data-toggle="dropdown" id="label-dropdown-6883494473" type="button" class="dropdown-toggle btn btn-default" aria-expanded="false">
@@ -209,11 +217,12 @@ Available contexts are <code>"default"</code> (default), <code>"primary"</code>,
 You can specify a custom <code>id</code> which will be added to the dropdown’s <code>ul</code> tag.
 You can also specify a custom <code>["button"=> "class"]</code> which will be added to the toggle <code>button</code> tag.',
             'php_code'=> "echo BHP::dropdown('Menu', ['split'=>true, 'id'=>'dropdown', 'button'=>['class'=>'en']], function(){
-    return
-        BHP::link_to('Home') .
-        BHP::link_to(BHP::content_tag('em', 'Profile'));
+    return [
+        BHP::link_to('Home'),
+        BHP::link_to(BHP::content_tag('em', 'Profile'))
+    ];
 });",
-            'result'=> BHP::dropdown('Menu', ['split'=>true, 'id'=>'dropdown', 'button'=>['class'=>'en']], function(){ return BHP::link_to('Home') .  BHP::link_to(BHP::content_tag('em', 'Profile'));}),
+            'result'=> BHP::dropdown('Menu', ['split'=>true, 'id'=>'dropdown', 'button'=>['class'=>'en']], function(){ return [BHP::link_to('Home'),  BHP::link_to(BHP::content_tag('em', 'Profile'))];}),
             'html_code'=>'<div class="btn-group">
   <button class="en btn btn-default" type="button">Menu</button>
   <button data-toggle="dropdown" id="dropdown" type="button" class="dropdown-toggle en btn btn-default">

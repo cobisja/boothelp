@@ -31,60 +31,67 @@ namespace BHP;
 use BHP\Base;
 use BHP\Helpers\ContentTag;
 
+
 class Navbar extends Base
 {
-    public function __construct($options = [], callable $block = null)
-    {
+    public function __construct($options = [], callable $block = null) {
         if (is_callable($options)) {
             $block = $options;
             $options = [];
         }
 
         Base::set_navbar_id(!isset($options['id']) ? ('navbar-collapse-' . (string) (mt_rand(1, pow(10, 7)))) : $options['id']);
-        $nav_tag = $this->navbar_string($options, $block);
-        $html = join("\n", array_filter([$this->navbar_style_tag($options), $nav_tag], 'strlen'));
+        $navbar = $this->build_navbar($options, $block);
         Base::set_navbar_id(false);
 
-        $this->set_html($html);
+        $this->set_html_object($navbar->get_html_object());
     }
 
-    private function navbar_string($options = [], $block = null)
-    {
+    private function build_navbar($options = [], $block = null) {
         if (is_callable($options)) {
             $block = $options;
             $options = [];
         }
 
+        $style_padding = $this->body_style_tag_for_navbar($options);
         $this->append_class($options, $this->navbar_class($options));
         $options['role'] = 'navigation';
 
-        return new ContentTag(
+        return (new ContentTag(
             'nav',
-            $options, function() use ($options, $block){
-                return new ContentTag('div', ['class'=>$this->navbar_container_class($options)], $block);
+            $options, function() use ($style_padding, $options, $block){
+                return [
+                    $style_padding,
+                    new ContentTag('div', ['class'=>$this->navbar_container_class($options)], function() use ($options, $block) {
+                        return call_user_func($block);
+                    })
+                ];
             }
-        );
+        ));
     }
 
-    private function navbar_style_tag($options = [])
-    {
-        $padding_value = isset($options['padding']) ? $options['padding'] : 70;
+    private function body_style_tag_for_navbar(&$options = []) {
+        $body_style_tag = '';
+        $options['padding'] = isset($options['padding']) ? $options['padding'] : 70;
 
-        if ($padding_value && $padding_type = $this->padding_type_for(isset($options['position']) ? $options['position'] : '')) {
-            return new ContentTag('style', "body {padding-$padding_type: " . $padding_value . 'px}');
+        if ($padding_type = $this->padding_type_for(isset($options['position']) ? $options['position'] : '')) {
+            $body_style_tag = new ContentTag('style', "body {padding-$padding_type: " . $options['padding'] . 'px}');
+            unset($options['padding']);
+        } else {
+            $body_style_tag = '';
         }
+
+        return $body_style_tag;
     }
 
-    private function padding_type_for($position)
-    {
+    private function padding_type_for($position) {
         $matches = [];
         preg_match('/fixed-(?<type>top|bottom)$/', $this->navbar_position_class_for($position), $matches);
 
         return isset($matches[1]) ? $matches[1] : '';
     }
 
-    private function navbar_class(&$options = [])
-    {
+    private function navbar_class(&$options = []) {
         $style = isset($options['inverted']) && $options['inverted'] ? 'inverse' : 'default';
         $position = isset($options['position']) ? $this->navbar_position_class_for($options['position']) : null;
 
@@ -102,8 +109,7 @@ class Navbar extends Base
         return $class;
     }
 
-    private function navbar_position_class_for($position)
-    {
+    private function navbar_position_class_for($position) {
         switch ($position) {
             case 'static': case 'static_top':
                 $class = 'static-top';
@@ -121,8 +127,7 @@ class Navbar extends Base
         return $class;
     }
 
-    private function navbar_container_class($options = [])
-    {
+    private function navbar_container_class($options = []) {
         return isset($options['fluid']) && $options['fluid'] ?  'container-fluid' : 'container';
     }
 }

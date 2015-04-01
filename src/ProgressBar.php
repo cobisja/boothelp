@@ -34,30 +34,28 @@ use BHP\Helpers\ContentTag;
 
 class ProgressBar extends Base
 {
-    public function __construct($options = [], $container_options = [])
-    {
+    public function __construct($options = [], $container_options = []) {
         $this->append_class($container_options, 'progress');
-        $this->set_html(new ContentTag('div', $container_options, function() use ($options){
+
+        $progress_bar = new ContentTag('div', $container_options, function() use ($options){
             if (is_array(reset($options))) {
                 $progress_strings = [];
 
                 foreach ($options as $progress_bar_options) {
-                    if (is_array($progress_bar_options)) {
-
-                    }
                     $progress_strings[] = $this->progress_bar_string($progress_bar_options);
                 }
 
-                return join("\n", $progress_strings);
+                return $progress_strings;
             }
             else {
               return $this->progress_bar_string($options);
             }
-        }));
+        });
+
+        $this->set_html_object($progress_bar->get_html_object());
     }
 
-    private function progress_bar_string($options=[])
-    {
+    private function progress_bar_string($options=[]) {
         $percentage = 0;
 
         if (isset($options['percentage'])) {
@@ -78,39 +76,30 @@ class ProgressBar extends Base
         return new ContentTag('div', $progress_label, $attributes);
     }
 
-    private function progress_bar_label($percentage, &$options = [])
-    {
+    private function progress_bar_label($percentage, &$options = []) {
         if (isset($options['context'])) {
             $text1 = " ({$options['context']})";
             unset($options['context']);
-        }
-        else {
+        } else {
             $text1 = null;
         }
 
-//        $text1 = isset($options['context']) ? " ({$options['context']})" : null;
         $text = "$percentage%" . $text1;
-
         $label = isset($options['label']) ? $options['label'] : false;
-
 
         if (is_bool($label)) {
             $label = $label ? $text : new ContentTag('span', $text, ['class'=>'sr-only']);
         }
+
         unset($options['label']);
 
         return $label;
     }
 
-    private function progress_bar_class(&$options = [])
-    {
+    private function progress_bar_class(&$options = []) {
         $striped = null;
         $animated = null;
         $valid_contexts = ['success', 'info', 'warning', 'danger'];
-
-//        if (!isset($options['context'])) {
-//            $options['context'] = null;
-//        }
 
         $context = $this->context_for(!isset($options['context']) ? null : $options['context'], ['valid'=>$valid_contexts]);
         $context = in_array($context, $valid_contexts) ? "progress-bar-$context" : null;

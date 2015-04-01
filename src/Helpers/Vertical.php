@@ -50,27 +50,27 @@ class Vertical extends Base
 
         if ($block) {
             $html = $this->vertical_string($content_or_options_with_block ? $content_or_options_with_block : [], $block);
-        }
-        else {
+        } else {
             $html =  $this->vertical_string($options ? $options : [], $content_or_options_with_block);
         }
 
-        $this->set_html($html);
+        $this->set_html_object($html);
     }
 
     private function vertical_string($options = [], $block = null)
     {
         Base::set_navbar_vertical(true);
+        
         $this->append_class($options, 'navbar-header');
+        $yield = is_callable($block) ? call_user_func($block) : $block;
 
-        $vertical = new ContentTag('div', $options, function() use($block){
-                  $capture = is_callable($block) ? call_user_func($block) : $block;
-                  return join("\n", [$this->toggle_button(), $capture]);
-            }
-        );
+        $vertical = new ContentTag('div', $options, function() use($yield){
+                  return [$this->toggle_button(), $yield];
+        });
+
         Base::set_navbar_vertical(false);
 
-        return $vertical;
+        return $vertical->get_html_object();
     }
 
     private function toggle_button($options = [])
@@ -80,19 +80,19 @@ class Vertical extends Base
         $options['data-toggle'] = 'collapse';
         $options['data-target'] = '#' . Base::get_navbar_id();
 
-        return new ContentTag('button', $options, function(){
-                  return join("\n", [$this->toggle_text(), $this->toggle_bar(), $this->toggle_bar(), $this->toggle_bar()]);
-            }
-        );
+        return (new ContentTag('button', $options, function(){
+                    return [$this->toggle_text(), $this->toggle_bar(), $this->toggle_bar(), $this->toggle_bar()];
+                })
+        )->get_html_object();
     }
 
     private function toggle_text()
     {
-        return new ContentTag('span', 'Toggle navigation', ['class'=>'sr-only']);
+        return (new ContentTag('span', 'Toggle navigation', ['class'=>'sr-only']))->get_html_object();
     }
 
     private function toggle_bar()
     {
-        return new ContentTag('span', null, ['class'=>'icon-bar']);
+        return (new ContentTag('span', null, ['class'=>'icon-bar']))->get_html_object();
     }
 }

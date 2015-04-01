@@ -36,12 +36,13 @@ $panel_rows = [
             'name'=> 'Basic row of panel',
             'description'=>'Use <code>panel_row</code> with the <code>column_class</code> option to wrap panels of the same size in a row.',
             'php_code'=> "echo BHP::panel_row(['column_class' => 'col-sm-4'], function(){
-    return
-        BHP::panel('Panel #1') .
-        BHP::panel('Panel #2') .
-        BHP::panel('Panel #3');
+    return [
+        BHP::panel('Panel #1'),
+        BHP::panel('Panel #2'),
+        BHP::panel('Panel #3')
+    ];
 });",
-            'result'=> BHP::panel_row(['column_class' => 'col-sm-4'], function(){return BHP::panel('Panel #1') . BHP::panel('Panel #2') . BHP::panel('Panel #3');}),
+            'result'=> BHP::panel_row(['column_class' => 'col-sm-4'], function(){return [BHP::panel('Panel #1'), BHP::panel('Panel #2'), BHP::panel('Panel #3')];}),
             'html_code'=>'<div class="row">
     <div class="col-sm-4">
         <div class="panel panel-default">
@@ -64,18 +65,20 @@ $panel_rows = [
             'name'=> 'Complex row of panels',
             'description'=>'You can specify custom options which will be added to the panel row’s <code>div</code> tag.',
             'php_code'=> "echo BHP::panel_row(['column_class'=>'col-sm-6', 'id'=>'panel_row', 'class'=>'en', 'data-js'=>1], function(){
-    return
-        BHP::panel('John Smith', ['title'=>'User', 'context'=>'info']) .
+    return [
+        BHP::panel('John Smith', ['title'=>'User', 'context'=>'info']),
         BHP::panel(['title'=>'Phone'], function(){
             return BHP::icon('earphone') . ' 323-555-5555';
-        });
+        })
+    ];
 });",
             'result'=> BHP::panel_row(['column_class'=>'col-sm-6', 'id'=>'panel_row', 'class'=>'en', 'data-js'=>1], function(){
-    return
-        BHP::panel('John Smith', ['title'=>'User', 'context'=>'info']) .
+    return [
+        BHP::panel('John Smith', ['title'=>'User', 'context'=>'info']),
         BHP::panel(['title'=>'Phone'], function(){
             return BHP::icon('earphone') . ' 323-555-5555';
-        });
+        })
+    ];
 }),
             'html_code'=>'<div data-js="1" class="en en row" id="panel_row">
     <div class="col-sm-6">

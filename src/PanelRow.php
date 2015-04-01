@@ -34,14 +34,14 @@ use BHP\Helpers\ContentTag;
 
 class PanelRow extends Base
 {
-    public function __construct($options, $block = null)
-    {
+    public function __construct($options, $block = null) {
         Base::set_panel_column_class(is_array($options) && isset($options['column_class']) ? $options['column_class'] : null);
-        $this->set_html(new ContentTag('div', call_user_func($block), $this->set_panel_row_options($options)));
+        $panel_row = new ContentTag('div', call_user_func($block), $this->set_panel_row_options($options));
+
+        $this->set_html_object($panel_row->get_html_object());
     }
 
-    private function set_panel_row_options($options)
-    {
+    private function set_panel_row_options($options) {
         if (isset($options['class'])) {
             $this->append_class($options, $options['class']);
         }
