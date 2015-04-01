@@ -26,53 +26,43 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace Tests\BHPHelpers;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BHP\Helpers\LinkTo;
 
 
-class Nav extends Base
-{
-    public function __construct($options = [], $block = null)
-    {
-        $num_args = $this->get_function_num_args(func_get_args());
+class LinkToTest extends \PHPUnit_Framework_TestCase {
+    public function testLinkWithJustTarget() {
+        $html = '<a href="#">Home</a>';
+        $link = new LinkTo('Home');
 
-        if (2 > $num_args && is_callable(func_get_arg($num_args-1))) {
-            $block = func_get_arg($num_args-1);
-            $options = [];
-        }
-
-        Base::set_nav_link(true);
-        $nav = new ContentTag('ul', $this->nav_options($options), $block);
-        Base::set_nav_link(false);
-
-        $this->set_html_object($nav->get_html_object());
+        $this->assertEquals($html, $link);
     }
 
-    private function nav_options($options = [])
+    public function testLinkWithHref()
     {
-        $this->append_class($options, 'nav');
+        $html = '<a href="/home">Home</a>';
+        $link = new LinkTo('Home', ['href'=>'/home']);
 
-        if (Base::get_navbar_id()) {
-            $this->append_class($options, 'navbar-nav');
-        } else {
-            $options['role'] = 'tablist';
+        $this->assertEquals($html, $link);
+    }
 
-            if (isset($options['as'])) {
-                $as = $options['as'];
-                unset($options['as']);
-            } else {
-                $as = 'tabs';
-            }
+    public function testLinkWithExtraOptions()
+    {
+        $html = '<a id="news" href="/articles">Articles</a>';
+        $link = new LinkTo('Articles', ['id'=>'news', 'href'=>"/articles"]);
 
-            $this->append_class($options, "nav-$as");
+        $this->assertEquals($html, $link);
+    }
 
-            if (isset($options['layout'])) {
-                $this->append_class($options, "nav-{$options['layout']}");
-            }
-      }
+    public function testLinkWithExtraOptionsAndClosure()
+    {
+        $html = '<a href="/articles" id="news" class="article"><strong>Articles</strong></a>';
+        $options = ['href'=>'/articles', 'id'=>'news', 'class'=>'article'];
+        $link = new LinkTo($options, function(){
+            return '<strong>Articles</strong>';
+        });
 
-      return $options;
+        $this->assertEquals($html, $link);
     }
 }

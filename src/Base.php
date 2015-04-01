@@ -28,9 +28,12 @@
 
 namespace BHP;
 
+use BHP\Helpers\Html;
+
+
 class Base
 {
-    const TEMPLATES_PATH = 'src/Helpers/templates/';
+    const SPACE = ' ';
 
     private static $dropdown_link = false;
     private static $alert_link = false;
@@ -42,89 +45,84 @@ class Base
     private $html;
 
 
-    public static function get_dropdown_link()
-    {
+    public static function get_dropdown_link() {
         return self::$dropdown_link;
     }
 
-    public static function get_alert_link()
-    {
+    public static function get_alert_link() {
         return self::$alert_link;
     }
 
-    public static function get_navbar_vertical()
-    {
+    public static function get_navbar_vertical() {
         return self::$navbar_vertical;
     }
 
-    public static function get_panel_column_class()
-    {
+    public static function get_panel_column_class() {
         return self::$panel_column_class;
     }
 
-    public static function get_navbar_id()
-    {
+    public static function get_navbar_id() {
         return self::$navbar_id;
     }
 
-    public static function get_nav_link()
-    {
+    public static function get_nav_link() {
         return self::$nav_link;
     }
 
-    public static function set_dropdown_link($dropdown_link)
-    {
+    public static function set_dropdown_link($dropdown_link) {
         self::$dropdown_link = $dropdown_link;
     }
 
-    public static function set_alert_link($alert_link)
-    {
+    public static function set_alert_link($alert_link) {
         self::$alert_link = $alert_link;
     }
 
-    public static function set_navbar_vertical($navbar_vertical)
-    {
+    public static function set_navbar_vertical($navbar_vertical) {
         self::$navbar_vertical = $navbar_vertical;
     }
 
-    public static function set_panel_column_class($panel_column_class)
-    {
+    public static function set_panel_column_class($panel_column_class) {
         self::$panel_column_class = $panel_column_class;
     }
 
-    public static function set_navbar_id($navbar_id)
-    {
+    public static function set_navbar_id($navbar_id) {
         self::$navbar_id = $navbar_id;
     }
 
-    public static function set_nav_link($nav_link)
-    {
+    public static function set_nav_link($nav_link) {
         self::$nav_link = $nav_link;
     }
 
-    public function set_html($html)
-    {
-        $this->html = $html;
+    public function set_html_object($type, $attributes=[], $content='') {
+        if (!is_object($type)) {
+            $this->html = new Html($type, $attributes, $content);
+        } else {
+            $this->html = $type;
+        }
     }
 
-    public function __toString()
-    {
+    public function get_html_object() {
+        return $this->html;
+    }
+
+    public function get_attributes() {
+        return $this->html->get_attributes();
+    }
+
+    public function __toString() {
         return (string) $this->html;
     }
 
-    public function get_templates_path()
-    {
+    public function get_templates_path() {
         return self::TEMPLATES_PATH;
     }
 
-    public static function append_class(&$hash, $new_class, $attribute = 'class')
-    {
+    public static function append_class(&$hash, $new_class, $attribute = 'class') {
         $existing_class = isset($hash[$attribute]) ? $hash[$attribute] : null;
         $hash[$attribute] = join( ' ', array_filter( [$existing_class, $new_class], 'strlen' ) );
     }
 
-    public static function context_for($context, $options=[])
-    {
+    public static function context_for($context, $options=[]) {
         switch ($context) {
             case 'notice':
                 $context = 'success';
@@ -136,26 +134,20 @@ class Base
 
         if (isset($options['valid']) && in_array($context, $options['valid'])) {
             return $context;
-        }
-
-        elseif (isset($options['default'])) {
+        } elseif (isset($options['default'])) {
             return $options['default'];
-        }
-        else {
+        } else {
             return 'default';
         }
     }
 
-    public static function set_options($base_options, &$options)
-    {
-        foreach ($base_options as $key => $default)
-        {
+    public static function set_options($base_options, &$options) {
+        foreach ($base_options as $key => $default) {
             !isset($options[$key]) && $options[$key] = $default;
         }
     }
 
-    public function get_function_num_args($args=[])
-    {
+    public function get_function_num_args($args=[]) {
         return count(array_filter($args, function($item) { return !is_null($item); }));
     }
 }

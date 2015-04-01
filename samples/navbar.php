@@ -38,30 +38,32 @@ $navbar = [
 Wrap the content that should always be visible (no matter the screen size) with the <code>vertical</code> helper.
 Wrap the content that should be collapsed for small screen sizes with the <code>horizontal</code> helper. Try resizing your browser!!!',
             'php_code'=> "echo BHP::navbar(function(){
-    return
+    return [
         BHP::vertical(function(){
             return BHP::link_to('Home');
-        }) .
+        }),
         BHP::horizontal(function(){
             return BHP::nav(['class'=>'navbar-right'], function(){
                 return
                     BHP::link_to('Profile') .
                     BHP::link_to('Settings');
             });
-        });
+        })
+    ];
 });",
             'result'=> BHP::navbar(function(){
-    return
+    return [
         BHP::vertical(function(){
             return BHP::link_to('Home');
-        }) .
+        }),
         BHP::horizontal(function(){
             return BHP::nav(['class'=>'navbar-right'], function(){
                 return
                     BHP::link_to('Profile') .
                     BHP::link_to('Settings');
             });
-        });
+        })
+    ];
 }),
             'html_code'=>'<nav class="navbar navbar-default" role="navigation">
     <div class="container">
@@ -209,30 +211,32 @@ Set the <code>padding</code> option to specify the padding to leave between the 
             'description'=>'You can specify a custom <code>id</code> which will be used for the navbar’s collapsable <code>div</code>.
 You can also specify custom options in the <code>vertical</code> and <code>horizontal</code> helpers which will be added to their <code>div</code> tags. ',
             'php_code'=> "echo BHP::navbar(['id'=>'navbar'], function(){
-    return
+    return [
         BHP::vertical(['id'=>'vertical', 'class'=>'en', 'data-js'=>1], function(){
             return BHP::link_to('Home');
-        }).
+        }),
         BHP::horizontal(['class'=>'en', 'data-js'=>2], function(){
             return BHP::nav(['class'=>'navbar-left'], function(){
                 return
                     BHP::link_to('Profile') .
                     BHP::link_to('Settings');
             });
-        });
+        })
+    ];
 });",
             'result'=> BHP::navbar(['id'=>'navbar'], function(){
-    return
+    return [
         BHP::vertical(['id'=>'vertical', 'class'=>'en', 'data-js'=>1], function(){
             return BHP::link_to('Home');
-        }).
+        }),
         BHP::horizontal(['class'=>'en', 'data-js'=>2], function(){
             return BHP::nav(['class'=>'navbar-left'], function(){
                 return
                     BHP::link_to('Profile') .
                     BHP::link_to('Settings');
             });
-        });
+        })
+    ];
 }),
             'html_code'=>'<nav class="navbar navbar-default" role="navigation">
     <div class="container">

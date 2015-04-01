@@ -67,10 +67,14 @@ Available contexts are <code>"success"</code>, <code>"info"</code> (default), <c
             'name'=>'Links in alerts',
             'description'=>'When a link is within any alert box, class <code>.alert-link</code> is automatically added to quickly provide matching colored links.',
             'php_code'=>"echo BHP::alert_box(['context'=>'warning', 'dismissible'=>true, 'id'=>'my-alert', 'class'=>'en', 'data-js'=>1], function(){
-    return '<strong>Well done!</strong> You successfully read ' . BHP::link_to('this important alert message', ['href'=> '#']) . '.';
+        return [
+            '<strong>Well done!</strong> You successfully read ',
+            BHP::link_to('this important alert message', ['href'=> '#']),
+            '.'
+        ];
 });",
             'result'=>BHP::alert_box(['context'=>'warning', 'dismissible'=>true, 'id'=>'my-alert', 'class'=>'en', 'data-js'=>1], function(){
-        return '<strong>Well done!</strong> You successfully read ' . BHP::link_to('this important alert message', ['href'=> '#']) . '.';
+        return ['<strong>Well done!</strong> You successfully read ', BHP::link_to('this important alert message', ['href'=> '#']), '.'];
     }),
             'html_code'=>'<div data-js="1" class="en alert alert-warning alert-dismissible" id="my-alert" role="alert">
     <button aria-label="Close" data-dismiss="alert" class="close" type="button">

@@ -50,24 +50,18 @@ class Horizontal extends Base
 
         if ($block) {
             $html = $this->horizontal_string($content_or_options_with_block ? $content_or_options_with_block : [], $block);
-        }
-        else {
+        } else {
             $html = $this->horizontal_string($options ? $options : [], $content_or_options_with_block);
         }
 
-        $this->set_html($html);
+        $this->set_html_object($html->get_html_object());
     }
 
     private function horizontal_string($options = [], $block = null)
     {
         $this->append_class($options, 'collapse navbar-collapse');
-        $options['id'] = $this->navbar_id();
+        $options['id'] = Base::get_navbar_id();
 
         return new ContentTag('div', $options, $block);
-    }
-
-    private function navbar_id()
-    {
-        return Base::get_navbar_id();
     }
 }

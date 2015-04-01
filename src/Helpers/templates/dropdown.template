@@ -1,9 +1,0 @@
-<div class="%div_class%">
-  <button class="dropdown-toggle %button_class%" type="button" id="%id%" data-toggle="dropdown">
-    %caption%
-    <span class="caret"></span>
-  </button>
-  <ul class="%list_class%" role="menu" aria-labelledby="%id%">
-    %yield%
-  </ul>
-</div>

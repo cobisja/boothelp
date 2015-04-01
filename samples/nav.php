@@ -39,16 +39,18 @@ $navs = [
 Note that links are automatically wrapped in <code>li</code> tags if you use the helper <code>link_to</code> or class <code>LinkTo</code>.
 Additionally, if any link matches the current URL, its <code>li</code> tag automatically gets the <code>active</code> class.',
             'php_code'=> "echo BHP::nav(function(){
-    return
-        new LinkTo('Home', ['href'=>'/']) .
-        new LinkTo('Users') .
-        new LinkTo('Profile');
+    return [
+        new LinkTo('Home', ['href'=>'/']),
+        new LinkTo('Users'),
+        new LinkTo('Profile')
+    ];
 });",
             'result'=> BHP::nav(function(){
-    return
-        new LinkTo('Home', ['href'=>'http://localhost/local_php/bhp/index.php']) .
-        new LinkTo('Users', ['href'=>'/users']) .
-        new LinkTo('Profile', ['href'=>'/profile']);
+    return [
+        new LinkTo('Home', ['href'=>'http://localhost/local_php/bhp/index.php']),
+        new LinkTo('Users', ['href'=>'/users']),
+        new LinkTo('Profile', ['href'=>'/profile'])
+    ];
 }),
             'html_code'=>'<ul role="tablist" class="nav nav-tabs">
     <li class="active"><a href="/">Home</a></li>
@@ -60,16 +62,18 @@ Additionally, if any link matches the current URL, its <code>li</code> tag autom
             'name'=> 'Navs with disable links',
             'description'=>'Use the <code>["disabled"=> true]</code> option to make tab disabled.',
             'php_code'=> "echo BHP::nav(function(){
-    return
-        new LinkTo('Home', ['href'=>'/']) .
-        new LinkTo('Users') .
-        new LinkTo('Profile', ['disabled'=>true]);
+    return [
+        new LinkTo('Home', ['href'=>'/']),
+        new LinkTo('Users'),
+        new LinkTo('Profile', ['disabled'=>true])
+    ];
 });",
             'result'=> BHP::nav(function(){
-    return
-        new LinkTo('Home', ['href'=>'http://localhost/local_php/bhp/index.php']) .
-        new LinkTo('Users') .
-        new LinkTo('Profile', ['disabled'=>true]);
+    return [
+        new LinkTo('Home', ['href'=>'http://localhost/local_php/bhp/index.php']),
+        new LinkTo('Users'),
+        new LinkTo('Profile', ['disabled'=>true])
+    ];
 }),
             'html_code'=>'<ul role="tablist" class="nav nav-tabs">
     <li class="active"><a href="/">Home</a></li>
@@ -81,16 +85,18 @@ Additionally, if any link matches the current URL, its <code>li</code> tag autom
             'name'=> 'Navs with justified tabs',
             'description'=>'Use the <code>["layout"=> "justified"]</code> option to make tabs occupy the entire width of their parent.',
             'php_code'=> "echo BHP::nav(['layout'=>'justified'], function(){
-    return
-        new LinkTo('Home', ['href'=>'/']) .
-        new LinkTo('Users') .
-        new LinkTo('Profile');
+    return [
+        new LinkTo('Home', ['href'=>'/']),
+        new LinkTo('Users'),
+        new LinkTo('Profile')
+    ];
 });",
             'result'=> BHP::nav(['layout'=>'justified'], function(){
-    return
-        new LinkTo('Home', ['href'=>'/local_php/bhp/index.php']) .
-        new LinkTo('Users') .
-        new LinkTo('Profile');
+    return [
+        new LinkTo('Home', ['href'=>'/local_php/bhp/index.php']),
+        new LinkTo('Users'),
+        new LinkTo('Profile')
+    ];
 }),
             'html_code'=>'<ul role="tablist" class="nav nav-tabs nav-justified" layout="justified">
     <li class="active"><a href="/">Home</a></li>
@@ -102,16 +108,18 @@ Additionally, if any link matches the current URL, its <code>li</code> tag autom
             'name'=> 'Navs with pills',
             'description'=>'Use the <code>["as"=> "pills"]</code> option to make tabs look like pills.',
             'php_code'=> "echo BHP::nav(['as'=>'pills'], function(){
-    return
-        new LinkTo('Home', ['href'=>'/']) .
-        new LinkTo('Users') .
-        new LinkTo('Profile');
+    return [
+        new LinkTo('Home', ['href'=>'/']),
+        new LinkTo('Users'),
+        new LinkTo('Profile')
+    ];
 });",
             'result'=> BHP::nav(['as'=>'pills'], function(){
-    return
-        new LinkTo('Home', ['href'=>'/local_php/bhp/index.php']) .
-        new LinkTo('Users') .
-        new LinkTo('Profile');
+    return [
+        new LinkTo('Home', ['href'=>'/local_php/bhp/index.php']),
+        new LinkTo('Users'),
+        new LinkTo('Profile')
+    ];
 }),
             'html_code'=>'<ul role="tablist" class="nav nav-pills">
     <li class="active"><a href="/">Home</a></li>
@@ -123,16 +131,18 @@ Additionally, if any link matches the current URL, its <code>li</code> tag autom
             'name'=> 'Navs with stacked pills',
             'description'=>'Use the <code>["layout"=> "stacked"]</code> option to make pills vertically stacked.',
             'php_code'=> "echo BHP::nav(['as'=>'pills', 'layout'=>'stacked'], function(){
-    return
-        new LinkTo('Home', ['href'=>'/']) .
-        new LinkTo('Users') .
-        new LinkTo('Profile');
+    return [
+        new LinkTo('Home', ['href'=>'/']),
+        new LinkTo('Users'),
+        new LinkTo('Profile')
+    ];
 });",
             'result'=> BHP::nav(['as'=>'pills', 'layout'=>'stacked'], function(){
-    return
-        new LinkTo('Home', ['href'=>'/local_php/bhp/index.php']) .
-        new LinkTo('Users') .
-        new LinkTo('Profile');
+    return [
+        new LinkTo('Home', ['href'=>'/local_php/bhp/index.php']),
+        new LinkTo('Users'),
+        new LinkTo('Profile')
+    ];
 }),
             'html_code'=>'<ul role="tablist" class="nav nav-pills nav-stacked" layout="stacked">
     <li class="active"><a href="/">Home</a></li>
@@ -145,16 +155,18 @@ Additionally, if any link matches the current URL, its <code>li</code> tag autom
             'description'=>'To include HTML tags or a long text in the nav, pass your content in a block.
 You can also specify custom options which will be added to the nav’s <code>ul</code> tag.',
             'php_code'=> "echo BHP::nav(['as'=>'pills', 'id'=>'nav', 'class'=>'en', 'data-js'=>1], function(){
-    return
-        new LinkTo('Home', ['href'=>'/']) .
-        new LinkTo('Users') .
-        new LinkTo('Profile');
+    return [
+        new LinkTo('Home', ['href'=>'/']),
+        new LinkTo('Users'),
+        new LinkTo('Profile')
+    ];
 });",
             'result'=> BHP::nav(['as'=>'pills', 'id'=>'nav', 'class'=>'en', 'data-js'=>1], function(){
-    return
-        new LinkTo('Home', ['href'=>'/local_php/bhp/index.php']) .
-        new LinkTo('Users') .
-        new LinkTo('Profile');
+    return [
+        new LinkTo('Home', ['href'=>'/local_php/bhp/index.php']),
+        new LinkTo('Users'),
+        new LinkTo('Profile')
+    ];
 }),
             'html_code'=>'<ul role="tablist" data-js="1" class="en nav nav-pills" id="nav">
     <li class="active"><a href="/local_php/bhp/index.php">Home</a></li>

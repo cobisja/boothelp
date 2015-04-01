@@ -34,29 +34,25 @@ use BHP\Helpers\ContentTag;
 
 class Button extends Base
 {
-    public function __construct($content_or_options_with_block = null, $options = null, $block = null)
-    {
+    public function __construct($content_or_options_with_block = null, $options = null, $block = null) {
         $num_args = $this->get_function_num_args(func_get_args());
 
         if (3 > $num_args && is_callable(func_get_arg($num_args-1))) {
             $block = func_get_arg($num_args-1);
-            $html = $this->button_string(call_user_func($block), is_null($content_or_options_with_block) ? [] : $content_or_options_with_block);
-        }
-        else {
-            $html = $this->button_string($content_or_options_with_block, is_null($options) ? [] : $options);
+            $html = $this->build_button(call_user_func($block), is_null($content_or_options_with_block) ? [] : $content_or_options_with_block);
+        } else {
+            $html = $this->build_button($content_or_options_with_block, is_null($options) ? [] : $options);
         }
 
-        $this->set_html($html);
+        $this->set_html_object($html->get_html_object());
     }
 
-    private function button_string($content = null, $options = [])
-    {
+    private function build_button($content = null, $options = []) {
         $this->append_class($options, $this->btn_class($options));
         return new ContentTag('button', $content, $options);
     }
 
-    private function btn_class(&$options = [])
-    {
+    private function btn_class(&$options = []) {
         $base_options = [
             'context' => null,
             'size' => '',
