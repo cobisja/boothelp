@@ -31,8 +31,17 @@ namespace BootHelp;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
-
+/**
+ * Class to generate a Modal object.
+ */
 class Modal extends Base {
+    /**
+     * Initializes the Modal instance.
+     *
+     * @param mixed $content_or_options_with_block the content to display in the Modal.
+     * @param mixed $options [optional] the display options for the Modal.
+     * @param mixed $block [optional] Block to generate a customized inside Modal content.
+     */
     public function __construct($content_or_options_with_block = null, $options = null, $block = null) {
         $html = '';
 
@@ -51,15 +60,23 @@ class Modal extends Base {
                 $content = null;
                 $options = [];
             }
-            $html = $this->get_modal($content, $options, $block);
+            $html = $this->set_modal_params($content, $options, $block);
         } else {
-            $html = $this->get_modal($content_or_options_with_block, is_null($options) ? [] : $options);
+            $html = $this->set_modal_params($content_or_options_with_block, is_null($options) ? [] : $options);
         }
 
         $this->set_html_object($html);
     }
 
-    private function get_modal($body, $options = null, $block = null) {
+    /**
+     * Set all the Modal's parameters prior to build it.
+     *
+     * @param mixed $body Modal's body.
+     * @param array $options Modal's options.
+     * @param closure $block Closure to generates complex Modal's body.
+     * @return Html a Html instance that holds the html representation of a Modal object.
+     */
+    private function set_modal_params($body, $options = null, $block = null) {
         $base_options['id'] = 'modal-' . (string)( mt_rand(1, pow(10, 10)) );
         $base_options['title'] = 'Modal';
         $base_options['dialog_class'] = $this->dialog_class(isset($options['size']) ? $options['size'] : null);
@@ -82,6 +99,13 @@ class Modal extends Base {
         return $modal->get_html_object();
     }
 
+    /**
+     * Builds the Modal.
+     *
+     * @param array $options Modal's options.
+     * @param mixed $yield Complementary content.
+     * @return ContentTag a ContentTag instance that represents a Modal.
+     */
     private function build_modal($options, $yield) {
         return new ContentTag('div', ['id'=>'modal-container-' . $options['id']], function() use ($options, $yield) {
             return [
@@ -111,6 +135,12 @@ class Modal extends Base {
         });
     }
 
+    /**
+     * Returns the Modal's button class.
+     *
+     * @param array $options options information to generate the button's class.
+     * @return string button's class.
+     */
     private function button_class($options = []) {
         $size = null;
 
@@ -128,6 +158,12 @@ class Modal extends Base {
         return  join(Base::SPACE, array_filter(['btn', "btn-$context", $size], 'strlen'));
     }
 
+    /**
+     * Returns the class associated to Modal's dialog.
+     *
+     * @param array $size options information to generate the Modal's dialog class.
+     * @return string dialog's class.
+     */
     private function dialog_class($size = null) {
         $size_class = null;
 
@@ -139,6 +175,12 @@ class Modal extends Base {
         return join(Base::SPACE, array_filter(['modal-dialog', $size_class], 'strlen'));
     }
 
+    /**
+     * Returns the Modal's body
+     *
+     * @param array $body options for Modal's body.
+     * @return mixed Modal's body.
+     */
     private function modal_body($body = null) {
         return !is_null($body) ? (new ContentTag('div', $body, ['class' => 'modal-body']))->get_html_object() : '';
     }

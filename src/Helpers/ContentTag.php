@@ -59,6 +59,13 @@ class ContentTag extends Base {
         }
     }
 
+    /**
+     * Builds the html object that represents ContentTag.
+     *
+     * @param string $name name of the tag that is going to be built.
+     * @param mixed $content content.
+     * @param mixed $options options to build the html object.
+     */
     private function build_content_tag($name, $content, $options) {
         ('a' === $name) && $this->get_alert_link() && $this->append_class($options, 'alert-link');
         $content = is_object($content) ? $content->get_html_object() : $content;

@@ -31,8 +31,16 @@ namespace BootHelp;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
-
+/**
+ * Class to generate an Icon object.
+ */
 class Icon extends Base {
+    /**
+     * Initializes the Icon instance.
+     *
+     * @param String $name the name of the icon object to build
+     * @param Array $options the options for the icon object.
+     */
     public function __construct($name = null, $options = []) {
         !isset($options['library']) ? $options['library'] = 'glyphicons' : null;
 
@@ -50,6 +58,12 @@ class Icon extends Base {
         $this->set_html_object($icon->get_html_object());
     }
 
+    /**
+     * Returns the library prefix to be used.
+     *
+     * @param sring $name library name
+     * @return string library prefix.
+     */
     private function library_prefix_for($name) {
         switch ($name){
             case 'font-awesome': case 'font_awesome': case 'fa':

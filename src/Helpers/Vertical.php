@@ -31,8 +31,17 @@ namespace BootHelp\Helpers;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
-
+/**
+ * Class helper to be used with navbar objects.
+ */
 class Vertical extends Base {
+    /**
+     * Initializes the Vertical instance
+     *
+     * @param mixed $content_or_options_with_block possible content of Vertical object.
+     * @param mixed $options possible options of Vertical object.
+     * @param closure $block Closure to build the Vertical content.
+     */
     public function __construct($content_or_options_with_block = null, $options = null, callable $block = null)
     {
         $num_args = $this->get_function_num_args(func_get_args());
@@ -48,12 +57,19 @@ class Vertical extends Base {
                 break;
         }
 
-        $html = $this->vertical_string($content_or_options_with_block ? $content_or_options_with_block : [], $block);
+        $html = $this->build_vertical($content_or_options_with_block ? $content_or_options_with_block : [], $block);
 
         $this->set_html_object($html);
     }
 
-    private function vertical_string($options = [], $block = null) {
+    /**
+     * Build the Vertical object.
+     *
+     * @param array $options options to build the Vertical object.
+     * @param closure $block Closure to build the Vertical object.
+     * @return ContentTag instance of ContenTag that represents the Vertical object.
+     */
+    private function build_vertical($options = [], $block = null) {
         Base::set_navbar_vertical(true);
 
         $this->append_class($options, 'navbar-header');
@@ -68,6 +84,12 @@ class Vertical extends Base {
         return $vertical->get_html_object();
     }
 
+    /**
+     * Builds the toggle button that shows up when resizing browser.
+     *
+     * @param arrray $options options to build the toggle button.
+     * @return mixed Html that represents the toggle button.
+     */
     private function toggle_button($options = []) {
         $options['type'] = 'button';
         $options['class'] = 'navbar-toggle';
@@ -80,10 +102,20 @@ class Vertical extends Base {
         )->get_html_object();
     }
 
+    /**
+     * Builds the toggle text.
+     *
+     * @return ContentTag instance of ContenTag that represents the toggle text object.
+     */
     private function toggle_text() {
         return (new ContentTag('span', 'Toggle navigation', ['class'=>'sr-only']))->get_html_object();
     }
 
+    /**
+     * Builds the toggle bar.
+     *
+     * @return ContentTag instance of ContenTag that represents the toggle bar object.
+     */
     private function toggle_bar() {
         return (new ContentTag('span', null, ['class'=>'icon-bar']))->get_html_object();
     }

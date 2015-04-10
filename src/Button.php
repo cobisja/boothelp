@@ -32,7 +32,17 @@ use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
 
+/**
+ * Class to generate a Button object.
+ */
 class Button extends Base {
+    /**
+     * Initializes the Button instance.
+     *
+     * @param mixed $content_or_options_with_block content of Button.
+     * @param mixed $options options to build a Button.
+     * @param closure $block closure to build the Button's content.
+     */
     public function __construct($content_or_options_with_block = null, $options = null, $block = null) {
         $num_args = $this->get_function_num_args(func_get_args());
 
@@ -46,11 +56,24 @@ class Button extends Base {
         $this->set_html_object($html->get_html_object());
     }
 
+    /**
+     * Builds the Button object.
+     *
+     * @param mixed $content Button's content.
+     * @param mixed $options Button's options.
+     * @return ContentTag instance of ContentTag object representing an Html Button.
+     */
     private function build_button($content = null, $options = []) {
         $this->append_class($options, $this->btn_class($options));
         return new ContentTag('button', $content, $options);
     }
 
+    /**
+     * Sets the different Button classes.
+     *
+     * @param array $options Button's options.
+     * @return string html class for the button.
+     */
     private function btn_class(&$options = []) {
         $base_options = [
             'context' => null,
