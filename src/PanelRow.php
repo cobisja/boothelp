@@ -31,8 +31,16 @@ namespace BootHelp;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
-
+/**
+ * Class to generate a PanelRow object.
+ */
 class PanelRow extends Base {
+    /**
+     * Initializes the PanelRow instance.
+     *
+     * @param mixed $options [optional] the display options for the panel.
+     * @param Callable $block [optional] Block to generate inside panel row content.
+     */
     public function __construct($options, $block = null) {
         Base::set_panel_column_class(is_array($options) && isset($options['column_class']) ? $options['column_class'] : null);
         $panel_row = new ContentTag('div', call_user_func($block), $this->set_panel_row_options($options));
@@ -40,6 +48,11 @@ class PanelRow extends Base {
         $this->set_html_object($panel_row->get_html_object());
     }
 
+    /**
+     * Add the class 'row' to indicates that this object has to be built like a PanelRow.
+     * @param array $options Panel information.
+     * @return array options processed.
+     */
     private function set_panel_row_options($options) {
         $this->append_class($options, 'row');
 

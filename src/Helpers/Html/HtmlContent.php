@@ -30,11 +30,21 @@ namespace BootHelp\Helpers\Html;
 
 use BootHelp\Helpers\Html\Html;
 
-
+/**
+ * Class HtmlContent: Handles all related with Html Content.
+ */
 class HtmlContent {
+    /**
+     * @var mixed Html content.
+     */
     private $content;
 
 
+    /**
+     * Initializes an HtmlContent instance.
+     *
+     * @param mixed $content specific content associated with an html object.
+     */
     public function __construct($content) {
         if (is_array($content)) {
             $new_content = [];
@@ -50,22 +60,47 @@ class HtmlContent {
         }
     }
 
+    /**
+     * Returns the html content.
+     *
+     * @return mixed html content.
+     */
     public function get_content() {
         return $this->content;
     }
 
+    /**
+     * Tells if the content of an html object is empty.
+     *
+     * @return boolean true on success, false otherwise.
+     */
     public function is_empty() {
         return is_array($this->content) && 1 === count($this->content) && is_null($this->content[0]);
     }
 
+    /**
+     * Tells how long is the content (how many children).
+     *
+     * @return int content's length.
+     */
     public function length() {
         return count($this->content);
     }
 
+    /**
+     * Sets the html content.
+     *
+     * @param mixed $content html content.
+     */
     public function set_content($content) {
         $this->content = !is_array($content) ? [$content] : $content;
     }
 
+    /**
+     * Magic method to get the string representation of content.
+     *
+     * @return string string representation of content.
+     */
     public function __toString() {
         $html_string = '';
 

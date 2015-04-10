@@ -31,11 +31,22 @@ namespace BootHelp\Helpers;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
+/**
+ * Class helper to build a Nav divider.
+ */
 class Divider extends Base {
+    /**
+     * Initialize a Divider instance.
+     */
     public function __construct() {
         $this->set_html_object($this->build_divider());
     }
 
+    /**
+     * Returns the Divider object built.
+     *
+     * @return type
+     */
     private function build_divider() {
         if (Base::get_dropdown_link()) {
             $divider = new ContentTag('li', '', ['class'=>'divider']);

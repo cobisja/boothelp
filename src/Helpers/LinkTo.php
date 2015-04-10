@@ -60,6 +60,15 @@ class LinkTo extends Base {
         $this->set_html_object($html->get_html_object());
     }
 
+    /**
+     * Build an standard link.
+     *
+     * @param int $num_args number of arguments passed when the class was instantiated.
+     * @param mixed $name link's content.
+     * @param mixed $options link's options.
+     * @param closure $block closure to build link's content.
+     * @return ContentTag instance of ContentTag that represents the link.
+     */
     private function build_standard_link($num_args, $name, $options, $block) {
         $options = is_array($name) ? $name : $options;
         $this->select_link_class($options);
@@ -85,6 +94,11 @@ class LinkTo extends Base {
       return $link;
     }
 
+    /**
+     * Determines the correct class associated with the link.
+     *
+     * @param array $options options associated with the link.
+     */
     private function select_link_class(&$options = []) {
         if($this->get_alert_link()){
             $this->append_class($options, 'alert-link');
@@ -97,6 +111,15 @@ class LinkTo extends Base {
         Base::set_alert_link(false);
     }
 
+    /**
+     * Build a link surrounded with a 'li' tag. This is used with dropdowns.
+     *
+     * @param int $num_args number of arguments passed when the class was instantiated.
+     * @param mixed $name link's content.
+     * @param mixed $options link's options.
+     * @param closure $block closure to build link's content.
+     * @return ContentTag instance of ContentTag that represents the link.
+     */
     private function build_dropdown_link($num_args, $name, $options, $block) {
         return new ContentTag(
             'li',
@@ -106,6 +129,15 @@ class LinkTo extends Base {
         );
     }
 
+    /**
+     * Build a link surrounded with a 'li' tag. This is used with nav and navbars.
+     *
+     * @param int $num_args number of arguments passed when the class was instantiated.
+     * @param mixed $name link's content.
+     * @param mixed $options link's options.
+     * @param closure $block closure to build link's content.
+     * @return ContentTag instance of ContentTag that represents the link.
+     */
     private function build_nav_link($num_args, $name, $options, $block) {
         $options['href'] = $this->link_href($options);
         $nav_item_class = $this->current_page($options['href']) ? 'active' : null;
@@ -126,10 +158,22 @@ class LinkTo extends Base {
         );
     }
 
+    /**
+     * Sets the link's href attribute.
+     *
+     * @param array $options link's options.
+     * @return string href value.
+     */
     private function link_href($options = []) {
         return isset($options['href']) ? $options['href'] : '#';
     }
 
+    /**
+     * Tells if current page (requested page) match with the link's href attribute.
+     *
+     * @param string $href href value.
+     * @return boolean true on success, false otherwise.
+     */
     private function current_page($href) {
         if (isset($_SERVER['HTTP_HOST'])) {
             $href = str_replace('http://' . $_SERVER['HTTP_HOST'], '', $href);

@@ -31,25 +31,41 @@ namespace BootHelp;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
-
+/**
+ * Class to generate a Panel object.
+ */
 class Panel extends Base {
+    /**
+     * Initializes the Panel instance.
+     *
+     * @param mixed $content_or_options_with_block the content to display in the panel.
+     * @param mixed $options [optional] the display options for the panel.
+     * @param Callable $block [optional] Block to generate a customized inside panel content.
+     */
     public function __construct($content_or_options_with_block = null, $options = null, $block = null) {
         $html = '';
         $num_args = $this->get_function_num_args(func_get_args());
 
         if ($num_args < 3 && is_callable(func_get_arg($num_args-1))) {
             $block = func_get_arg($num_args-1);
-            $html = $this->panel_string(call_user_func($block), is_null($content_or_options_with_block) ? [] : $content_or_options_with_block);
+            $html = $this->build_panel(call_user_func($block), is_null($content_or_options_with_block) ? [] : $content_or_options_with_block);
         } elseif (is_array($content_or_options_with_block) && is_null($options)) {
-            $html = $this->panel_string(null, $content_or_options_with_block);
+            $html = $this->build_panel(null, $content_or_options_with_block);
         } else {
-          $html = $this->panel_string($content_or_options_with_block, is_null($options) ? [] : $options);
+          $html = $this->build_panel($content_or_options_with_block, is_null($options) ? [] : $options);
         }
 
         $this->set_html_object($html->get_html_object());
     }
 
-    private function panel_string($content = null, $options = []) {
+    /**
+     * Builds the Panel object
+     *
+     * @param mixed $content Panel's content.
+     * @param array $options Panel's options.
+     * @return ContentTag a ContentTag instance that represents a Panel object.
+     */
+    private function build_panel($content = null, $options = []) {
         !is_array($options) ? $options = [] : null;
 
         $body = $this->build_panel_body($content);
@@ -83,6 +99,12 @@ class Panel extends Base {
         return $panel_string;
     }
 
+    /**
+     * Return the context panel class.
+     *
+     * @param string $context context.
+     * @return string context panel class.
+     */
     private function panel_class($context = null) {
         $valid_contexts = ['primary', 'success', 'info', 'warning', 'danger'];
         $context = $this->context_for($context, ['valid' => $valid_contexts]);
@@ -90,10 +112,22 @@ class Panel extends Base {
         return "panel panel-$context";
     }
 
+    /**
+     * Builds the Panel's body.
+     *
+     * @param mixed $content Panel's content.
+     * @return ContentTag ContenTag instance that represents the Panel's body.
+     */
     private function build_panel_body($content) {
         return new ContentTag('div', $content, ['class' => 'panel-body']);
     }
 
+    /**
+     * Builds the Panel's header.
+     *
+     * @param array $options options information about Panel's header.
+     * @return string Panel's header.
+     */
     private function build_panel_heading(&$options = []) {
         if ( isset($options['title']) ) {
             $title = new ContentTag('h3', $options['title'], ['class' => 'panel-title']);
@@ -109,6 +143,13 @@ class Panel extends Base {
 
         return $heading;
     }
+
+    /**
+     * Builds the Panel's footer.
+     *
+     * @param array $options options information about Panel's footer.
+     * @return string Panel's footer.
+     */
 
     private function build_panel_footer(&$options = []) {
         if (isset($options['footer'])) {

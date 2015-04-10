@@ -31,8 +31,16 @@ namespace BootHelp;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
-
+/**
+ * Class to generate a Nav object.
+ */
 class Nav extends Base {
+    /**
+     * Initializes a Nav instance.
+     *
+     * @param array $options options the display options for the nav.
+     * @param mixed $block Block to generate a customized inside nav content.
+     */
     public function __construct($options = [], $block = null) {
         $num_args = $this->get_function_num_args(func_get_args());
 
@@ -48,6 +56,12 @@ class Nav extends Base {
         $this->set_html_object($nav->get_html_object());
     }
 
+    /**
+     * Process the Nav's options.
+     *
+     * @param array $options Nav's options.
+     * @return array Nav's options processed.
+     */
     private function nav_options($options = []) {
         $this->append_class($options, 'nav');
 

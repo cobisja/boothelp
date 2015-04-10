@@ -31,8 +31,17 @@ namespace BootHelp;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
-
+/**
+ * Class to generate a Dropdown object.
+ */
 class Dropdown extends Base {
+    /**
+     * Initializes the Dropdown instance.
+     *
+     * @param string $caption Dropdown caption.
+     * @param array $options options to build the Dropdown.
+     * @param closure $block closure to build the Dropdown content.
+     */
     public function __construct($caption, $options = [], $block = null) {
         if (is_callable($options)) {
             $block = $options;
@@ -55,6 +64,13 @@ class Dropdown extends Base {
         $this->set_html_object($dropdown->get_html_object());
     }
 
+    /**
+     * Builds a Standard Dropdown.
+     *
+     * @param array $options Dropdown's options.
+     * @param mixed $yield Dropdown's content.
+     * @return ContentTag a Contentag instance that represents a Dropdown, in this case a button that triggers an unordered html list.
+     */
     private function build_standard_dropdown($options, $yield) {
         return
             new ContentTag('div', ['class'=>$options['div_class']], function() use ($options, $yield) {
@@ -70,6 +86,13 @@ class Dropdown extends Base {
             });
     }
 
+    /**
+     * Builds a Split Dropdown.
+     *
+     * @param array $options Dropdown's options.
+     * @param mixed $yield Dropdown's content.
+     * @return ContentTag a Contentag instance that represents a Split Dropdown, in this case 2 buttons, one of them triggers an unordered html list.
+     */
     private function build_split_dropdown($options, $yield) {
         return
             new ContentTag('div', ['class'=>$options['div_class']], function() use ($options, $yield) {
@@ -86,6 +109,12 @@ class Dropdown extends Base {
             });
     }
 
+    /**
+     * Returns the class for the div that contains the Dropdown.
+     *
+     * @param array $options Div's class options.
+     * @return string Div's class.
+     */
     private function dropdown_div_class($options = []) {
         $group = (isset($options['groupable']) && $options['groupable']) ||
                  (isset($options['split']) && $options['split'] ) ||
@@ -96,11 +125,23 @@ class Dropdown extends Base {
         return  join(Base::SPACE, array_filter([$group, $direction], 'strlen' ));
     }
 
+    /**
+     * Returns the class related with alignment.
+     *
+     * @param array $options alignment options.
+     * @return string alignment class.
+     */
     private function dropdown_list_class($options = []) {
         $align = isset($options['align']) && $options['align'] === 'right' ? 'dropdown-menu-right' : null;
         return  join(Base::SPACE, array_filter(['dropdown-menu', $align], 'strlen' ));
     }
 
+    /**
+     * Returns the class information associated to the Button.
+     *
+     * @param array $options class options information.
+     * @return string button's class.
+     */
     private function dropdown_button_class($options = []) {
         $base_options = [
             'context' => null,
