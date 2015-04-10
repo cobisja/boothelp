@@ -1,7 +1,7 @@
 <?php
 
 /*
- * pbh
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,25 +26,24 @@
  * THE SOFTWARE.
  */
 
-namespace BHP\Helpers;
+namespace BootHelp\Helpers;
 
-use BHP\Base;
+use BootHelp\Base;
 
-class ContentTag extends Base
-{
-    static $BOOLEAN_ATTRIBUTES = [
-        'disabled', 'readonly', 'multiple', 'checked', 'autobuffer',
-        'autoplay', 'controls', 'loop', 'selected', 'hidden', 'scoped', 'async',
-        'defer', 'reversed', 'ismap', 'seamless', 'muted', 'required',
-        'autofocus', 'novalidate', 'formnovalidate', 'open', 'pubdate',
-        'itemscope', 'allowfullscreen', 'default', 'inert', 'sortable',
-        'truespeed', 'typemustmatch'
-    ];
-
-
-    public function __construct($name, $content_or_options_with_block = null, $options = null, callable $block = null)
-    {
-        $html = '';
+/**
+ * ContentTag class: generates an specific HTML block tag surrounding an specific content.
+ */
+class ContentTag extends Base {
+    /**
+     * Initializes the object and returns an instance holding an HTML block tag
+     * surrounding an specific content.
+     *
+     * @param string $name Block tag type.
+     * @param mixed $content_or_options_with_block Options or closure.
+     * @param mixed $options Options or closure.
+     * @param callable $block closure that generates the content to be surrounding to.
+     */
+    public function __construct($name, $content_or_options_with_block = null, $options = null, callable $block = null) {
         $num_args = $this->get_function_num_args(func_get_args());
 
         if(4 > $num_args && is_callable(func_get_arg($num_args-1))) {
@@ -54,50 +53,15 @@ class ContentTag extends Base
                 $options = $content_or_options_with_block;
             }
 
-            $html = $this->content_tag_string($name, call_user_func($block), $options);
+            $this->build_content_tag($name, call_user_func($block), $options);
+        } else {
+            $this->build_content_tag($name, $content_or_options_with_block, $options);
         }
-        else {
-            $html = $this->content_tag_string($name, $content_or_options_with_block, $options);
-        }
-
-        $this->set_html($html);
     }
 
-    private function content_tag_string($name, $content, $options)
-    {
-        $tag_options = $this->tag_options($options);
-
-        return "<". rtrim($name . ' ' . $tag_options) . ">" . trim($content) . "</$name>";
-    }
-
-    private function tag_options($options)
-    {
-        $attrs = [];
-
-        if(!is_null($options)){
-          foreach($options as $key => $value){
-            if(in_array($key, self::$BOOLEAN_ATTRIBUTES)){
-              $attrs[] = $this->boolean_tag_option($key);
-            }
-            else{
-              $value = $this->is_a_boolean_value($value);
-              $attrs[] = "$key=\"$value\"";
-            }
-          }
-        }
-
-        return join(" ", $attrs);
-    }
-
-    private function boolean_tag_option($key)
-    {
-        return "$key=\"$key\"";
-    }
-
-    private function is_a_boolean_value($value)
-    {
-        $boolean_values = [0=>'false', 1=>'true'];
-
-        return is_bool($value) ? $boolean_values[(int)$value] : $value;
+    private function build_content_tag($name, $content, $options) {
+        ('a' === $name) && $this->get_alert_link() && $this->append_class($options, 'alert-link');
+        $content = is_object($content) ? $content->get_html_object() : $content;
+        $this->set_html_object($name, $options, $content);
     }
 }

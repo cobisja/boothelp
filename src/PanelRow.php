@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,26 +26,21 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
 
-class PanelRow extends Base
-{
-    public function __construct($options, $block = null)
-    {
+class PanelRow extends Base {
+    public function __construct($options, $block = null) {
         Base::set_panel_column_class(is_array($options) && isset($options['column_class']) ? $options['column_class'] : null);
-        $this->set_html(new ContentTag('div', call_user_func($block), $this->set_panel_row_options($options)));
+        $panel_row = new ContentTag('div', call_user_func($block), $this->set_panel_row_options($options));
+
+        $this->set_html_object($panel_row->get_html_object());
     }
 
-    private function set_panel_row_options($options)
-    {
-        if (isset($options['class'])) {
-            $this->append_class($options, $options['class']);
-        }
-
+    private function set_panel_row_options($options) {
         $this->append_class($options, 'row');
 
         if (isset($options['column_class'])) {

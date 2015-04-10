@@ -1,7 +1,7 @@
 <?php
 
 /*
- * pbh
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,110 +26,116 @@
  * THE SOFTWARE.
  */
 
-namespace BHP\Helpers;
+namespace BootHelp\Helpers;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
-
-class LinkTo extends Base
-{
-    public function __construct($name = null, $options = [], callable $block = null)
-    {
+/**
+ * LinkTo: Generates a link tag.
+ */
+class LinkTo extends Base {
+    /**
+     * Initializes the object and returns an instance holding the HTML code for
+     * a link tag.
+     *
+     * @param mixed $name link target.
+     * @param array $options link options.
+     * @param callable $block closure that generates the content to be surrounding to.
+     */
+    public function __construct($name, $options = [], callable $block = null) {
         $html = '';
 
         $num_args = $this->get_function_num_args(func_get_args());
         $block = is_callable(func_get_arg($num_args-1)) ? func_get_arg($num_args-1) : null;
 
-        if (!is_array($options)) {
-            $options = [];
-        }
-
         if (Base::get_dropdown_link()) {
             $html = $this->build_dropdown_link($num_args, $name, $options, $block);
-        }
-        elseif (Base::get_nav_link()) {
+        } elseif (Base::get_nav_link()) {
             $html = $this->build_nav_link($num_args, $name, $options, $block);
+        } else {
+            $html = $this->build_standard_link($num_args, $name, $options, $block);
         }
-        else {
-            $html = $this->link_to_string($num_args, $name, $options, $block);
+
+        $this->set_html_object($html->get_html_object());
+    }
+
+    private function build_standard_link($num_args, $name, $options, $block) {
+        $options = is_array($name) ? $name : $options;
+        $this->select_link_class($options);
+        $options['href'] = $this->link_href($options);
+
+        switch($num_args){
+            case 1:
+                if (!is_null($block)) {
+                    $link = new ContentTag('a', $options, $block);
+                } else {
+                    $link = new ContentTag('a', is_array($name) ? '' : $name, $options);
+                }
+                break;
+            case 2:
+                if (is_string($name) && is_array($options)) {
+                    $link = new ContentTag('a', $name, $options);
+                } else {
+                    $link = new ContentTag('a', $options, $block);
+                }
+                break;
         }
 
-        $this->set_html($html);
+      return $link;
     }
 
-    private function link_to_string($num_args, $name, $options, $block)
-    {
-      $this->select_link_class($options);
+    private function select_link_class(&$options = []) {
+        if($this->get_alert_link()){
+            $this->append_class($options, 'alert-link');
+        } elseif($this->get_navbar_vertical()){
+            $this->append_class($options, 'navbar-brand');
+        } elseif($this->get_dropdown_link()){
+            $options = array_merge($options, ['role'=>'menuitem']);
+        }
 
-      $options['href'] = $this->link_href($options);
-
-      switch($num_args){
-        case 1:
-            return new ContentTag('a', $block ? $block : $name, $options);
-        case 2:
-            return new ContentTag('a', $name, $block ? $block : $options);
-        default:
-            return new ContentTag('a', $name, $options, $block);
-      }
+        Base::set_alert_link(false);
     }
 
-    private function select_link_class(&$options = [])
-    {
-      if($this->get_alert_link()){
-          $this->append_class($options, 'alert-link');
-      }
-      elseif($this->get_navbar_vertical()){
-          $this->append_class($options, 'navbar-brand');
-      }
-      elseif($this->get_dropdown_link()){
-          $options = array_merge($options, ['role'=>'menuitem', 'tabindex'=>'-1']);
-      }
-
-      Base::set_alert_link(false);
-    }
-
-    private function build_dropdown_link($num_args, $name, $options, $block)
-    {
+    private function build_dropdown_link($num_args, $name, $options, $block) {
         return new ContentTag(
-                   'li',
-                   ['role'=>'presentation'],
-                   function() use ($num_args, $name, $options, $block) {
-                        return $this->link_to_string($num_args, $name, $options, $block);
-                    }
-            );
+            'li',
+            function() use ($num_args, $name, $options, $block) {
+                 return $this->build_standard_link($num_args, $name, $options, $block);
+             }
+        );
     }
 
-    private function build_nav_link($num_args, $name, $options, $block)
-    {
+    private function build_nav_link($num_args, $name, $options, $block) {
         $options['href'] = $this->link_href($options);
         $nav_item_class = $this->current_page($options['href']) ? 'active' : null;
 
         if (isset($options['disabled']) && $options['disabled']) {
             $disabled = 'disabled';
             unset($options['disabled']);
-        }
-        else {
+        } else {
             $disabled = null;
         }
 
         return new ContentTag(
-               'li',
-               is_null($nav_item_class) && is_null($disabled) ? [] : ['class'=>trim($nav_item_class . ' ' . $disabled)],
-               function() use ($num_args, $name, $options, $block) {
-                    return $this->link_to_string($num_args, $name, $options, $block);
-                }
+            'li',
+             is_null($nav_item_class) && is_null($disabled) ? [] : ['class'=>trim($nav_item_class . ' ' . $disabled)],
+             function() use ($num_args, $name, $options, $block) {
+                 return $this->build_standard_link($num_args, $name, $options, $block);
+             }
         );
     }
 
-    private function link_href($options = [])
-    {
+    private function link_href($options = []) {
         return isset($options['href']) ? $options['href'] : '#';
     }
 
-    private function current_page($href)
-    {
-        $href = str_replace('http://' . $_SERVER['HTTP_HOST'], '', $href);
-        return $_SERVER['REQUEST_URI'] === $href;
+    private function current_page($href) {
+        if (isset($_SERVER['HTTP_HOST'])) {
+            $href = str_replace('http://' . $_SERVER['HTTP_HOST'], '', $href);
+            return $_SERVER['REQUEST_URI'] === $href;
+        } else {
+            return false;
+        }
     }
 }

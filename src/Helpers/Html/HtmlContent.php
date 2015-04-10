@@ -26,49 +26,53 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp;
+namespace BootHelp\Helpers\Html;
 
-use BootHelp\Base;
-use BootHelp\Helpers\ContentTag;
+use BootHelp\Helpers\Html\Html;
 
 
-class Nav extends Base {
-    public function __construct($options = [], $block = null) {
-        $num_args = $this->get_function_num_args(func_get_args());
+class HtmlContent {
+    private $content;
 
-        if (2 > $num_args && is_callable(func_get_arg($num_args-1))) {
-            $block = func_get_arg($num_args-1);
-            $options = [];
+
+    public function __construct($content) {
+        if (is_array($content)) {
+            $new_content = [];
+
+            foreach ($content as $item) {
+                $new_content[] = (is_string($item) || is_object($item) && $item instanceof Html) ? $item : $item->get_html_object();
+            }
+
+            $this->content = array_filter($new_content, 'strlen');
+
+        } else {
+            $this->set_content($content);
         }
-
-        Base::set_nav_link(true);
-        $nav = new ContentTag('ul', $this->nav_options($options), $block);
-        Base::set_nav_link(false);
-
-        $this->set_html_object($nav->get_html_object());
     }
 
-    private function nav_options($options = []) {
-        $this->append_class($options, 'nav');
+    public function get_content() {
+        return $this->content;
+    }
 
-        if (Base::get_navbar_id()) {
-            $this->append_class($options, 'navbar-nav');
-        } else {
-            if (isset($options['as'])) {
-                $as = $options['as'];
-                unset($options['as']);
-            } else {
-                $as = 'tabs';
-            }
+    public function is_empty() {
+        return is_array($this->content) && 1 === count($this->content) && is_null($this->content[0]);
+    }
 
-            $this->append_class($options, "nav-$as");
+    public function length() {
+        return count($this->content);
+    }
 
-            if (isset($options['layout'])) {
-                $this->append_class($options, "nav-{$options['layout']}");
-                unset($options['layout']);
-            }
-      }
+    public function set_content($content) {
+        $this->content = !is_array($content) ? [$content] : $content;
+    }
 
-      return $options;
+    public function __toString() {
+        $html_string = '';
+
+        foreach ($this->content as $content) {
+            $html_string .= (string) $content;
+        }
+
+        return $html_string;
     }
 }

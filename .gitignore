@@ -1,6 +1,7 @@
 nbproject/**/*
 vendor/**/*
-samples/css/bootstrap.min.css
-samples/fonts/**/*
-samples/js/bootstrap.min.js
-samples/js/jquery.min.js
+coverage/**/*
+webdocs/css/bootstrap.min.css
+webdocs/fonts/**/*
+webdocs/js/bootstrap.min.js
+webdocs/js/jquery.min.js

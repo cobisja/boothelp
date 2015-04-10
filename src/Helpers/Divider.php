@@ -26,49 +26,23 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp;
+namespace BootHelp\Helpers;
 
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
-
-class Nav extends Base {
-    public function __construct($options = [], $block = null) {
-        $num_args = $this->get_function_num_args(func_get_args());
-
-        if (2 > $num_args && is_callable(func_get_arg($num_args-1))) {
-            $block = func_get_arg($num_args-1);
-            $options = [];
-        }
-
-        Base::set_nav_link(true);
-        $nav = new ContentTag('ul', $this->nav_options($options), $block);
-        Base::set_nav_link(false);
-
-        $this->set_html_object($nav->get_html_object());
+class Divider extends Base {
+    public function __construct() {
+        $this->set_html_object($this->build_divider());
     }
 
-    private function nav_options($options = []) {
-        $this->append_class($options, 'nav');
-
-        if (Base::get_navbar_id()) {
-            $this->append_class($options, 'navbar-nav');
+    private function build_divider() {
+        if (Base::get_dropdown_link()) {
+            $divider = new ContentTag('li', '', ['class'=>'divider']);
         } else {
-            if (isset($options['as'])) {
-                $as = $options['as'];
-                unset($options['as']);
-            } else {
-                $as = 'tabs';
-            }
+            $divider = null;
+        }
 
-            $this->append_class($options, "nav-$as");
-
-            if (isset($options['layout'])) {
-                $this->append_class($options, "nav-{$options['layout']}");
-                unset($options['layout']);
-            }
-      }
-
-      return $options;
+        return $divider;
     }
 }

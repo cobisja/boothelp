@@ -1,6 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Bootstrap 101 Template</title>
+
+        <!-- Bootstrap -->
+        <link href="Guide/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- BootHelp -->
+        <link href="Guide/css/boothelp.css" rel="stylesheet">
+
+        <!-- Font awesome css -->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css" />
+    </head>
+  <body>
+      <div class="container">
+          <div class="row">
+              <div class="col-md-9" role="main">
 <?php
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,34 +49,59 @@
  */
 
 /**
- * Sample file to show you how to use BHP - Bootstrap Helpers using PHP
+ * Guide to how to use BootHelp - PHP Helpers for Bootstrap
  *
- * To get running this demo you have to download the followings pieces of software:
+ * To get running this web guide you have to download the followings pieces of software:
  *
  * - jQuery 1.9.x -> http://jquery.com
  * - Bootsrap 3.3.x -> http://getbootstrap.com
  *
  * Then copy the followings files into specified locations:
  *
- * bootstrap css: 'bootstrap.min -> 'samples/css'.
- * bootstrap fonts: 'bootstrap/fonts/*' -> 'samples/fonts'.
- * jquery and bootstrap js: 'bootstrap.min.js and jquery.min.js -> 'samples/js'.
+ * bootstrap css: 'bootstrap.min.css -> 'Guide/css'.
+ * bootstrap fonts: 'bootstrap/fonts/*' -> 'Guide/fonts'.
+ * jquery and bootstrap js: 'bootstrap.min.js and jquery.min.js -> 'Guide/js'.
  *
  * Aditional css is required to use 'Font awesome'. You have to add a link to awesome.css:
  * <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css" />
  */
 require 'vendor/autoload.php';
 
-include('samples/html/start_page.html');
-require('samples/overview.php');
-require('samples/alert.php');
-require('samples/button.php');
-require('samples/dropdown.php');
-require('samples/icon.php');
-require('samples/modal.php');
-require('samples/nav.php');
-require('samples/navbar.php');
-require('samples/panel.php');
-require('samples/panel_rows.php');
-require('samples/progress_bar.php');
-include('samples/html/end_page.html');
+require('Guide/overview.php');
+require('Guide/alert.php');
+require('Guide/button.php');
+require('Guide/dropdown.php');
+require('Guide/icon.php');
+require('Guide/modal.php');
+require('Guide/nav.php');
+require('Guide/navbar.php');
+require('Guide/panel.php');
+require('Guide/panel_rows.php');
+require('Guide/progress_bar.php');
+
+?>
+                </div>
+                <div class="col-md-3">
+                   <div role="complementary" class="sidebar  affix">
+                        <ul class="nav bs-docs-sidenav">
+                          <li><a href="#overview">Overview</a></li>
+                          <li><a href="#alerts">Alerts</a></li>
+                          <li><a href="#buttons">Buttons</a></li>
+                          <li><a href="#dropdowns">Dropdowns</a></li>
+                          <li><a href="#icons">Icons</a></li>
+                          <li><a href="#modals">Modals</a></li>
+                          <li><a href="#navs">Navs</a></li>
+                          <li><a href="#navbars">Navbars</a></li>
+                          <li><a href="#panels">Panels</a></li>
+                          <li><a href="#panel-rows">Panel rows</a></li>
+                          <li><a href="#progress-bar">Progress bars</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="Guide/js/jquery.min.js"></script>
+        <script src="Guide/js/bootstrap.min.js"></script>
+        <script src="Guide/js/boothelp.js"></script>
+    </body>
+</html>
