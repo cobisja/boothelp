@@ -1,6 +1,6 @@
 <?php
 /*
- * BHP
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -25,10 +25,10 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
 /**
  * Generates an HTML block tag that follows the Bootstrap documentation
@@ -55,8 +55,7 @@ use BHP\Helpers\ContentTag;
  *
  * See {@link http://getbootstrap.com/components/#alerts} for more information.
  */
-class AlertBox extends Base
-{
+class AlertBox extends Base {
     /**
      * Initializes AlertBox object.
      *
@@ -86,11 +85,11 @@ class AlertBox extends Base
      * @return ContentTag html alert box.
      */
     private function build_alert_box($message=null, $options=[]) {
-        $dismissible = isset($options['dismissible']);
+        $dismissible = false;
         $context = isset($options['context']) ? $options['context'] : null;
 
-        if ($dismissible) {
-            $message = $this->add_dismiss_button_to($message);
+        if (isset($options['dismissible'])) {
+            ($dismissible = $options['dismissible']) && ($message = $this->add_dismiss_button_to($message));
             unset($options['dismissible']);
         }
 

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,14 +26,13 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
 
-class ProgressBar extends Base
-{
+class ProgressBar extends Base {
     public function __construct($options = [], $container_options = []) {
         $this->append_class($container_options, 'progress');
 
@@ -114,6 +113,6 @@ class ProgressBar extends Base
             unset($options['animated']);
         }
 
-        return  join( ' ', array_filter( ['progress-bar', $context, $striped, $animated], 'strlen' ) );
+        return  join(Base::SPACE, array_filter(['progress-bar', $context, $striped, $animated], 'strlen'));
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,14 +26,13 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
 
-class Button extends Base
-{
+class Button extends Base {
     public function __construct($content_or_options_with_block = null, $options = null, $block = null) {
         $num_args = $this->get_function_num_args(func_get_args());
 
@@ -62,7 +61,7 @@ class Button extends Base
         $valid_contexts = [ 'primary', 'success', 'info', 'warning', 'danger', 'link' ];
 
         $this->set_options($base_options, $options);
-        $context = $this->context_for( $options['context'], ['valid' => $valid_contexts]);
+        $context = $this->context_for($options['context'], ['valid' => $valid_contexts]);
 
         $size = null;
         switch ($options['size']) {
@@ -77,6 +76,6 @@ class Button extends Base
         unset($options['size']);
         unset($options['layout']);
 
-        return  join( ' ', array_filter( ['btn', "btn-$context", $size, $layout], 'strlen' ) );
+        return  join(Base::SPACE, array_filter(['btn', "btn-$context", $size, $layout], 'strlen'));
     }
 }

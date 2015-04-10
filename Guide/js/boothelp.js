@@ -1,6 +1,4 @@
-<?php
-
-/*
+/* 
  * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
@@ -26,35 +24,35 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp\Helpers;
-
-use BootHelp\Base;
-use BootHelp\Helpers\ContentTag;
-
-class Horizontal extends Base {
-    public function __construct($content_or_options_with_block = null, $options = null, callable $block = null) {
-        $num_args = $this->get_function_num_args(func_get_args());
-        $block = is_callable(func_get_arg($num_args-1)) ? func_get_arg($num_args-1) : null;
-
-        switch ($num_args) {
-            case '1':
-                $content_or_options_with_block = null;
-                $options = null;
-                break;
-            case '2':
-                $options = null;
-                break;
+// navbar top toggler
+(function () {
+      $('.navbar-top-toggle').click(function () {
+        var shown = $(this).text() == "Hide the navbar";
+        if(shown) {
+          $("body").animate({paddingTop: "0px"});
+          $('[data-navbar="top"]').hide('slow');
+          $(this).text('Show the navbar');
+        } else {
+          $("body").animate({paddingTop: "70px"});
+          $('[data-navbar="top"]').show('slow');
+          $(this).text('Hide the navbar');
         }
+      })
+    })();
 
-        $html = $this->horizontal_string($content_or_options_with_block ? $content_or_options_with_block : [], $block);
-
-        $this->set_html_object($html->get_html_object());
+// navbar bottom toggler
+(function () {
+  $('.navbar-bottom-toggle').click(function () {
+    var shown = $(this).text() == "Hide the navbar";
+    if(shown) {
+      $("body").animate({paddingBottom: "0px"});
+      $('[data-navbar="bottom"]').hide('slow');
+      $(this).text('Show the navbar');
+    } else {
+      $("body").animate({paddingBottom: "100px"});
+      $('[data-navbar="bottom"]').show('slow');
+      $(this).text('Hide the navbar');
     }
+  })
+})();
 
-    private function horizontal_string($options = [], $block = null) {
-        $this->append_class($options, 'collapse navbar-collapse');
-        $options['id'] = Base::get_navbar_id();
-
-        return new ContentTag('div', $options, $block);
-    }
-}

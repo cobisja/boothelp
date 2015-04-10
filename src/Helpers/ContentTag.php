@@ -1,7 +1,7 @@
 <?php
 
 /*
- * pbh
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,15 +26,14 @@
  * THE SOFTWARE.
  */
 
-namespace BHP\Helpers;
+namespace BootHelp\Helpers;
 
-use BHP\Base;
+use BootHelp\Base;
 
 /**
  * ContentTag class: generates an specific HTML block tag surrounding an specific content.
  */
-class ContentTag extends Base
-{
+class ContentTag extends Base {
     /**
      * Initializes the object and returns an instance holding an HTML block tag
      * surrounding an specific content.
@@ -44,8 +43,7 @@ class ContentTag extends Base
      * @param mixed $options Options or closure.
      * @param callable $block closure that generates the content to be surrounding to.
      */
-    public function __construct($name, $content_or_options_with_block = null, $options = null, callable $block = null)
-    {
+    public function __construct($name, $content_or_options_with_block = null, $options = null, callable $block = null) {
         $num_args = $this->get_function_num_args(func_get_args());
 
         if(4 > $num_args && is_callable(func_get_arg($num_args-1))) {
@@ -61,8 +59,8 @@ class ContentTag extends Base
         }
     }
 
-    private function build_content_tag($name, $content, $options)
-    {
+    private function build_content_tag($name, $content, $options) {
+        ('a' === $name) && $this->get_alert_link() && $this->append_class($options, 'alert-link');
         $content = is_object($content) ? $content->get_html_object() : $content;
         $this->set_html_object($name, $options, $content);
     }

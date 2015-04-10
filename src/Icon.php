@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,14 +26,13 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
 
-class Icon extends Base
-{
+class Icon extends Base {
     public function __construct($name = null, $options = []) {
         !isset($options['library']) ? $options['library'] = 'glyphicons' : null;
 
@@ -53,7 +52,7 @@ class Icon extends Base
 
     private function library_prefix_for($name) {
         switch ($name){
-            case 'font-awesome': case 'font_awesome':
+            case 'font-awesome': case 'font_awesome': case 'fa':
                 return 'fa';
             case '': case 'glyphicons':
                 return 'glyphicon';

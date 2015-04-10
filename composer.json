@@ -1,8 +1,8 @@
 {
-    "name": "cobisja/BHP",
-    "description": "PHP Bootstrap Helpers",
+    "name": "BootHelp",
+    "description": "PHP Helpers for Bootstrap",
     "license": "MIT",
-    "keywords": ["bootstrap"],
+    "keywords": ["bootstrap", "helpers", "php"],
     "authors": [
         {
             "name": "Jorge Cobis",
@@ -10,6 +10,11 @@
         }
     ],
     "autoload": {
-        "psr-4": {"BHP\\": "src/", "BHP\\Helpers\\": "src/Helpers", "BHP\\Samples\\": "samples/"}
+        "psr-4": {
+            "BootHelp\\": "src/",
+            "BootHelp\\Helpers\\": "src/Helpers",
+            "BootHelp\\Helpers\\Html\\": "src/Helpers/Html",
+            "BootHelp\\Guide\\": "Guide/"
+        }
     }  
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,14 +26,13 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
 
-class Dropdown extends Base
-{
+class Dropdown extends Base {
     public function __construct($caption, $options = [], $block = null) {
         if (is_callable($options)) {
             $block = $options;
@@ -88,15 +87,18 @@ class Dropdown extends Base
     }
 
     private function dropdown_div_class($options = []) {
-        $group = (isset($options['groupable']) ? $options['groupable'] : true ) ? 'btn-group' : 'dropdown';
-        $direction = isset($options['direction']) && $options['direction'] === 'up' ? 'dropup' : null;
+        $group = (isset($options['groupable']) && $options['groupable']) ||
+                 (isset($options['split']) && $options['split'] ) ||
+                 (isset($options['align']) && 'right' === $options['align'] )? 'btn-group' : null;
 
-        return  join( ' ', array_filter( [$group, $direction], 'strlen' ) );
+        $direction = isset($options['direction']) && $options['direction'] === 'up' ? 'dropup' : 'dropdown';
+
+        return  join(Base::SPACE, array_filter([$group, $direction], 'strlen' ));
     }
 
     private function dropdown_list_class($options = []) {
         $align = isset($options['align']) && $options['align'] === 'right' ? 'dropdown-menu-right' : null;
-        return  join( ' ', array_filter( ['dropdown-menu', $align], 'strlen' ) );
+        return  join(Base::SPACE, array_filter(['dropdown-menu', $align], 'strlen' ));
     }
 
     private function dropdown_button_class($options = []) {
@@ -121,6 +123,6 @@ class Dropdown extends Base
         unset($options['context']);
         unset($options['size']);
 
-        return  join( ' ', array_filter( [$button_class, 'btn', "btn-$context", $size], 'strlen' ) );
+        return join(Base::SPACE, array_filter([$button_class, 'btn', "btn-$context", $size], 'strlen'));
     }
 }

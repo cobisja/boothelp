@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,14 +26,13 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
 
-class Navbar extends Base
-{
+class Navbar extends Base {
     public function __construct($options = [], callable $block = null) {
         if (is_callable($options)) {
             $block = $options;
@@ -41,6 +40,7 @@ class Navbar extends Base
         }
 
         Base::set_navbar_id(!isset($options['id']) ? ('navbar-collapse-' . (string) (mt_rand(1, pow(10, 7)))) : $options['id']);
+        unset($options['id']);
         $navbar = $this->build_navbar($options, $block);
         Base::set_navbar_id(false);
 
@@ -48,24 +48,20 @@ class Navbar extends Base
     }
 
     private function build_navbar($options = [], $block = null) {
-        if (is_callable($options)) {
-            $block = $options;
-            $options = [];
-        }
-
         $style_padding = $this->body_style_tag_for_navbar($options);
+        unset($options['padding']);
         $this->append_class($options, $this->navbar_class($options));
         $options['role'] = 'navigation';
 
         return (new ContentTag(
             'nav',
             $options, function() use ($style_padding, $options, $block){
-                return [
-                    $style_padding,
-                    new ContentTag('div', ['class'=>$this->navbar_container_class($options)], function() use ($options, $block) {
+                return array_filter([
+                    new ContentTag('div', ['class'=>$this->navbar_container_class($options)], function() use ($block) {
                         return call_user_func($block);
-                    })
-                ];
+                    }),
+                    $style_padding
+                ], 'strlen');
             }
         ));
     }
@@ -76,9 +72,8 @@ class Navbar extends Base
 
         if ($padding_type = $this->padding_type_for(isset($options['position']) ? $options['position'] : '')) {
             $body_style_tag = new ContentTag('style', "body {padding-$padding_type: " . $options['padding'] . 'px}');
-            unset($options['padding']);
         } else {
-            $body_style_tag = '';
+            $body_style_tag = null;
         }
 
         return $body_style_tag;

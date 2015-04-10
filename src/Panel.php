@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,14 +26,13 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
 
-class Panel extends Base
-{
+class Panel extends Base {
     public function __construct($content_or_options_with_block = null, $options = null, $block = null) {
         $html = '';
         $num_args = $this->get_function_num_args(func_get_args());
@@ -51,6 +50,8 @@ class Panel extends Base
     }
 
     private function panel_string($content = null, $options = []) {
+        !is_array($options) ? $options = [] : null;
+
         $body = $this->build_panel_body($content);
         $heading = $this->build_panel_heading($options);
         $footer = $this->build_panel_footer($options);

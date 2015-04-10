@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -9,10 +9,10 @@
         <title>Bootstrap 101 Template</title>
 
         <!-- Bootstrap -->
-        <link href="samples/css/bootstrap.min.css" rel="stylesheet">
+        <link href="Guide/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- BHP -->
-        <link href="samples/css/bhp_samples.css" rel="stylesheet">
+        <!-- BootHelp -->
+        <link href="Guide/css/boothelp.css" rel="stylesheet">
 
         <!-- Font awesome css -->
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css" />
@@ -23,7 +23,7 @@
               <div class="col-md-9" role="main">
 <?php
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -49,140 +49,35 @@
  */
 
 /**
- * Sample file to show you how to use BHP - Bootstrap Helpers using PHP
+ * Guide to how to use BootHelp - PHP Helpers for Bootstrap
  *
- * To get running this demo you have to download the followings pieces of software:
+ * To get running this web guide you have to download the followings pieces of software:
  *
  * - jQuery 1.9.x -> http://jquery.com
  * - Bootsrap 3.3.x -> http://getbootstrap.com
  *
  * Then copy the followings files into specified locations:
  *
- * bootstrap css: 'bootstrap.min -> 'samples/css'.
- * bootstrap fonts: 'bootstrap/fonts/*' -> 'samples/fonts'.
- * jquery and bootstrap js: 'bootstrap.min.js and jquery.min.js -> 'samples/js'.
+ * bootstrap css: 'bootstrap.min.css -> 'Guide/css'.
+ * bootstrap fonts: 'bootstrap/fonts/*' -> 'Guide/fonts'.
+ * jquery and bootstrap js: 'bootstrap.min.js and jquery.min.js -> 'Guide/js'.
  *
  * Aditional css is required to use 'Font awesome'. You have to add a link to awesome.css:
  * <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css" />
  */
 require 'vendor/autoload.php';
 
-use BHP\Helpers\ContentTag;
-use BHP\Helpers\LinkTo;
-use BHP\AlertBox;
-use BHP\Button;
-use BHP\Dropdown;
-use BHP\Icon;
-use BHP\Modal;
-use BHP\Nav;
-use BHP\Navbar;
-use BHP\Helpers\Horizontal;
-use BHP\Helpers\Vertical;
-use BHP\Panel;
-use BHP\PanelRow;
-use BHP\ProgressBar;
-
-//$dd = new Dropdown('Menu', function(){
-//    return [new LinkTo('Home'), new LinkTo('Users') , new LinkTo('Profile')];
-//});
-//echo $dd;
-
-//include('samples/html/start_page.html');
-
-//$bt = new Button(['context'=>'warning', 'id'=>'button', 'class'=>'en', 'data-js'=>1], function(){
-//    return ['Your ', new ContentTag('em', 'personal'), 'menu'];
-//});
-//echo $bt;
-
-//
-//$ct = new ContentTag('p', 'Hello world');
-//$ct = new ContentTag('div', ['id'=>'sample'], function(){
-//    return [
-//        new ContentTag('button', ['type'=>'button', 'class'=>'close'], function(){
-//            return new ContentTag('span', '&times;', ['aria-hidden'=>true]);
-//        }),
-//        '<strong>Warning!</strong> Better check yourself.'
-//    ];
-//});
-//echo $ct;
-//$ct = new ContentTag('p', ['class'=> 'demo main-demo en', 'id'=>'ct2'], function(){
-//    return new ContentTag('strong','Hello world',  ['disabled'=>true]);
-//});
-//echo $ct;
-//
-//$link = new LinkTo(['class'=>'new en2', 'id'=>'lnk'], function(){
-//    return 'Add new ' . new ContentTag('strong', 'User');
-//});
-//echo $link;
-
-//$ab = new AlertBox (['context'=>'warning', 'dismissible'=>true, 'id'=>'my-alert', 'class'=>'en', 'data-js'=>1], function(){
-//        return [
-//            '<strong>Well done!</strong> You successfully read ',
-//            new LinkTo('this important alert message', ['href'=> '#']),
-//            '.'
-//        ];
-//    });
-//echo $ab;
-
-//$i = new Icon('user');
-//echo $i;
-//$m = new Modal('Do what you want!', ['button'=>['caption'=>'Click me']]);
-//echo $m;
-
-//$n = new Nav(function(){
-//    return [
-//        new LinkTo('Home', ['href'=>'http://localhost/local_php/bhp/index.php']),
-//        new LinkTo('Users'),
-//        new LinkTo('Profile')
-//    ];
-//});
-//echo $n;
-
-//$nb = new Navbar(['position'=>'top'], function(){
-//    return [
-//        new Vertical(function(){
-//            return new LinkTo('Home');
-//        }),
-//        new Horizontal(function(){
-//            return new Nav(['class'=>'navbar-right'], function(){
-//                return [
-//                    new LinkTo('Profile'),
-//                    new LinkTo('Settings')
-//                ];
-//            });
-//        })
-//    ];
-//});
-
-//echo $nb;
-
-//$p = new Panel('You accepted the Terms of service.', ['footer'=>'Congratulations']);
-//echo $p;
-
-//$pr = new PanelRow(['column_class'=>'col-sm-4'], function (){
-//    return [
-//        new Panel('Panel #1'),
-//        new Panel('Panel #2'),
-//        new Panel('Panel #3')
-//    ];
-//});
-//echo $pr;
-
-//$pb = new ProgressBar(['percentage'=>30, 'id'=>'bar', 'data-js'=>1], ['id'=>'container', 'class'=>'en']);
-//echo $pb;
-
-require('samples/overview.php');
-require('samples/alert.php');
-require('samples/button.php');
-require('samples/dropdown.php');
-require('samples/icon.php');
-require('samples/modal.php');
-require('samples/nav.php');
-require('samples/navbar.php');
-require('samples/panel.php');
-require('samples/panel_rows.php');
-require('samples/progress_bar.php');
-//include('samples/html/end_page.html');
+require('Guide/overview.php');
+require('Guide/alert.php');
+require('Guide/button.php');
+require('Guide/dropdown.php');
+require('Guide/icon.php');
+require('Guide/modal.php');
+require('Guide/nav.php');
+require('Guide/navbar.php');
+require('Guide/panel.php');
+require('Guide/panel_rows.php');
+require('Guide/progress_bar.php');
 
 ?>
                 </div>
@@ -205,8 +100,8 @@ require('samples/progress_bar.php');
                 </div>
             </div>
         </div>
-        <script src="samples/js/jquery.min.js"></script>
-        <script src="samples/js/bootstrap.min.js"></script>
-        <script src="samples/js/bhp_samples.js"></script>
+        <script src="Guide/js/jquery.min.js"></script>
+        <script src="Guide/js/bootstrap.min.js"></script>
+        <script src="Guide/js/boothelp.js"></script>
     </body>
 </html>

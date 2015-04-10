@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp
  *
  * (The MIT License)
  *
@@ -26,59 +26,120 @@
  * THE SOFTWARE.
  */
 
-namespace Tests\BHPHelpers;
+namespace Tests\BootHelpHelpers;
 
-use BHP\Helpers\ContentTag;
+use BootHelp\Helpers\ContentTag;
 
 
 class ContentTagTest extends \PHPUnit_Framework_TestCase {
-    public function testWithEmptyContent()
-    {
-        $html = '<p></p>';
-
+    public function testWithEmptyContent() {
+        /**
+         * It should generates: '<p></p>'
+         */
         $content_tag = new ContentTag('p');
+        $html = $content_tag->get_html();
 
-        $this->assertEquals($html, $content_tag);
+        $this->assertEquals('p', $html->get_type());
+        $this->assertEquals('', $html->get_attributes());
+        $this->assertTrue($html->get_content()->is_empty());
     }
 
-    public function testWithNotEmptyContent()
-    {
-        $html = '<p>Hello world</p>';
-
+    public function testWithNotEmptyContent() {
+        /**
+         *  It should generates:
+         *
+         *  <p>Hello world</p>'
+         */
         $content_tag = new ContentTag('p', 'Hello world');
 
-        $this->assertEquals($html, $content_tag);
+        $html = $content_tag->get_html();
+
+        $this->assertEquals('p', $html->get_type());
+        $this->assertEquals('', $html->get_attributes());
+        $this->assertFalse($html->get_content()->is_empty());
+        $this->assertEquals(1, $html->get_content()->length());
+        $this->assertEquals('Hello world', $html->get_child(0));
     }
 
-    public function testWithExtraOptions()
-    {
-        $html = '<p id="bar" class="foo">Hello world</p>';
+    public function testWithExtraOptions() {
+        /**
+         *  It should generates:
+         *
+         *  <p id="bar" class="foo">Hello world</p>
+         */
+        $content_tag = new ContentTag('p', 'Hello world', ['id'=>'bar', 'class'=>'foo'] );
+        $html = $content_tag->get_html();
 
-        $options = ['id'=>'bar', 'class'=>'foo'];
-        $content_tag = new ContentTag('p', 'Hello world', $options );
-
-        $this->assertEquals($html, $content_tag);
+        $this->assertTrue($html->is_a('p', ['class'=>'foo', 'id'=>'bar']));
+        $this->assertFalse($html->get_content()->is_empty());
+        $this->assertEquals(1, $html->get_content()->length());
+        $this->assertEquals('Hello world', $html->get_child(0));
     }
 
-    public function testWithClosure()
-    {
-        $html = '<div><pre>Sample code</pre></div>';
+    public function testWithClosure() {
+        /**
+         * It should generates:
+         *
+         * <div><pre>Sample code</pre></div>
+         */
         $content_tag = new ContentTag('div', function(){
             return new ContentTag('pre', 'Sample code');
         });
+        $html = $content_tag->get_html();
+        $child = $html->get_child(0);
 
-        $this->assertEquals($html, $content_tag);
-
+        $this->assertTrue($html->is_a('div'));
+        $this->assertTrue(1 === $html->get_content()->length());
+        $this->assertTrue($child->is_a('pre'));
+        $this->assertEquals('Sample code', $child->get_child(0));
     }
 
-    public function testWithExtraOptionsAndClosure()
-    {
-        $html = '<div id="foo" class="bar"><a href="#" class="taz" readonly="readonly">Sample code</a></div>';
+    public function testWithExtraOptionsAndClosure() {
+        /**
+         * It should generates:
+         *
+         * <div id="foo" class="bar">
+         *     <a href="#" class="taz" readonly="readonly">
+         *         Sample code
+         *     </a>
+         * </div>
+         */
         $content_tag = new ContentTag('div', ['id'=>'foo', 'class'=>'bar'], function(){
             return new ContentTag('a', 'Sample code', ['href'=>'#', 'class'=>'taz', 'readonly'=>true]);
         });
 
-        $this->assertEquals($html, $content_tag);
+        $html = $content_tag->get_html();
+        $child = $html->get_child(0);
+        $grand_child = $child->get_child(0);
+
+        $this->assertTrue($html->is_a('div', ['class'=>'bar', 'id'=>'foo']));
+        $this->assertTrue($child->is_a('a', ['class'=>'taz', 'readonly'=>true]));
+        $this->assertEquals('Sample code', $grand_child);
     }
 
+    public function testMultipleContentAtSameLevel() {
+        /**
+         * It should generates:
+         *
+         * <div id="main">
+         *     <p class="comment">First content</p>
+         *     <a role="navigation" href="/home">Go Home!</a>
+         * </div>
+         */
+        $content_tag = new ContentTag('div', ['class'=>'main'], function(){
+            return [
+                new ContentTag('p', 'First content', ['class'=>'comment']),
+                new ContentTag('a', ['role'=>'navigation', 'href'=>'/home'])
+            ];
+        });
+
+        $html = $content_tag->get_html();
+        $this->assertEquals(2, $html->get_content()->length());
+
+        $first_child = $html->get_child(0);
+        $second_child = $html->get_child(1);
+
+        $this->assertTrue($first_child->is_a('p', ['class'=>'comment']));
+        $this->assertTrue($second_child->is_a('a'));
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - Bootstrap Helpers written in PHP
  *
  * (The MIT License)
  *
@@ -26,43 +26,76 @@
  * THE SOFTWARE.
  */
 
-namespace Tests\BHPHelpers;
+namespace Tests\BootHelpHelpers;
 
-use BHP\Helpers\LinkTo;
+use BootHelp\Helpers\LinkTo;
+use BootHelp\Helpers\ContentTag;
 
 
 class LinkToTest extends \PHPUnit_Framework_TestCase {
     public function testLinkWithJustTarget() {
+        /**
+         * It should generates:
+         *
+         * <a href="#">Home</a>
+         */
         $html = '<a href="#">Home</a>';
         $link = new LinkTo('Home');
 
-        $this->assertEquals($html, $link);
+        $this->assertEquals($html, $link->to_string());
     }
 
-    public function testLinkWithHref()
-    {
+    public function testLinkWithOnlyOptions() {
+        /**
+         * It should generates:
+         *
+         * <a class="#" href="#"></a>
+         */
+        $options = ['class'=>'en', 'id'=>'my-link'];
+        $link = new LinkTo($options);
+        $html = $link->get_html();
+
+        $this->assertTrue($html->is_a('a', $options));
+    }
+
+    public function testLinkWithClosure() {
+        /**
+         * It should generates:
+         *
+         * <a href="#"><strong>Home</strong></a>
+         */
+        $link = new LinkTo(function(){
+            return new ContentTag('strong', 'Home');
+        });
+        $html = $link->get_html();
+
+        $this->assertTrue($html->is_a('a', ['href'=>'#']));
+    }
+
+    public function testLinkWithHref() {
+        /**
+         * It should generates:
+         *
+         * <a href="/home">Home</a>
+         */
         $html = '<a href="/home">Home</a>';
         $link = new LinkTo('Home', ['href'=>'/home']);
 
-        $this->assertEquals($html, $link);
+        $this->assertEquals($html, $link->to_string());
     }
 
-    public function testLinkWithExtraOptions()
-    {
-        $html = '<a id="news" href="/articles">Articles</a>';
-        $link = new LinkTo('Articles', ['id'=>'news', 'href'=>"/articles"]);
-
-        $this->assertEquals($html, $link);
-    }
-
-    public function testLinkWithExtraOptionsAndClosure()
-    {
-        $html = '<a href="/articles" id="news" class="article"><strong>Articles</strong></a>';
-        $options = ['href'=>'/articles', 'id'=>'news', 'class'=>'article'];
+    public function testLinkWithOptionsAndClosure() {
+        /**
+         * It should generates:
+         *
+         * <a href="#" class="en"><strong>Home</strong></a>
+         */
+        $options = ['class'=>'en'];
         $link = new LinkTo($options, function(){
-            return '<strong>Articles</strong>';
+            return new ContentTag('strong', 'Home');
         });
+        $html = $link->get_html();
 
-        $this->assertEquals($html, $link);
+        $this->assertTrue($html->is_a('a', $options));
     }
 }

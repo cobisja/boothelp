@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,13 +26,12 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Helpers\Html;
+use BootHelp\Helpers\Html\Html;
 
 
-class Base
-{
+class Base {
     const SPACE = ' ';
 
     private static $dropdown_link = false;
@@ -94,27 +93,27 @@ class Base
     }
 
     public function set_html_object($type, $attributes=[], $content='') {
-        if (!is_object($type)) {
+        if (!is_object($type) && !is_null($type)) {
             $this->html = new Html($type, $attributes, $content);
         } else {
             $this->html = $type;
         }
     }
 
+    public function get_html() {
+        return $this->get_html_object();
+    }
+
     public function get_html_object() {
         return $this->html;
     }
 
-    public function get_attributes() {
-        return $this->html->get_attributes();
+    public function to_string() {
+        return $this->__toString();
     }
 
     public function __toString() {
-        return (string) $this->html;
-    }
-
-    public function get_templates_path() {
-        return self::TEMPLATES_PATH;
+        return trim($this->html);
     }
 
     public static function append_class(&$hash, $new_class, $attribute = 'class') {
@@ -123,15 +122,6 @@ class Base
     }
 
     public static function context_for($context, $options=[]) {
-        switch ($context) {
-            case 'notice':
-                $context = 'success';
-                break;
-            case 'alert':
-                $context = 'danger';
-                break;
-        }
-
         if (isset($options['valid']) && in_array($context, $options['valid'])) {
             return $context;
         } elseif (isset($options['default'])) {

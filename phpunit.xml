@@ -9,7 +9,7 @@
          verbose="true"
 >
   <testsuites>
-    <testsuite name="BHP test suite">
+    <testsuite name="BootHelp test suite">
       <directory>tests</directory>
     </testsuite>
   </testsuites>

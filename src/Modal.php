@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,14 +26,13 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
 
-class Modal extends Base
-{
+class Modal extends Base {
     public function __construct($content_or_options_with_block = null, $options = null, $block = null) {
         $html = '';
 
@@ -41,10 +40,18 @@ class Modal extends Base
 
         if (3 > $num_args && is_callable(func_get_arg($num_args-1))) {
             $block = func_get_arg($num_args-1);
-
-            $html = $this->get_modal(null, is_null($content_or_options_with_block) ? [] : $content_or_options_with_block, $block);
-        } elseif (is_array($content_or_options_with_block) && is_null($options)) {
-            $html = $this->get_modal($content_or_options_with_block);
+            if (is_string($content_or_options_with_block)) {
+                $content = $content_or_options_with_block;
+                $options = [];
+            } elseif (is_array($content_or_options_with_block)) {
+                $content = null;
+                $options = $content_or_options_with_block;
+            } elseif (is_callable($content_or_options_with_block)) {
+                $content_or_options_with_block = null;
+                $content = null;
+                $options = [];
+            }
+            $html = $this->get_modal($content, $options, $block);
         } else {
             $html = $this->get_modal($content_or_options_with_block, is_null($options) ? [] : $options);
         }
@@ -73,7 +80,6 @@ class Modal extends Base
         $modal = $this->build_modal($options, $yield);
 
         return $modal->get_html_object();
-
     }
 
     private function build_modal($options, $yield) {
@@ -119,7 +125,7 @@ class Modal extends Base
             }
         }
 
-        return  join( ' ', array_filter( ['btn', "btn-$context", $size], 'strlen' ) );
+        return  join(Base::SPACE, array_filter(['btn', "btn-$context", $size], 'strlen'));
     }
 
     private function dialog_class($size = null) {
@@ -130,16 +136,10 @@ class Modal extends Base
             case 'sm': case 'small': $size_class = 'modal-sm'; break;
         }
 
-        return join( ' ', array_filter( ['modal-dialog', $size_class], 'strlen' ) );
+        return join(Base::SPACE, array_filter(['modal-dialog', $size_class], 'strlen'));
     }
 
     private function modal_body($body = null) {
-        if (!is_null($body)) {
-            $body = (new ContentTag('div', $body, ['class' => 'modal-body']))->get_html_object();
-        } else {
-            $body = '';
-        }
-
-        return $body;
+        return !is_null($body) ? (new ContentTag('div', $body, ['class' => 'modal-body']))->get_html_object() : '';
     }
 }
