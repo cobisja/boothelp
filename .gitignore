@@ -1,7 +1,7 @@
 nbproject/**/*
 vendor/**/*
 coverage/**/*
-webdocs/css/bootstrap.min.css
-webdocs/fonts/**/*
-webdocs/js/bootstrap.min.js
-webdocs/js/jquery.min.js
+Guide/css/bootstrap.min.css
+Guide/fonts/**/*
+Guide/js/bootstrap.min.js
+Guide/js/jquery.min.js
