@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,65 +26,99 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
-class Navbar extends Base
-{
-    public function __construct($options = [], callable $block = null)
-    {
+/**
+ * Class to generate a NavBar object.
+ */
+class Navbar extends Base {
+    /**
+     * Initializes a Navbar instance.
+     *
+     * @param array $options options the display options for the NavBar.
+     * @param mixed $block Block to generate a customized inside NavBar content.
+     */
+    public function __construct($options = [], callable $block = null) {
         if (is_callable($options)) {
             $block = $options;
             $options = [];
         }
 
         Base::set_navbar_id(!isset($options['id']) ? ('navbar-collapse-' . (string) (mt_rand(1, pow(10, 7)))) : $options['id']);
-        $nav_tag = $this->navbar_string($options, $block);
-        $html = join("\n", array_filter([$this->navbar_style_tag($options), $nav_tag], 'strlen'));
+        unset($options['id']);
+        $navbar = $this->build_navbar($options, $block);
         Base::set_navbar_id(false);
 
-        $this->set_html($html);
+        $this->set_html_object($navbar->get_html_object());
     }
 
-    private function navbar_string($options = [], $block = null)
-    {
-        if (is_callable($options)) {
-            $block = $options;
-            $options = [];
-        }
-
+    /**
+     * Generates a Navbar object.
+     *
+     * @param array $options Navbar's options
+     * @param closure $block closure to generate Navbar's content.
+     * @return ContentTag a ContentTag instance that represents a NavBar.
+     */
+    private function build_navbar($options = [], $block = null) {
+        $style_padding = $this->body_style_tag_for_navbar($options);
+        unset($options['padding']);
         $this->append_class($options, $this->navbar_class($options));
         $options['role'] = 'navigation';
 
-        return new ContentTag(
+        return (new ContentTag(
             'nav',
-            $options, function() use ($options, $block){
-                return new ContentTag('div', ['class'=>$this->navbar_container_class($options)], $block);
+            $options, function() use ($style_padding, $options, $block){
+                return array_filter([
+                    new ContentTag('div', ['class'=>$this->navbar_container_class($options)], function() use ($block) {
+                        return call_user_func($block);
+                    }),
+                    $style_padding
+                ], 'strlen');
             }
-        );
+        ));
     }
 
-    private function navbar_style_tag($options = [])
-    {
-        $padding_value = isset($options['padding']) ? $options['padding'] : 70;
+    /**
+     * Generate a 'style tag' to sets a properly spacing for Navbar with fixed position.
+     *
+     * @param array $options information about Navbar fixed position.
+     * @return string style tag
+     */
+    private function body_style_tag_for_navbar(&$options = []) {
+        $body_style_tag = '';
+        $options['padding'] = isset($options['padding']) ? $options['padding'] : 70;
 
-        if ($padding_value && $padding_type = $this->padding_type_for(isset($options['position']) ? $options['position'] : '')) {
-            return new ContentTag('style', "body {padding-$padding_type: " . $padding_value . 'px}');
+        if ($padding_type = $this->padding_type_for(isset($options['position']) ? $options['position'] : '')) {
+            $body_style_tag = new ContentTag('style', "body {padding-$padding_type: " . $options['padding'] . 'px}');
+        } else {
+            $body_style_tag = null;
         }
+
+        return $body_style_tag;
     }
 
-    private function padding_type_for($position)
-    {
+    /**
+     * Tells if the class is dealing with a fixed top or fixed bottom Navbar.
+     * @param type $position Navbar position information.
+     * @return string type of fixed position (top or bottom).
+     */
+    private function padding_type_for($position) {
         $matches = [];
         preg_match('/fixed-(?<type>top|bottom)$/', $this->navbar_position_class_for($position), $matches);
 
         return isset($matches[1]) ? $matches[1] : '';
     }
 
-    private function navbar_class(&$options = [])
-    {
+    /**
+     * Returns the class to be applied to the Navbar.
+     *
+     * @param array $options class information.
+     * @return string class fot the Navbar.
+     */
+    private function navbar_class(&$options = []) {
         $style = isset($options['inverted']) && $options['inverted'] ? 'inverse' : 'default';
         $position = isset($options['position']) ? $this->navbar_position_class_for($options['position']) : null;
 
@@ -102,8 +136,13 @@ class Navbar extends Base
         return $class;
     }
 
-    private function navbar_position_class_for($position)
-    {
+    /**
+     * Tells what kind of position class has to be applied to the Navbar.
+     *
+     * @param string $position position information.
+     * @return string position class.
+     */
+    private function navbar_position_class_for($position) {
         switch ($position) {
             case 'static': case 'static_top':
                 $class = 'static-top';
@@ -121,8 +160,13 @@ class Navbar extends Base
         return $class;
     }
 
-    private function navbar_container_class($options = [])
-    {
+    /**
+     * Tells if the Navbar has to be in a standard container or in a fluid one.
+     *
+     * @param type $options
+     * @return type
+     */
+    private function navbar_container_class($options = []) {
         return isset($options['fluid']) && $options['fluid'] ?  'container-fluid' : 'container';
     }
 }

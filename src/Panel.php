@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,57 +26,71 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
-class Panel extends Base
-{
-    public function __construct($content_or_options_with_block = null, $options = null, $block = null)
-    {
+/**
+ * Class to generate a Panel object.
+ */
+class Panel extends Base {
+    /**
+     * Initializes the Panel instance.
+     *
+     * @param mixed $content_or_options_with_block the content to display in the panel.
+     * @param mixed $options [optional] the display options for the panel.
+     * @param Callable $block [optional] Block to generate a customized inside panel content.
+     */
+    public function __construct($content_or_options_with_block = null, $options = null, $block = null) {
         $html = '';
         $num_args = $this->get_function_num_args(func_get_args());
 
         if ($num_args < 3 && is_callable(func_get_arg($num_args-1))) {
             $block = func_get_arg($num_args-1);
-            $html = $this->panel_string(call_user_func($block), is_null($content_or_options_with_block) ? [] : $content_or_options_with_block);
-        }
-        elseif (is_array($content_or_options_with_block) && is_null($options)) {
-            $html = $this->panel_string(null, $content_or_options_with_block);
-        }
-        else {
-          $html = $this->panel_string($content_or_options_with_block, is_null($options) ? [] : $options);
+            $html = $this->build_panel(call_user_func($block), is_null($content_or_options_with_block) ? [] : $content_or_options_with_block);
+        } elseif (is_array($content_or_options_with_block) && is_null($options)) {
+            $html = $this->build_panel(null, $content_or_options_with_block);
+        } else {
+          $html = $this->build_panel($content_or_options_with_block, is_null($options) ? [] : $options);
         }
 
-        $this->set_html($html);
+        $this->set_html_object($html->get_html_object());
     }
 
-    private function panel_string($content = null, $options = [])
-    {
-        $content = $this->prepend_body_to($content);
-        $content = $this->prepend_optional_heading_to($content, $options);
-        $content = $this->optional_footer_to($content, $options);
+    /**
+     * Builds the Panel object
+     *
+     * @param mixed $content Panel's content.
+     * @param array $options Panel's options.
+     * @return ContentTag a ContentTag instance that represents a Panel object.
+     */
+    private function build_panel($content = null, $options = []) {
+        !is_array($options) ? $options = [] : null;
+
+        $body = $this->build_panel_body($content);
+        $heading = $this->build_panel_heading($options);
+        $footer = $this->build_panel_footer($options);
 
         if (isset($options['tag'])) {
             $tag = $options['tag'];
             unset($options['tag']);
-        }
-        else {
+        } else {
             $tag = 'div';
         }
 
         if (isset($options['context'])) {
             $context = $options['context'];
             unset($options['context']);
-        }
-        else {
+        } else {
             $context = null;
         }
 
         $this->append_class($options, $this->panel_class($context));
 
-        $panel_string = new ContentTag($tag, $content, $options);
+        $panel_string = new ContentTag($tag, $options, function() use ($heading, $body, $footer) {
+            return [$heading, $body, $footer];
+        });
 
         if (!is_null(Base::get_panel_column_class())) {
             $panel_string = new ContentTag('div', $panel_string, ['class'=>Base::get_panel_column_class()]);
@@ -85,52 +99,66 @@ class Panel extends Base
         return $panel_string;
     }
 
-    private function panel_class($context = null)
-    {
+    /**
+     * Return the context panel class.
+     *
+     * @param string $context context.
+     * @return string context panel class.
+     */
+    private function panel_class($context = null) {
         $valid_contexts = ['primary', 'success', 'info', 'warning', 'danger'];
         $context = $this->context_for($context, ['valid' => $valid_contexts]);
 
         return "panel panel-$context";
     }
 
-    private function prepend_body_to($content)
-    {
+    /**
+     * Builds the Panel's body.
+     *
+     * @param mixed $content Panel's content.
+     * @return ContentTag ContenTag instance that represents the Panel's body.
+     */
+    private function build_panel_body($content) {
         return new ContentTag('div', $content, ['class' => 'panel-body']);
     }
 
-    private function prepend_optional_heading_to($content, &$options = [])
-    {
+    /**
+     * Builds the Panel's header.
+     *
+     * @param array $options options information about Panel's header.
+     * @return string Panel's header.
+     */
+    private function build_panel_heading(&$options = []) {
         if ( isset($options['title']) ) {
             $title = new ContentTag('h3', $options['title'], ['class' => 'panel-title']);
             unset($options['title']);
-        }
-        elseif ( isset($options['heading'])) {
+        } elseif ( isset($options['heading'])) {
             $title = $options['heading'];
             unset($options['heading']);
-        }
-        else {
+        } else {
             $title = null;
         }
 
-        $heading = !is_null(($title)) ? new ContentTag('div', $title, ['class' => 'panel-heading']) : null;
+        $heading = !is_null(($title)) ? new ContentTag('div', $title, ['class' => 'panel-heading']) : '';
 
-        return join( '', array_filter( [$heading, $content], 'strlen' ) );
+        return $heading;
     }
 
-    private function optional_footer_to($content, &$options = [])
-    {
+    /**
+     * Builds the Panel's footer.
+     *
+     * @param array $options options information about Panel's footer.
+     * @return string Panel's footer.
+     */
+
+    private function build_panel_footer(&$options = []) {
         if (isset($options['footer'])) {
-            $footer = $options['footer'];
+            $footer = new ContentTag('div', $options['footer'], ['class' => 'panel-footer']);
             unset($options['footer']);
-        }
-        else {
-            $footer = null;
-        }
-
-        if ($footer) {
-            $footer = new ContentTag('div', $footer, ['class' => 'panel-footer']);
+        } else {
+            $footer = '';
         }
 
-        return join( '', array_filter( [$content, $footer], 'strlen' ) );
+        return $footer;
     }
 }

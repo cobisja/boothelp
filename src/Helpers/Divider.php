@@ -26,52 +26,34 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp;
+namespace BootHelp\Helpers;
 
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
 /**
- * Class to generate an Icon object.
+ * Class helper to build a Nav divider.
  */
-class Icon extends Base {
+class Divider extends Base {
     /**
-     * Initializes the Icon instance.
-     *
-     * @param String $name the name of the icon object to build
-     * @param Array $options the options for the icon object.
+     * Initialize a Divider instance.
      */
-    public function __construct($name = null, $options = []) {
-        !isset($options['library']) ? $options['library'] = 'glyphicons' : null;
-
-        $prefix = $this->library_prefix_for($options['library']);
-        unset($options['library']);
-
-        $this->append_class($options, $prefix);
-
-        if (!is_null($name)) {
-            $name = str_replace('_', '-', $name);
-            $this->append_class($options, "$prefix-$name");
-        }
-
-        $icon = new ContentTag('span', '', $options);
-        $this->set_html_object($icon->get_html_object());
+    public function __construct() {
+        $this->set_html_object($this->build_divider());
     }
 
     /**
-     * Returns the library prefix to be used.
+     * Returns the Divider object built.
      *
-     * @param sring $name library name
-     * @return string library prefix.
+     * @return type
      */
-    private function library_prefix_for($name) {
-        switch ($name){
-            case 'font-awesome': case 'font_awesome': case 'fa':
-                return 'fa';
-            case '': case 'glyphicons':
-                return 'glyphicon';
-            default:
-                return $name;
+    private function build_divider() {
+        if (Base::get_dropdown_link()) {
+            $divider = new ContentTag('li', '', ['class'=>'divider']);
+        } else {
+            $divider = null;
         }
+
+        return $divider;
     }
 }

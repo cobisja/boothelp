@@ -1,6 +1,4 @@
-<?php
-
-/*
+/* 
  * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
@@ -26,40 +24,35 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp;
-
-use BootHelp\Base;
-use BootHelp\Helpers\ContentTag;
-
-/**
- * Class to generate a PanelRow object.
- */
-class PanelRow extends Base {
-    /**
-     * Initializes the PanelRow instance.
-     *
-     * @param mixed $options [optional] the display options for the panel.
-     * @param Callable $block [optional] Block to generate inside panel row content.
-     */
-    public function __construct($options, $block = null) {
-        Base::set_panel_column_class(is_array($options) && isset($options['column_class']) ? $options['column_class'] : null);
-        $panel_row = new ContentTag('div', call_user_func($block), $this->set_panel_row_options($options));
-
-        $this->set_html_object($panel_row->get_html_object());
-    }
-
-    /**
-     * Add the class 'row' to indicates that this object has to be built like a PanelRow.
-     * @param array $options Panel information.
-     * @return array options processed.
-     */
-    private function set_panel_row_options($options) {
-        $this->append_class($options, 'row');
-
-        if (isset($options['column_class'])) {
-            unset($options['column_class']);
+// navbar top toggler
+(function () {
+      $('.navbar-top-toggle').click(function () {
+        var shown = $(this).text() == "Hide the navbar";
+        if(shown) {
+          $("body").animate({paddingTop: "0px"});
+          $('[data-navbar="top"]').hide('slow');
+          $(this).text('Show the navbar');
+        } else {
+          $("body").animate({paddingTop: "70px"});
+          $('[data-navbar="top"]').show('slow');
+          $(this).text('Hide the navbar');
         }
+      })
+    })();
 
-        return $options;
+// navbar bottom toggler
+(function () {
+  $('.navbar-bottom-toggle').click(function () {
+    var shown = $(this).text() == "Hide the navbar";
+    if(shown) {
+      $("body").animate({paddingBottom: "0px"});
+      $('[data-navbar="bottom"]').hide('slow');
+      $(this).text('Show the navbar');
+    } else {
+      $("body").animate({paddingBottom: "100px"});
+      $('[data-navbar="bottom"]').show('slow');
+      $(this).text('Hide the navbar');
     }
-}
+  })
+})();
+

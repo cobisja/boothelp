@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,15 +26,23 @@
  * THE SOFTWARE.
  */
 
-namespace BHP\Helpers;
+namespace BootHelp\Helpers;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
-class Horizontal extends Base
-{
-    public function __construct($content_or_options_with_block = null, $options = null, callable $block = null)
-    {
+/**
+ * Class Helper to be used with navbar objects.
+ */
+class Horizontal extends Base {
+    /**
+     * Initializes the Horizontal instance.
+     *
+     * @param mixed $content_or_options_with_block possible content of Horizontal object.
+     * @param mixed $options possible options of Horizontal object.
+     * @param closure $block Closure to build the Horizontal content.
+     */
+    public function __construct($content_or_options_with_block = null, $options = null, callable $block = null) {
         $num_args = $this->get_function_num_args(func_get_args());
         $block = is_callable(func_get_arg($num_args-1)) ? func_get_arg($num_args-1) : null;
 
@@ -48,26 +56,22 @@ class Horizontal extends Base
                 break;
         }
 
-        if ($block) {
-            $html = $this->horizontal_string($content_or_options_with_block ? $content_or_options_with_block : [], $block);
-        }
-        else {
-            $html = $this->horizontal_string($options ? $options : [], $content_or_options_with_block);
-        }
+        $html = $this->build_horizontal($content_or_options_with_block ? $content_or_options_with_block : [], $block);
 
-        $this->set_html($html);
+        $this->set_html_object($html->get_html_object());
     }
 
-    private function horizontal_string($options = [], $block = null)
-    {
+    /**
+     * Build the Horizontal object.
+     *
+     * @param array $options options to build the Horizontal object.
+     * @param closure $block Closure to build the Horizontal object.
+     * @return ContentTag instance of ContenTag that represents the Horizontal object.
+     */
+    private function build_horizontal($options = [], $block = null) {
         $this->append_class($options, 'collapse navbar-collapse');
-        $options['id'] = $this->navbar_id();
+        $options['id'] = Base::get_navbar_id();
 
         return new ContentTag('div', $options, $block);
-    }
-
-    private function navbar_id()
-    {
-        return Base::get_navbar_id();
     }
 }

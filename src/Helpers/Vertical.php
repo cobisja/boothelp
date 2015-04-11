@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,13 +26,22 @@
  * THE SOFTWARE.
  */
 
-namespace BHP\Helpers;
+namespace BootHelp\Helpers;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
-class Vertical extends Base
-{
+/**
+ * Class helper to be used with navbar objects.
+ */
+class Vertical extends Base {
+    /**
+     * Initializes the Vertical instance
+     *
+     * @param mixed $content_or_options_with_block possible content of Vertical object.
+     * @param mixed $options possible options of Vertical object.
+     * @param closure $block Closure to build the Vertical content.
+     */
     public function __construct($content_or_options_with_block = null, $options = null, callable $block = null)
     {
         $num_args = $this->get_function_num_args(func_get_args());
@@ -48,51 +57,66 @@ class Vertical extends Base
                 break;
         }
 
-        if ($block) {
-            $html = $this->vertical_string($content_or_options_with_block ? $content_or_options_with_block : [], $block);
-        }
-        else {
-            $html =  $this->vertical_string($options ? $options : [], $content_or_options_with_block);
-        }
+        $html = $this->build_vertical($content_or_options_with_block ? $content_or_options_with_block : [], $block);
 
-        $this->set_html($html);
+        $this->set_html_object($html);
     }
 
-    private function vertical_string($options = [], $block = null)
-    {
+    /**
+     * Build the Vertical object.
+     *
+     * @param array $options options to build the Vertical object.
+     * @param closure $block Closure to build the Vertical object.
+     * @return ContentTag instance of ContenTag that represents the Vertical object.
+     */
+    private function build_vertical($options = [], $block = null) {
         Base::set_navbar_vertical(true);
-        $this->append_class($options, 'navbar-header');
 
-        $vertical = new ContentTag('div', $options, function() use($block){
-                  $capture = is_callable($block) ? call_user_func($block) : $block;
-                  return join("\n", [$this->toggle_button(), $capture]);
-            }
-        );
+        $this->append_class($options, 'navbar-header');
+        $yield = is_callable($block) ? call_user_func($block) : $block;
+
+        $vertical = new ContentTag('div', $options, function() use($yield){
+            return [$this->toggle_button(), $yield];
+        });
+
         Base::set_navbar_vertical(false);
 
-        return $vertical;
+        return $vertical->get_html_object();
     }
 
-    private function toggle_button($options = [])
-    {
+    /**
+     * Builds the toggle button that shows up when resizing browser.
+     *
+     * @param arrray $options options to build the toggle button.
+     * @return mixed Html that represents the toggle button.
+     */
+    private function toggle_button($options = []) {
         $options['type'] = 'button';
         $options['class'] = 'navbar-toggle';
         $options['data-toggle'] = 'collapse';
         $options['data-target'] = '#' . Base::get_navbar_id();
 
-        return new ContentTag('button', $options, function(){
-                  return join("\n", [$this->toggle_text(), $this->toggle_bar(), $this->toggle_bar(), $this->toggle_bar()]);
-            }
-        );
+        return (new ContentTag('button', $options, function(){
+                return [$this->toggle_text(), $this->toggle_bar(), $this->toggle_bar(), $this->toggle_bar()];
+            })
+        )->get_html_object();
     }
 
-    private function toggle_text()
-    {
-        return new ContentTag('span', 'Toggle navigation', ['class'=>'sr-only']);
+    /**
+     * Builds the toggle text.
+     *
+     * @return ContentTag instance of ContenTag that represents the toggle text object.
+     */
+    private function toggle_text() {
+        return (new ContentTag('span', 'Toggle navigation', ['class'=>'sr-only']))->get_html_object();
     }
 
-    private function toggle_bar()
-    {
-        return new ContentTag('span', null, ['class'=>'icon-bar']);
+    /**
+     * Builds the toggle bar.
+     *
+     * @return ContentTag instance of ContenTag that represents the toggle bar object.
+     */
+    private function toggle_bar() {
+        return (new ContentTag('span', null, ['class'=>'icon-bar']))->get_html_object();
     }
 }

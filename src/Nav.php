@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,15 +26,22 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
-class Nav extends Base
-{
-    public function __construct($options = [], $block = null)
-    {
+/**
+ * Class to generate a Nav object.
+ */
+class Nav extends Base {
+    /**
+     * Initializes a Nav instance.
+     *
+     * @param array $options options the display options for the nav.
+     * @param mixed $block Block to generate a customized inside nav content.
+     */
+    public function __construct($options = [], $block = null) {
         $num_args = $this->get_function_num_args(func_get_args());
 
         if (2 > $num_args && is_callable(func_get_arg($num_args-1))) {
@@ -43,34 +50,36 @@ class Nav extends Base
         }
 
         Base::set_nav_link(true);
-        $html = new ContentTag('ul', $this->nav_options($options), $block);
+        $nav = new ContentTag('ul', $this->nav_options($options), $block);
         Base::set_nav_link(false);
 
-        $this->set_html($html);
+        $this->set_html_object($nav->get_html_object());
     }
 
-    private function nav_options($options = [])
-    {
+    /**
+     * Process the Nav's options.
+     *
+     * @param array $options Nav's options.
+     * @return array Nav's options processed.
+     */
+    private function nav_options($options = []) {
         $this->append_class($options, 'nav');
 
         if (Base::get_navbar_id()) {
             $this->append_class($options, 'navbar-nav');
-        }
-        else {
-            $options['role'] = 'tablist';
-
+        } else {
             if (isset($options['as'])) {
-                $as = $options['as'];
+                $as = 'single' === $options['as'] ? '' : 'nav-' . $options['as'];
                 unset($options['as']);
-            }
-            else {
-                $as = 'tabs';
+            } else {
+                $as = 'nav-tabs';
             }
 
-            $this->append_class($options, "nav-$as");
+            $this->append_class($options, $as);
 
             if (isset($options['layout'])) {
                 $this->append_class($options, "nav-{$options['layout']}");
+                unset($options['layout']);
             }
       }
 

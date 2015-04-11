@@ -1,7 +1,7 @@
 <?php
 
 /*
- * bhp
+ * BootHelp - PHP Helpers for Bootstrap
  *
  * (The MIT License)
  *
@@ -26,38 +26,49 @@
  * THE SOFTWARE.
  */
 
-namespace BHP;
+namespace BootHelp;
 
-use BHP\Base;
-use BHP\Helpers\ContentTag;
+use BootHelp\Base;
+use BootHelp\Helpers\ContentTag;
 
-
-class ProgressBar extends Base
-{
-    public function __construct($options = [], $container_options = [])
-    {
+/**
+ * Class to generate a ProgressBar object.
+ */
+class ProgressBar extends Base {
+    /**
+     * Initializes the ProgressBar instance.
+     *
+     * @param array $options options to build the ProgressBar.
+     * @param array $container_options options to be passed to the ProgressBar's container.
+     */
+    public function __construct($options = [], $container_options = []) {
         $this->append_class($container_options, 'progress');
-        $this->set_html(new ContentTag('div', $container_options, function() use ($options){
+
+        $progress_bar = new ContentTag('div', $container_options, function() use ($options){
             if (is_array(reset($options))) {
                 $progress_strings = [];
 
                 foreach ($options as $progress_bar_options) {
-                    if (is_array($progress_bar_options)) {
-
-                    }
-                    $progress_strings[] = $this->progress_bar_string($progress_bar_options);
+                    $progress_strings[] = $this->build_progress_bar($progress_bar_options);
                 }
 
-                return join("\n", $progress_strings);
+                return $progress_strings;
             }
             else {
-              return $this->progress_bar_string($options);
+              return $this->build_progress_bar($options);
             }
-        }));
+        });
+
+        $this->set_html_object($progress_bar->get_html_object());
     }
 
-    private function progress_bar_string($options=[])
-    {
+    /**
+     * Generates the ProgressBar object.
+     *
+     * @param array $options ProgressBar's options.
+     * @return ContentTag ContentTag instance that representes the ProgressBar.
+     */
+    private function build_progress_bar($options=[]) {
         $percentage = 0;
 
         if (isset($options['percentage'])) {
@@ -78,39 +89,43 @@ class ProgressBar extends Base
         return new ContentTag('div', $progress_label, $attributes);
     }
 
-    private function progress_bar_label($percentage, &$options = [])
-    {
+    /**
+     * Returns the ProgressBar's label.
+     *
+     * @param string $percentage value of the progress bar (number or text).
+     * @param array $options label's options.
+     * @return string ProgressBar's label.
+     */
+    private function progress_bar_label($percentage, &$options = []) {
         if (isset($options['context'])) {
             $text1 = " ({$options['context']})";
             unset($options['context']);
-        }
-        else {
+        } else {
             $text1 = null;
         }
 
-//        $text1 = isset($options['context']) ? " ({$options['context']})" : null;
         $text = "$percentage%" . $text1;
-
         $label = isset($options['label']) ? $options['label'] : false;
-
 
         if (is_bool($label)) {
             $label = $label ? $text : new ContentTag('span', $text, ['class'=>'sr-only']);
         }
+
         unset($options['label']);
 
         return $label;
     }
 
-    private function progress_bar_class(&$options = [])
-    {
+    /**
+     * Generates the ProgressBar class.
+     *
+     * @param array $options ProgressBar class information.
+     * @return string ProgressBar class.
+     */
+    private function progress_bar_class(&$options = []) {
         $striped = null;
         $animated = null;
         $valid_contexts = ['success', 'info', 'warning', 'danger'];
-
-//        if (!isset($options['context'])) {
-//            $options['context'] = null;
-//        }
 
         $context = $this->context_for(!isset($options['context']) ? null : $options['context'], ['valid'=>$valid_contexts]);
         $context = in_array($context, $valid_contexts) ? "progress-bar-$context" : null;
@@ -125,6 +140,6 @@ class ProgressBar extends Base
             unset($options['animated']);
         }
 
-        return  join( ' ', array_filter( ['progress-bar', $context, $striped, $animated], 'strlen' ) );
+        return  join(Base::SPACE, array_filter(['progress-bar', $context, $striped, $animated], 'strlen'));
     }
 }
