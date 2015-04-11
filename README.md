@@ -158,6 +158,10 @@ Feel free to contribute!!!. Welcome aboard!!!
 ## Misc
 ### Version history
 
+**0.2.1** (Friday, 10th April 2015)
+
+* Updating .gitignore file.
+
 **0.2.0** (Friday, 10th April 2015)
 
 * First public release.
