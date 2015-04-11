@@ -79,23 +79,29 @@ require('Guide/panel.php');
 require('Guide/panel_rows.php');
 require('Guide/progress_bar.php');
 
+use BootHelp\Nav;
+use BootHelp\Helpers\LinkTo;
 ?>
                 </div>
                 <div class="col-md-3">
                    <div role="complementary" class="sidebar  affix">
-                        <ul class="nav bs-docs-sidenav">
-                          <li><a href="#overview">Overview</a></li>
-                          <li><a href="#alerts">Alerts</a></li>
-                          <li><a href="#buttons">Buttons</a></li>
-                          <li><a href="#dropdowns">Dropdowns</a></li>
-                          <li><a href="#icons">Icons</a></li>
-                          <li><a href="#modals">Modals</a></li>
-                          <li><a href="#navs">Navs</a></li>
-                          <li><a href="#navbars">Navbars</a></li>
-                          <li><a href="#panels">Panels</a></li>
-                          <li><a href="#panel-rows">Panel rows</a></li>
-                          <li><a href="#progress-bar">Progress bars</a></li>
-                        </ul>
+                       <?php
+                        echo new Nav(['as'=>'single', 'class'=>'bs-docs-sidenav'], function(){
+                            return [
+                                new LinkTo('Overview', ['href'=>'#overview']),
+                                new LinkTo('Alerts', ['href'=>'#alerts']),
+                                new LinkTo('Buttons', ['href'=>'#buttons']),
+                                new LinkTo('Dropdowns', ['href'=>'#dropdowns']),
+                                new LinkTo('Icons', ['href'=>'#icons']),
+                                new LinkTo('Modals', ['href'=>'#modals']),
+                                new LinkTo('Navs', ['href'=>'#navs']),
+                                new LinkTo('Navbars', ['href'=>'#navbars']),
+                                new LinkTo('Panels', ['href'=>'#panels']),
+                                new LinkTo('Panel rows', ['href'=>'#panel-rows']),
+                                new LinkTo('Progress bars', ['href'=>'#progress-bar'])
+                            ];
+                        });
+                        ?>
                     </div>
                 </div>
             </div>

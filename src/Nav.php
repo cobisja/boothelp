@@ -69,13 +69,13 @@ class Nav extends Base {
             $this->append_class($options, 'navbar-nav');
         } else {
             if (isset($options['as'])) {
-                $as = $options['as'];
+                $as = 'single' === $options['as'] ? '' : 'nav-' . $options['as'];
                 unset($options['as']);
             } else {
-                $as = 'tabs';
+                $as = 'nav-tabs';
             }
 
-            $this->append_class($options, "nav-$as");
+            $this->append_class($options, $as);
 
             if (isset($options['layout'])) {
                 $this->append_class($options, "nav-{$options['layout']}");

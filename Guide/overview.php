@@ -40,7 +40,7 @@ echo BootHelp::content_tag('h1', 'Overview', ['id'=>'overview', 'class'=>'page-h
 echo BootHelp::content_tag('p', function(){
     return
     "Nowadays Bootstrap is a great framework commonly used by a lot of web designers and web developers to "
-    . " build web sites with a \"fresh looking\" using its HMTL and CSS based design templates "
+    . " build web sites with a \"fresh looking\" using its HTML and CSS based design templates "
     . "for typography, forms, buttons, navigation, and other interface components, as well "
     . "JavaScript extensions.";
 });
