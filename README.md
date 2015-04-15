@@ -55,7 +55,26 @@ Even if Composer it's the preferred method to generate the files needed to get a
 
 	```php
     <?php
-	require 'BootHelp/src/BootHelp.php';
+    require 'src/Helpers/Html/Html.php';
+    require 'src/Helpers/Html/HtmlAttribute.php';
+    require 'src/Helpers/Html/HtmlContent.php';
+    require 'src/Helpers/ContentTag.php';
+    require 'src/Helpers/LinkTo.php';
+    require 'src/Helpers/Vertical.php';
+    require 'src/Helpers/Horizontal.php';
+    require 'src/Helpers/Divider.php';
+    require 'src/Base.php';
+    require 'src/AlertBox.php';
+    require 'src/Button.php';
+    require 'src/Dropdown.php';
+    require 'src/Icon.php';
+    require 'src/Modal.php';
+    require 'src/Nav.php';
+    require 'src/Navbar.php';
+    require 'src/Panel.php';
+    require 'src/PanelRow.php';
+    require 'src/ProgressBar.php';
+    require 'src/BootHelp.php'	
     ```
     
 #### Handling namespaces
@@ -119,7 +138,7 @@ Html, HtmlAttribute, HtmlContent, Base, BootHelp
 
 ## BootHelp API
 
-To get an idea about how to use **BootHelp classes**, what parameters you have to provide, what classes you can use together, and somethings like that, there is a complete guide included. You can load in your browser. The guide is located in **Guide folder**. Actually, when you download **BootHelp** you can open the file **index.php** in your browser to read all the information about the classes.
+To get an idea about how to use **BootHelp classes**, what parameters you have to provide, what classes you can use together, and somethings like that, there is a complete guide included, that you can load in your browser. The guide is located in **Guide folder**. Actually, when you download **BootHelp** you can open the file **index.php** in your browser to read all the information about the classes.
 
 However, to get running the Guide, you need to download and install the following:
 
@@ -128,9 +147,10 @@ However, to get running the Guide, you need to download and install the followin
 
 Then, uncompress the files above downloaded and carefully follows the steps show below:
 
-1. Copy the file **bootstrap.min.css** into **BootHelp/Guide/css** folder.
-2. Copy the files **bootstrap/fonts/*** into **BootHelp/Guide/fonts** folder.
-2. Copy the files **bootstrap.min.js** and **jquery.min.js** into **BootHelp/Guide/js** folder.
+1. Get into BootHelp root folder.
+2. Copy the file **bootstrap.min.css** into **Guide/css** folder.
+3. Copy the files **bootstrap/fonts/*** into **Guide/fonts** folder.
+4. Copy the files **bootstrap.min.js** and **jquery.min.js** into **Guide/js** folder.
 
 Aditional css is required to use 'Font awesome'. You have to add a link to awesome.css:
 ```html
@@ -143,7 +163,7 @@ You have to put the sentence above in **index.php**
 **BootHelp** is not perfect!!!. It's been tested but maybe you can find some bugs, or maybe you can find many better ways to do the things. For that reason, there are some things to do:
 
 * Include more Bootstrap components.
-* Find a way to integrates with template engines like [Twig].
+* Find a way to integrate **BootHelp** with template engines like [Twig].
 * Improve the classes integration.
 
 
@@ -157,6 +177,10 @@ Feel free to contribute!!!. Welcome aboard!!!
 
 ## Misc
 ### Version history
+
+**0.2.1** (Friday, 10th April 2015)
+
+* Updating .gitignore file.
 
 **0.2.0** (Friday, 10th April 2015)
 

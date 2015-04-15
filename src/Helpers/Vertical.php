@@ -75,8 +75,9 @@ class Vertical extends Base {
         $this->append_class($options, 'navbar-header');
         $yield = is_callable($block) ? call_user_func($block) : $block;
 
-        $vertical = new ContentTag('div', $options, function() use($yield){
-            return [$this->toggle_button(), $yield];
+        $vertical = new ContentTag('div', $options, function() use ($yield){
+            $content = is_array($yield) ? array_merge([$this->toggle_button()], $yield) : [$this->toggle_button(), $yield];
+            return $content;
         });
 
         Base::set_navbar_vertical(false);
