@@ -154,6 +154,105 @@ Additionally, if any link matches the current URL, its <code>li</code> tag autom
 </ul>'
         ],
         [
+            'name'=> 'Navs with Dropdowns - Option 1',
+            'description'=>'Dropdowns into Navs has a different behaviour. Instead to build a Button to trigger the
+    the dropdown menu, a Link (<code>"a" tag</code>) is generated. So, to get a Dropdown into a Nav just define the dropdown
+    as any other Nav item.',
+            'php_code'=> "echo BootHelp::nav(function(){
+    return [
+        new LinkTo('Home', ['href'=>'/']),
+        Boothelp::dropdown('Social networks', function(){
+            return [
+                BootHelp::link_to('Twitter'),
+                BootHelp::link_to('Facebook'),
+                BootHelp::divider(),
+                BootHelp::link_to('Other')
+            ];
+        }),
+        new LinkTo('Profile')
+    ];
+});",
+            'result'=> BootHelp::nav(function() use ($href) {
+    return [
+        new LinkTo('Home', ['href'=>$href]),
+        Boothelp::dropdown('Social networks', function(){
+            return [
+                BootHelp::link_to('Twitter'),
+                BootHelp::link_to('Facebook'),
+                BootHelp::divider(),
+                BootHelp::link_to('Other')
+            ];
+        }),
+        new LinkTo('Profile')
+    ];
+}),
+            'html_code'=>'<ul class="nav nav-tabs">
+    <li class="active"><a href="/">Home</a></li>
+    <li class="dropdown">
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            Social networks
+            <span class="caret"></span>
+        </a>
+        <ul aria-labelledby="label-dropdown-705851964" role="menu" class="dropdown-menu">
+            <li><a href="#" role="menuitem">Twitter</a></li>
+            <li><a href="#" role="menuitem">Facebook</a></li>
+            <li class="divider"></li><li><a href="#" role="menuitem">Other</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Profile</a></li>
+</ul>'
+        ],
+        [
+            'name'=> 'Navs with Dropdowns - Option 2',
+            'description'=>'Maybe you want to build the <code>Dropdown</code> outside the <code>Nav</code> and then
+    put it inside the Nav definition, to get the Nav code cleaner. In these cases, you have to use <code>["into_nav"=>true]</code>
+    to indicates that the Dropdown is embedded the Nav.',
+            'php_code'=> "\$sub_menu = Boothelp::dropdown('Social networks', ['into_nav'=>true], function(){
+    return [
+        BootHelp::link_to('Twitter'),
+        BootHelp::link_to('Facebook'),
+        BootHelp::divider(),
+        BootHelp::link_to('Others')
+    ];
+});
+echo BootHelp::nav(function() use (\$sub_menu) {
+    return [
+        new LinkTo('Home', ['href'=>'/']),
+        \$sub_menu
+        new LinkTo('Profile')
+    ];
+});",
+            'result'=> BootHelp::nav(function() use ($href) {
+    return [
+        new LinkTo('Home', ['href'=>$href]),
+        Boothelp::dropdown('Social networks', function(){
+            return [
+                BootHelp::link_to('Twitter'),
+                BootHelp::link_to('Facebook'),
+                BootHelp::divider(),
+                BootHelp::link_to('Other')
+            ];
+        }),
+        new LinkTo('Profile')
+    ];
+}),
+            'html_code'=>'<ul class="nav nav-tabs">
+    <li class="active"><a href="/">Home</a></li>
+    <li class="dropdown">
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            Social networks
+            <span class="caret"></span>
+        </a>
+        <ul aria-labelledby="label-dropdown-705851964" role="menu" class="dropdown-menu">
+            <li><a href="#" role="menuitem">Twitter</a></li>
+            <li><a href="#" role="menuitem">Facebook</a></li>
+            <li class="divider"></li><li><a href="#" role="menuitem">Other</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Profile</a></li>
+</ul>'
+        ],
+        [
             'name'=> 'Complex navs',
             'description'=>'To include HTML tags or a long text in the nav, pass your content in a block.
 You can also specify custom options which will be added to the nav’s <code>ul</code> tag.',

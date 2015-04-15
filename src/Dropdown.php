@@ -30,6 +30,7 @@ namespace BootHelp;
 
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
+use BootHelp\Helpers\LinkTo;
 
 /**
  * Class to generate a Dropdown object.
@@ -42,7 +43,7 @@ class Dropdown extends Base {
      * @param array $options options to build the Dropdown.
      * @param closure $block closure to build the Dropdown content.
      */
-    public function __construct($caption, $options = [], $block = null) {
+        public function __construct($caption, $options = [], $block = null) {
         if (is_callable($options)) {
             $block = $options;
             $options = [];
@@ -57,8 +58,16 @@ class Dropdown extends Base {
         Base::set_dropdown_link(true);
 
         $yield = is_callable($block) ? call_user_func($block) : null;
-        $dropdown = isset($options['split']) && $options['split'] ? $this->build_split_dropdown($options, $yield) : $this->build_standard_dropdown($options, $yield);
+//        $dropdown = isset($options['split']) && $options['split'] ? $this->build_split_dropdown($options, $yield) : $this->build_standard_dropdown($options, $yield);
 
+        if ((isset($options['into_navbar']) && $options['into_navbar']) || ('' !== Base::get_navbar_id())) {
+            $dropdown = $this->build_standard_dropdown_into_navbar($options, $yield);
+        } elseif (isset($options['into_nav']) && $options['into_nav'] || Base::get_nav_link()) {
+            $dropdown = $this->build_standard_dropdown_into_nav($options, $yield);
+        }
+        else {
+           $dropdown = isset($options['split']) && $options['split'] ? $this->build_split_dropdown($options, $yield) : $this->build_standard_dropdown($options, $yield);
+        }
         Base::set_dropdown_link(false);
 
         $this->set_html_object($dropdown->get_html_object());
@@ -84,6 +93,54 @@ class Dropdown extends Base {
                     new ContentTag('ul', $yield, ['class'=>$options['list_class'], 'role'=>'menu', 'aria-labelledby'=>$options['id']])
                 ];
             });
+    }
+
+    /**
+     * Builds a standard Dropdown that is rendered within a Navbar, so the Button
+     * is not going to be generated instead a LinkTo is generated to trigger the
+     * dropdown menu.
+     *
+     * @param array $options Dropdown's options.
+     * @param mixed $yield Dropdown's content.
+     * @return ContentTag a ContentTag instance that represents a Dropdown within a NavBar.
+     */
+    private function build_standard_dropdown_into_navbar($options, $yield) {
+        return
+            new ContentTag('div', ['class'=>$options['div_class']], function() use ($options, $yield) {
+                return new ContentTag('ul', ['class'=>'nav navbar-nav'], function() use ($options, $yield) {
+                    return $this->build_standard_dropdown_into_nav($options, $yield);
+                });
+            });
+    }
+
+    /**
+     * Builds a standard Dropdown that is rendered within a Nav, so the Button
+     * is not going to be generated instead a LinkTo is generated to trigger the
+     * dropdown menu.
+     *
+     * @param array $options Dropdown's options.
+     * @param mixed $yield Dropdown's content.
+     * @return ContentTag a ContentTag instance that represents a Dropdown within a Nav.
+     */
+    private function build_standard_dropdown_into_nav($options, $yield) {
+        return new ContentTag('li', ['class'=>'dropdown'], function() use ($options, $yield) {
+            $nav_link_status = Base::get_nav_link();
+            $dropdown_link_status = Base::get_dropdown_link();
+            Base::set_dropdown_link(false);
+            Base::set_nav_link(false);
+            $link =  new LinkTo(['href'=>'#', 'class'=>'dropdown-toggle', 'data-toggle'=>'dropdown'], function() use ($options) {
+                return [
+                    $options['caption'],
+                    new ContentTag('span', '', ['class'=>'caret'])
+                ];
+            });
+            Base::set_nav_link($nav_link_status);
+            Base::set_dropdown_link($dropdown_link_status);
+            return [
+                $link,
+                new ContentTag('ul', $yield, ['class'=>$options['list_class'], 'role'=>'menu', 'aria-labelledby'=>$options['id']])
+            ];
+        });
     }
 
     /**

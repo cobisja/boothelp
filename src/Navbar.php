@@ -50,7 +50,7 @@ class Navbar extends Base {
         Base::set_navbar_id(!isset($options['id']) ? ('navbar-collapse-' . (string) (mt_rand(1, pow(10, 7)))) : $options['id']);
         unset($options['id']);
         $navbar = $this->build_navbar($options, $block);
-        Base::set_navbar_id(false);
+        Base::set_navbar_id('');
 
         $this->set_html_object($navbar->get_html_object());
     }

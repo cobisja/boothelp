@@ -94,11 +94,12 @@ class Button extends Base {
         }
 
         $layout = $options['layout'] === 'block' ? 'btn-block' : null;
+        $navbar_btn_class = ('' !== Base::get_navbar_id() ? 'navbar-btn' : null);
 
         unset($options['context']);
         unset($options['size']);
         unset($options['layout']);
 
-        return  join(Base::SPACE, array_filter(['btn', "btn-$context", $size, $layout], 'strlen'));
+        return join(Base::SPACE, array_filter(['btn', "btn-$context", $size, $layout, $navbar_btn_class], 'strlen'));
     }
 }
