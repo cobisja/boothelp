@@ -113,9 +113,9 @@ $modal = BootHelp::modal('How easy is to use BootHelp!!!');
 echo $modal;
 ...
 ```
-**BootHelp abstract class** exposes the following 15 abstract methods:
+**BootHelp abstract class** exposes the following 17 abstract methods:
 ```
-content_tag, divider, horizontal, link_to, vertical, alert_box, button, dropdown, icon, modal, nav, navbar, panel, panel_row, progress_bar
+content_tag, divider, horizontal, link_to, vertical, alert_box, button, button_group, button_toolbar, dropdown, icon, modal, nav, navbar, panel, panel_row, progress_bar
 ```
 #### Method 2 - Using directly the component class:
 
@@ -126,9 +126,9 @@ use BootHelp\Modal;
 $modal = new Modal('How easy is to use BootHelp!!!');
 echo $modal;
 ```
-**BootHelp** offers 15 classes that deal directly with Bootstrap components:
+**BootHelp** offers 17 classes that deal directly with Bootstrap components:
 ```
-ContentTag, Divider, Horizontal, LinkTo, Vertical, AlertBox, Button, Dropdown, Icon, Modal, Nav, Navbar, Panel, PanelRow, ProgressBar.
+ContentTag, Divider, Horizontal, LinkTo, Vertical, AlertBox, Button, ButtonGroup, ButtonToolbar, Dropdown, Icon, Modal, Nav, Navbar, Panel, PanelRow, ProgressBar.
 ```
 
 Besides the classes showed above, you can find 5 additionals classes with differents purposes:
@@ -177,6 +177,21 @@ Feel free to contribute!!!. Welcome aboard!!!
 
 ## Misc
 ### Version history
+
+**0.3.0** (Thursday, 16th April 2015)
+
+* Adding support for generating Button Groups and Button Toolbars.
+* Improved documentation.
+* Fix minor bugs.
+* New tests for new compoments.
+* Updated test for Dropdown, Nav and Navbar components.
+
+**0.2.2** (Wednesday, 15th April 2015)
+
+* Better integration between Dropdown and Nav / Navbar.
+* Adding correct class when a Button is within a Navbar.
+* Fix minor bugs.
+* README.md upgraded.
 
 **0.2.1** (Friday, 10th April 2015)
 

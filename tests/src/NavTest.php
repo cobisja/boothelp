@@ -29,7 +29,9 @@
 namespace BootHelp\Tests;
 
 use BootHelp\Nav;
+use BootHelp\Dropdown;
 use BootHelp\Helpers\LinkTo;
+use BootHelp\Helpers\Divider;
 
 class NavTest extends \PHPUnit_Framework_TestCase {
     public function testWithNoOptions() {
@@ -160,6 +162,51 @@ class NavTest extends \PHPUnit_Framework_TestCase {
         });
         $html = $nav->get_html();
         $this->assertTrue($html->is_a('ul', ['id'=>'my-nav', 'data-js'=>1, 'class'=>'en nav nav-tabs']));
+    }
+
+    public function testDropdownIntoNav() {
+        /**
+         * It should generates:
+         *
+         * <ul class="nav nav-tabs">
+         *     <li><a href="/">Home</a></li>
+         *     <li class="dropdown">
+         *         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+         *             Social networks
+         *             <span class="caret"></span>
+         *         </a>
+         *         <ul aria-labelledby="label-dropdown-7152901241" role="menu" class="dropdown-menu">
+         *             <li><a href="#" role="menuitem">Twitter</a></li>
+         *             <li><a href="#" role="menuitem">Facebook</a></li>
+         *             <li class="divider"></li>
+         *             <li><a href="#" role="menuitem">Other</a></li>
+         *         </ul>
+         *     </li>
+         *     <li><a href="#">Profile</a></li>
+         * </ul>
+         */
+        $nav = new Nav(function(){
+            return [
+                new LinkTo('Home', ['href'=>'/']),
+                new Dropdown('Social networks', function(){
+                    return [
+                        new LinkTo('Twitter'),
+                        new LinkTo('Facebook'),
+                        new Divider(),
+                        new LinkTo('Other')
+                    ];
+                }),
+                new LinkTo('Profile')
+            ];
+        });
+        $html = $nav->get_html();
+        $this->validate_nav($html);
+
+        $dropdown = $html->get_child(1);
+        $this->assertTrue($dropdown->is_a('li', ['class'=>'dropdown']));
+        $this->assertTrue(2 === $dropdown->number_of_children());
+        $this->assertTrue($dropdown->get_child(0)->is_a('a', ['class'=>'dropdown-toggle']));
+        $this->assertTrue($dropdown->get_child(1)->is_a('ul', ['class'=>'dropdown-menu']));
     }
 
 

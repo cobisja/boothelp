@@ -70,6 +70,8 @@ require 'vendor/autoload.php';
 require('Guide/overview.php');
 require('Guide/alert.php');
 require('Guide/button.php');
+require('Guide/button_group.php');
+require('Guide/button_toolbar.php');
 require('Guide/dropdown.php');
 require('Guide/icon.php');
 require('Guide/modal.php');
@@ -91,6 +93,8 @@ use BootHelp\Helpers\LinkTo;
                                 new LinkTo('Overview', ['href'=>'#overview']),
                                 new LinkTo('Alerts', ['href'=>'#alerts']),
                                 new LinkTo('Buttons', ['href'=>'#buttons']),
+                                new LinkTo('Button Group', ['href'=>'#button-group']),
+                                new LinkTo('Button Toolbar', ['href'=>'#button-toolbar']),
                                 new LinkTo('Dropdowns', ['href'=>'#dropdowns']),
                                 new LinkTo('Icons', ['href'=>'#icons']),
                                 new LinkTo('Modals', ['href'=>'#modals']),

@@ -31,8 +31,12 @@ namespace BootHelp;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
+
 /**
- * Class to generate a ProgressBar object.
+ * Generates an HTML block tag that follows the Bootstrap documentation
+ * on how to display <strong>Progress bar</strong> component.
+ *
+ * See {@link http://getbootstrap.com/components/#progress} for more information.
  */
 class ProgressBar extends Base {
     /**

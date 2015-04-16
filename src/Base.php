@@ -71,6 +71,11 @@ class Base {
     private static $nav_link = false;
 
     /**
+     * @var boolean to know the button group justified context.
+     */
+    private static $justified_button_group = false;
+
+    /**
      * @var HTML holds an HTML instance.
      */
     private $html;
@@ -185,6 +190,21 @@ class Base {
     }
 
     /**
+     * Gets Button Group's justified context.
+     * @return boolean Button Group justified context.
+     */
+    static function get_justified_button_group() {
+        return self::$justified_button_group;
+    }
+
+    /**
+     * Sets Button Group's context to justified.
+     */
+    static function set_justified_button_group($justified_button_group) {
+        self::$justified_button_group = $justified_button_group;
+    }
+
+    /**
      * Sets the html attribute with a instance of HTML.
      *
      * @param mixed $type type of Html object.
@@ -200,7 +220,7 @@ class Base {
     }
 
     /**
-     * Returns the Html instance store in html attribute.
+     * Returns the Html instance stored in html attribute.
      *
      * @return HTML html instance.
      */
@@ -208,7 +228,7 @@ class Base {
         return $this->get_html_object();
     }
     /**
-     * Returns the Html instance store in html attribute.
+     * Returns the Html instance stored in html attribute.
      *
      * @return HTML html instance.
      */

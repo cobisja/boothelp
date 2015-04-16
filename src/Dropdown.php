@@ -32,8 +32,12 @@ use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 use BootHelp\Helpers\LinkTo;
 
+
 /**
- * Class to generate a Dropdown object.
+ * Generates an HTML block tag that follows the Bootstrap documentation
+ * on how to display <strong>Dropdown</strong> component.
+ *
+ * See {@link http://getbootstrap.com/components/#dropdowns} for more information.
  */
 class Dropdown extends Base {
     /**
