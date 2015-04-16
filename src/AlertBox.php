@@ -30,28 +30,10 @@ namespace BootHelp;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
+
 /**
  * Generates an HTML block tag that follows the Bootstrap documentation
- * on how to display *alert boxes*.
- *
- * Examples:
- *
- * An alert with a plain-text message as the first parameter.
- *
- * <code>
- * echo BH::alert_box('You accepted the Terms of service.', ['dismissible'=>true]);
- * </code>
- *
- * <code>
- * echo new AlertBox(''You accepted the Terms of service.', ['dismissible'=>true]);
- * </code>
- *
- * An alert with an HTML message passed as a block.
- *
- * <code>
- * BH::alert_box(['dismissible'=>true],
- *    function(){ return BH::content_tag('strong', 'User updated successfully'); }
- * </code>
+ * on how to display <strong>Alert Box</strong> component.
  *
  * See {@link http://getbootstrap.com/components/#alerts} for more information.
  */

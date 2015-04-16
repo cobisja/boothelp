@@ -1,7 +1,7 @@
 <?php
 
 /*
- * BootHelp - PHP Helpers for Bootstrap
+ * BootHelp
  *
  * (The MIT License)
  *
@@ -31,39 +31,41 @@ namespace BootHelp;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
-
 /**
  * Generates an HTML block tag that follows the Bootstrap documentation
- * on how to display multiple column panels using <strong>Panel</strong> component.
+ * on how to display <strong>Button Toolbar</strong>.
  *
- * See {@link http://getbootstrap.com/css/#grid} for more information.
+ * See {@link http://getbootstrap.com/components/#btn-groups-toolbar} for more information.
  */
-class PanelRow extends Base {
+class ButtonToolbar extends Base {
     /**
-     * Initializes the PanelRow instance.
+     * Initializes the ButtonToolbar instance.
      *
-     * @param mixed $options [optional] the display options for the panel.
-     * @param Callable $block [optional] Block to generate inside panel row content.
+     * @param mixed $options the display options for the ButtonToolbar.
+     * @param Callable $block Block to generate inside ButtonToolbar content.
      */
     public function __construct($options, $block = null) {
-        Base::set_panel_column_class(is_array($options) && isset($options['column_class']) ? $options['column_class'] : null);
-        $panel_row = new ContentTag('div', call_user_func($block), $this->set_panel_row_options($options));
+        if (is_callable($options)) {
+            $block = $options;
+            $options = [];
+        }
 
-        $this->set_html_object($panel_row->get_html_object());
+        $button_toolbar = $this->build_button_toolbar($options, $block);
+        $this->set_html_object($button_toolbar->get_html_object());
     }
 
     /**
-     * Add the class 'row' to indicates that this object has to be built like a PanelRow.
-     * @param array $options Panel information.
-     * @return array options processed.
+     * Generates de ButtonToolbar object.
+     *
+     * @param array $options
+     * @param type $block
+     * @return ContentTag
      */
-    private function set_panel_row_options($options) {
-        $this->append_class($options, 'row');
+    private function build_button_toolbar(Array $options, $block) {
+        $this->append_class($options, 'btn-toolbar');
 
-        if (isset($options['column_class'])) {
-            unset($options['column_class']);
-        }
-
-        return $options;
+        return new ContentTag('div', array_merge($options, ['aria-label'=>'toolbar', 'role'=>'toolbar']), function() use ($block) {
+            return call_user_func($block);
+        });
     }
 }
