@@ -33,7 +33,10 @@ use BootHelp\Helpers\ContentTag;
 
 
 /**
- * Class to generate a Button object.
+ * Generates an HTML block tag that follows the Bootstrap documentation
+ * on how to display <strong>Button</strong>.
+ *
+ * See {@link http://getbootstrap.com/css/#buttons} for more information.
  */
 class Button extends Base {
     /**
@@ -65,7 +68,13 @@ class Button extends Base {
      */
     private function build_button($content = null, $options = []) {
         $this->append_class($options, $this->btn_class($options));
-        return new ContentTag('button', $content, $options);
+        $button = new ContentTag('button', $content, $options);
+
+        if (Base::get_justified_button_group()) {
+            $button = new ContentTag('div', $button, ['class'=>'btn-group', 'role'=>'group']);
+        }
+
+        return $button;
     }
 
     /**

@@ -31,8 +31,12 @@ namespace BootHelp;
 use BootHelp\Base;
 use BootHelp\Helpers\ContentTag;
 
+
 /**
- * Class to generate a Modal object.
+ * Generates an HTML block tag that follows the Bootstrap documentation
+ * on how to display <strong>Modal</strong> component.
+ *
+ * See {@link http://getbootstrap.com/javascript/#modals} for more information.
  */
 class Modal extends Base {
     /**

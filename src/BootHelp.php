@@ -41,6 +41,8 @@ use BootHelp\Dropdown;
 use BootHelp\Helpers\Divider;
 use BootHelp\ProgressBar;
 use BootHelp\Button;
+use BootHelp\ButtonGroup;
+use BootHelp\ButtonToolbar;
 
 /**
  * Class that exposes methods to interact with any BootHelp object.
@@ -131,6 +133,28 @@ abstract class BootHelp {
      */
     public static function button($content_or_options_with_block = null, $options = null, $block = null) {
         return new Button($content_or_options_with_block, $options, $block);
+    }
+
+    /**
+     * Gets a ButtonGroup instance.
+     *
+     * @param mixed $options the display options for the ButtonGroup.
+     * @param Callable $block Block to generate inside ButtonGroup content.
+     * @return ButtonGroup a ButtonGroup instance.
+     */
+    public static function button_group($options, $block = null) {
+        return new ButtonGroup($options, $block);
+    }
+
+    /**
+     * Gets a ButtonToolbar instance.
+     *
+     * @param mixed $options the display options for the ButtonToolbar.
+     * @param Callable $block Block to generate inside ButtonToolbar content.
+     * @return ButtonToolbar a ButtonToolbar instance.
+     */
+    public static function button_toolbar($options, $block = null) {
+        return new ButtonToolbar($options, $block);
     }
 
     /**
