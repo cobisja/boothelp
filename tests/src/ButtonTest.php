@@ -26,9 +26,9 @@
  * THE SOFTWARE.
  */
 
-namespace Tests;
+namespace BootHelp\Tests;
 
-use BootHelp\Button;
+use cobisja\BootHelp\Button;
 
 
 class ButtonTest extends \PHPUnit_Framework_TestCase {

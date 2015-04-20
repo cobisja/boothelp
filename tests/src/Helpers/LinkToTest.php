@@ -28,8 +28,8 @@
 
 namespace Tests\BootHelpHelpers;
 
-use BootHelp\Helpers\LinkTo;
-use BootHelp\Helpers\ContentTag;
+use cobisja\BootHelp\Helpers\LinkTo;
+use cobisja\BootHelp\Helpers\ContentTag;
 
 
 class LinkToTest extends \PHPUnit_Framework_TestCase {

@@ -28,10 +28,10 @@
 
 namespace BootHelp\Tests;
 
-use BootHelp\Nav;
-use BootHelp\Dropdown;
-use BootHelp\Helpers\LinkTo;
-use BootHelp\Helpers\Divider;
+use cobisja\BootHelp\Nav;
+use cobisja\BootHelp\Dropdown;
+use cobisja\BootHelp\Helpers\LinkTo;
+use cobisja\BootHelp\Helpers\Divider;
 
 class NavTest extends \PHPUnit_Framework_TestCase {
     public function testWithNoOptions() {

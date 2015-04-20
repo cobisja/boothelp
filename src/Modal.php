@@ -26,10 +26,10 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp;
+namespace cobisja\BootHelp;
 
-use BootHelp\Base;
-use BootHelp\Helpers\ContentTag;
+use cobisja\BootHelp\Base;
+use cobisja\BootHelp\Helpers\ContentTag;
 
 
 /**
@@ -95,6 +95,10 @@ class Modal extends Base {
             $options['button']['caption'] = isset($options['title']) ? $options['title'] : $base_options['title'];
         }
 
+        if (!isset($options['button']['style'])) {
+            $options['button']['style'] = null;
+        }
+
         $options['button']['class'] = $this->button_class(isset($options['button']) ? $options['button'] : $base_options['button']);
         $this->set_options($base_options, $options);
         $yield = is_callable($block) ? call_user_func($block) : '';
@@ -113,7 +117,7 @@ class Modal extends Base {
     private function build_modal($options, $yield) {
         return new ContentTag('div', ['id'=>'modal-container-' . $options['id']], function() use ($options, $yield) {
             return [
-                new ContentTag('button', $options['button']['caption'], ['class'=>$options['button']['class'], 'data-toggle'=>'modal', 'data-target'=>'#' . $options['id']]),
+                new ContentTag('button', $options['button']['caption'], array_merge($options['button'], ['data-toggle'=>'modal', 'data-target'=>'#' . $options['id']])),
                 new ContentTag('div', ['class'=>'modal fade', 'id'=>$options['id'], 'tabindex'=>-1, 'role'=>'dialog', 'arialabelledby'=>'label-' . $options['id'], 'aria-hidden'=>true], function() use ($options, $yield) {
                     return new ContentTag('div', ['class'=>$options['dialog_class']], function() use ($options, $yield) {
                         return new ContentTag('div', ['class'=>'modal-content'], function() use ($options, $yield) {
@@ -159,7 +163,11 @@ class Modal extends Base {
             }
         }
 
-        return  join(Base::SPACE, array_filter(['btn', "btn-$context", $size], 'strlen'));
+        $this->append_class($options, 'btn');
+        $this->append_class($options, 'btn-' . $context);
+        $this->append_class($options, $size);
+
+        return  $options['class'];
     }
 
     /**

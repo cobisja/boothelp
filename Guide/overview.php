@@ -26,7 +26,7 @@
  * THE SOFTWARE.
  */
 
-use BootHelp\BootHelp;
+use cobisja\BootHelp\BootHelp;
 
 echo BootHelp::content_tag('header', ['id'=>'top', 'role'=>'banner'], function(){
     return

@@ -28,9 +28,9 @@
 
 namespace BootHelp\Tests;
 
-use BootHelp\PanelRow;
-use BootHelp\Panel;
-use BootHelp\Icon;
+use cobisja\BootHelp\PanelRow;
+use cobisja\BootHelp\Panel;
+use cobisja\BootHelp\Icon;
 
 
 class PanelRowTest extends \PHPUnit_Framework_TestCase {

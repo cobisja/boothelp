@@ -25,24 +25,24 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp;
+namespace cobisja\BootHelp;
 
-use BootHelp\Helpers\ContentTag;
-use BootHelp\Helpers\LinkTo;
-use BootHelp\AlertBox;
-use BootHelp\Panel;
-use BootHelp\PanelRow;
-use BootHelp\Icon;
-use BootHelp\Modal;
-use BootHelp\Nav;
-use BootHelp\Helpers\Vertical;
-use BootHelp\Helpers\Horizontal;
-use BootHelp\Dropdown;
-use BootHelp\Helpers\Divider;
-use BootHelp\ProgressBar;
-use BootHelp\Button;
-use BootHelp\ButtonGroup;
-use BootHelp\ButtonToolbar;
+use cobisja\BootHelp\Helpers\ContentTag;
+use cobisja\BootHelp\Helpers\LinkTo;
+use cobisja\BootHelp\AlertBox;
+use cobisja\BootHelp\Panel;
+use cobisja\BootHelp\PanelRow;
+use cobisja\BootHelp\Icon;
+use cobisja\BootHelp\Modal;
+use cobisja\BootHelp\Nav;
+use cobisja\BootHelp\Helpers\Vertical;
+use cobisja\BootHelp\Helpers\Horizontal;
+use cobisja\BootHelp\Dropdown;
+use cobisja\BootHelp\Helpers\Divider;
+use cobisja\BootHelp\ProgressBar;
+use cobisja\BootHelp\Button;
+use cobisja\BootHelp\ButtonGroup;
+use cobisja\BootHelp\ButtonToolbar;
 
 /**
  * Class that exposes methods to interact with any BootHelp object.

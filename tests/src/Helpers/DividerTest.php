@@ -28,7 +28,7 @@
 
 namespace Tests\BootHelpHelpers;
 
-use BootHelp\Helpers\Divider;
+use cobisja\BootHelp\Helpers\Divider;
 
 class DividerTest extends \PHPUnit_Framework_TestCase {
     public function testItShouldNotGenerateAnyDividerOutOfDropdownContext() {

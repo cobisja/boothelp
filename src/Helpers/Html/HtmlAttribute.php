@@ -26,7 +26,7 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp\Helpers\Html;
+namespace cobisja\BootHelp\Helpers\Html;
 
 /**
  * Class HtmlAttribute: Handles all the logic associated with html attributes.

@@ -28,8 +28,8 @@
 
 namespace BootHelp\Tests;
 
-use BootHelp\ButtonGroup;
-use BootHelp\Button;
+use cobisja\BootHelp\ButtonGroup;
+use cobisja\BootHelp\Button;
 
 class ButtonGroupTest extends \PHPUnit_Framework_TestCase {
     public function testWithNoOptions() {

@@ -26,10 +26,10 @@
  * THE SOFTWARE.
  */
 
-namespace Tests;
+namespace BootHelp\Tests;
 
-use BootHelp\AlertBox;
-use BootHelp\Helpers\LinkTo;
+use cobisja\BootHelp\AlertBox;
+use cobisja\BootHelp\Helpers\LinkTo;
 
 class AlertBoxTest extends \PHPUnit_Framework_TestCase {
     public function testWithNoAlertOptions() {

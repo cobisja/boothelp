@@ -28,7 +28,7 @@
 
 namespace BootHelp\Tests;
 
-use BootHelp\Icon;
+use cobisja\BootHelp\Icon;
 
 class IconTest extends \PHPUnit_Framework_TestCase {
     public function testWithNoOptions() {

@@ -26,9 +26,9 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp;
+namespace cobisja\BootHelp;
 
-use BootHelp\Helpers\Html\Html;
+use cobisja\BootHelp\Helpers\Html\Html;
 
 /**
  * Utility class that holds several methods and attributes shared by all BootHelp classes.

@@ -26,9 +26,9 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp\Helpers;
+namespace cobisja\BootHelp\Helpers;
 
-use BootHelp\Base;
+use cobisja\BootHelp\Base;
 
 /**
  * ContentTag class: generates an specific HTML block tag surrounding an specific content.

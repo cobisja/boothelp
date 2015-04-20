@@ -28,8 +28,8 @@
 
 namespace BootHelp\Tests;
 
-use BootHelp\Modal;
-use BootHelp\Helpers\ContentTag;
+use cobisja\BootHelp\Modal;
+use cobisja\BootHelp\Helpers\ContentTag;
 
 class ModalTest extends \PHPUnit_Framework_TestCase {
     public function testWithNoOptions()

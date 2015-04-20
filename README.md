@@ -51,30 +51,32 @@ Even if Composer it's the preferred method to generate the files needed to get a
 
 1. Copy and paste **BootHelp** folder in your project root.
 
-2. Require/Include the **BootHelp abstract class** using the relative **BootHelp** path:
+2. Require/Include the **BootHelp classes**:
 
 	```php
     <?php
-    require 'src/Helpers/Html/Html.php';
-    require 'src/Helpers/Html/HtmlAttribute.php';
-    require 'src/Helpers/Html/HtmlContent.php';
-    require 'src/Helpers/ContentTag.php';
-    require 'src/Helpers/LinkTo.php';
-    require 'src/Helpers/Vertical.php';
-    require 'src/Helpers/Horizontal.php';
-    require 'src/Helpers/Divider.php';
-    require 'src/Base.php';
-    require 'src/AlertBox.php';
-    require 'src/Button.php';
-    require 'src/Dropdown.php';
-    require 'src/Icon.php';
-    require 'src/Modal.php';
-    require 'src/Nav.php';
-    require 'src/Navbar.php';
-    require 'src/Panel.php';
-    require 'src/PanelRow.php';
-    require 'src/ProgressBar.php';
-    require 'src/BootHelp.php'	
+        require '{BootHelp root folder}/src/Base.php';
+        require '{BootHelp root folder}/src/Helpers/Html/Html.php';
+        require '{BootHelp root folder}/src/Helpers/Html/HtmlAttribute.php';
+        require '{BootHelp root folder}/src/Helpers/Html/HtmlContent.php';
+        require '{BootHelp root folder}/src/Helpers/ContentTag.php';
+        require '{BootHelp root folder}/src/Helpers/LinkTo.php';
+        require '{BootHelp root folder}/src/Helpers/Vertical.php';
+        require '{BootHelp root folder}/src/Helpers/Horizontal.php';
+        require '{BootHelp root folder}/src/Helpers/Divider.php';
+        require '{BootHelp root folder}/src/AlertBox.php';
+        require '{BootHelp root folder}/src/Button.php';
+        require '{BootHelp root folder}/src/ButtonGroup.php';
+        require '{BootHelp root folder}/src/ButtonToolbar.php';
+        require '{BootHelp root folder}/src/Dropdown.php';
+        require '{BootHelp root folder}/src/Icon.php';
+        require '{BootHelp root folder}/src/Modal.php';
+        require '{BootHelp root folder}/src/Nav.php';
+        require '{BootHelp root folder}/src/Navbar.php';
+        require '{BootHelp root folder}/src/Panel.php';
+        require '{BootHelp root folder}/src/PanelRow.php';
+        require '{BootHelp root folder}/src/ProgressBar.php';
+        require '{BootHelp root folder}/src/BootHelp.php';  
     ```
     
 #### Handling namespaces
@@ -177,6 +179,13 @@ Feel free to contribute!!!. Welcome aboard!!!
 
 ## Misc
 ### Version history
+
+**0.3.1** (Monday, 20th April 2015)
+
+* Adding full customizing options for modal button.
+* General namespace refactoring.
+* Guide bugs fixed.
+* Fix minor bugs.
 
 **0.3.0** (Thursday, 16th April 2015)
 

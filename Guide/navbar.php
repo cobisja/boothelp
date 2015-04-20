@@ -26,8 +26,8 @@
  * THE SOFTWARE.
  */
 
-use BootHelp\BootHelp;
-use BootHelp\Guide\Sample;
+use cobisja\BootHelp\BootHelp;
+use cobisja\BootHelp\Guide\Sample;
 
 $navbar = [
     'title'=>'Navbars',
@@ -207,7 +207,7 @@ Set the <code>padding</code> option to specify the padding to leave between the 
 </nav>'
         ],
         [
-            'name'=> 'Navbars with Dropdowns - Option 1',
+            'name'=> 'Navbar with Dropdowns - Option 1',
             'description'=>'Dropdowns into Navbar has a different behaviour. Instead to build a Button to trigger the
     the dropdown menu, a Link (<code>"a" tag</code>) is generated. So, to get a Dropdown into a Navbar just define the dropdown
     as any other Navbar item.',
@@ -222,7 +222,7 @@ Set the <code>padding</code> option to specify the padding to leave between the 
                 Boothelp::dropdown('Menu', function(){
                     return [
                         BootHelp::link_to('The walking dead'),
-                        BootHelp::link_to('Scorpio'),
+                        BootHelp::link_to('Scorpion'),
                         BootHelp::divider(),
                         BootHelp::link_to('Old series')
                     ];
@@ -243,7 +243,7 @@ Set the <code>padding</code> option to specify the padding to leave between the 
                 Boothelp::dropdown('TV series', function(){
                     return [
                         BootHelp::link_to('The walking dead'),
-                        BootHelp::link_to('Scorpio'),
+                        BootHelp::link_to('Scorpion'),
                         BootHelp::divider(),
                         BootHelp::link_to('Old series')
                     ];
@@ -291,16 +291,16 @@ Set the <code>padding</code> option to specify the padding to leave between the 
 </nav>'
         ],
         [
-            'name'=> 'Navs with Dropdowns - Option 2',
+            'name'=> 'Navbar with Dropdowns - Option 2',
             'description'=>'Maybe you want to build the <code>Dropdown</code> outside the <code>Navbar</code> and then
     put it inside the Navbar definition, to get the Navbar code cleaner. In these cases, you have to use <code>["into_navbar"=>true]</code>
     to indicates that the Dropdown is embedded the Navbar.',
             'php_code'=> "\$sub_menu = Boothelp::dropdown('Social networks', ['into_navbar'=>true], function(){
     return [
-        BootHelp::link_to('Twitter'),
-        BootHelp::link_to('Facebook'),
+        BootHelp::link_to('The walking dead'),
+        BootHelp::link_to('Scorpion'),
         BootHelp::divider(),
-        BootHelp::link_to('Others')
+        BootHelp::link_to('Old series')
     ];
 });
 echo BootHelp::navbar(function() use (\$sub_menu) {
@@ -317,18 +317,25 @@ echo BootHelp::navbar(function() use (\$sub_menu) {
         })
     ];
 });",
-            'result'=> BootHelp::nav(function() use ($href) {
+            'result'=> BootHelp::navbar(function() {
     return [
-        BootHelp::link_to('Home', ['href'=>$href]),
-        Boothelp::dropdown('Social networks', function(){
-            return [
-                BootHelp::link_to('Twitter'),
-                BootHelp::link_to('Facebook'),
-                BootHelp::divider(),
-                BootHelp::link_to('Other')
-            ];
+        BootHelp::vertical(function(){
+            return BootHelp::link_to('Home');
         }),
-        BootHelp::link_to('Profile')
+        BootHelp::horizontal(function(){
+            return [
+                BootHelp::nav(function(){return BootHelp::link_to('Users');}),
+                Boothelp::dropdown('TV series', function(){
+                    return [
+                        BootHelp::link_to('The walking dead'),
+                        BootHelp::link_to('Scorpion'),
+                        BootHelp::divider(),
+                        BootHelp::link_to('Old series')
+                    ];
+                }),
+                BootHelp::nav(function(){return BootHelp::link_to('About us');})
+            ];
+        })
     ];
 }),
             'html_code'=>'<nav role="navigation" class="navbar navbar-default">
@@ -355,7 +362,7 @@ echo BootHelp::navbar(function() use (\$sub_menu) {
                         </a>
                         <ul aria-labelledby="label-dropdown-2259769408" role="menu" class="dropdown-menu">
                             <li><a href="#" role="menuitem">The walking dead</a></li>
-                            <li><a href="#" role="menuitem">Scorpio</a></li>
+                            <li><a href="#" role="menuitem">Scorpion</a></li>
                             <li class="divider"></li><li><a href="#" role="menuitem">Old series</a></li>
                         </ul>
                     </li>
