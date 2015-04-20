@@ -28,14 +28,14 @@
 
 namespace BootHelp\Tests;
 
-use BootHelp\Navbar;
-use BootHelp\Nav;
-use BootHelp\Button;
-use BootHelp\Dropdown;
-use BootHelp\Helpers\LinkTo;
-use BootHelp\Helpers\Vertical;
-use BootHelp\Helpers\Horizontal;
-use BootHelp\Helpers\Divider;
+use cobisja\BootHelp\Navbar;
+use cobisja\BootHelp\Nav;
+use cobisja\BootHelp\Button;
+use cobisja\BootHelp\Dropdown;
+use cobisja\BootHelp\Helpers\LinkTo;
+use cobisja\BootHelp\Helpers\Vertical;
+use cobisja\BootHelp\Helpers\Horizontal;
+use cobisja\BootHelp\Helpers\Divider;
 
 
 class NavbarTest extends \PHPUnit_Framework_TestCase {

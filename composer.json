@@ -1,5 +1,5 @@
 {
-    "name": "BootHelp",
+    "name": "cobisja/boothelp",
     "description": "PHP Helpers for Bootstrap",
     "license": "MIT",
     "keywords": ["bootstrap", "helpers", "php"],
@@ -11,10 +11,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "BootHelp\\": "src/",
-            "BootHelp\\Helpers\\": "src/Helpers",
-            "BootHelp\\Helpers\\Html\\": "src/Helpers/Html",
-            "BootHelp\\Guide\\": "Guide/"
+            "cobisja\\BootHelp\\": "src/",
+            "cobisja\\BootHelp\\Guide\\": "Guide/"
         }
     }  
 }

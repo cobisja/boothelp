@@ -26,10 +26,10 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp\Helpers\Html;
+namespace cobisja\BootHelp\Helpers\Html;
 
-use BootHelp\Helpers\Html\HtmlAttribute;
-use BootHelp\Helpers\Html\HtmlContent;
+use cobisja\BootHelp\Helpers\Html\HtmlAttribute;
+use cobisja\BootHelp\Helpers\Html\HtmlContent;
 
 /**
  * Class Html: Handle of logic related to HTML generation base on a BootHelp helper.

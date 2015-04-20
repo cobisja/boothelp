@@ -26,8 +26,8 @@
  * THE SOFTWARE.
  */
 
-use BootHelp\BootHelp;
-use BootHelp\Guide\Sample;
+use cobisja\BootHelp\BootHelp;
+use cobisja\BootHelp\Guide\Sample;
 
 $button_groups = [
     'title'=>'Button Group',

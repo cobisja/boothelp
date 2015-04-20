@@ -26,11 +26,11 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp;
+namespace cobisja\BootHelp;
 
-use BootHelp\Base;
-use BootHelp\Helpers\ContentTag;
-use BootHelp\Helpers\LinkTo;
+use cobisja\BootHelp\Base;
+use cobisja\BootHelp\Helpers\ContentTag;
+use cobisja\BootHelp\Helpers\LinkTo;
 
 
 /**

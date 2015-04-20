@@ -26,9 +26,9 @@
  * THE SOFTWARE.
  */
 
-use BootHelp\BootHelp;
-use BootHelp\Helpers\LinkTo;
-use BootHelp\Guide\Sample;
+use cobisja\BootHelp\BootHelp;
+use cobisja\BootHelp\Helpers\LinkTo;
+use cobisja\BootHelp\Guide\Sample;
 
 // Change $href to match your BootHelp app root path.
 $href = 'http://localhost/local_php/BootHelp/index.php';

@@ -26,10 +26,10 @@
  * THE SOFTWARE.
  */
 
-namespace Tests;
+namespace BootHelp\Tests;
 
-use BootHelp\Dropdown;
-use BootHelp\Helpers\LinkTo;
+use cobisja\BootHelp\Dropdown;
+use cobisja\BootHelp\Helpers\LinkTo;
 
 class DropdownTest extends \PHPUnit_Framework_TestCase  {
     public function testWithNoDropdownOptions() {

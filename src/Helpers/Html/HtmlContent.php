@@ -26,9 +26,9 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp\Helpers\Html;
+namespace cobisja\BootHelp\Helpers\Html;
 
-use BootHelp\Helpers\Html\Html;
+use cobisja\BootHelp\Helpers\Html\Html;
 
 /**
  * Class HtmlContent: Handles all related with Html Content.

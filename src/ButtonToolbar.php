@@ -1,7 +1,7 @@
 <?php
 
 /*
- * BootHelp
+ * cobisja\BootHelp
  *
  * (The MIT License)
  *
@@ -26,10 +26,10 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp;
+namespace cobisja\BootHelp;
 
-use BootHelp\Base;
-use BootHelp\Helpers\ContentTag;
+use cobisja\BootHelp\Base;
+use cobisja\BootHelp\Helpers\ContentTag;
 
 /**
  * Generates an HTML block tag that follows the Bootstrap documentation

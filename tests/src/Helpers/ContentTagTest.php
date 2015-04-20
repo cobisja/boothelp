@@ -28,7 +28,7 @@
 
 namespace Tests\BootHelpHelpers;
 
-use BootHelp\Helpers\ContentTag;
+use cobisja\BootHelp\Helpers\ContentTag;
 
 
 class ContentTagTest extends \PHPUnit_Framework_TestCase {

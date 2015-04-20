@@ -26,9 +26,9 @@
  * THE SOFTWARE.
  */
 
-namespace BootHelp\Guide;
+namespace cobisja\BootHelp\Guide;
 
-use BootHelp\Helpers\ContentTag;
+use cobisja\BootHelp\Helpers\ContentTag;
 
 
 class Sample

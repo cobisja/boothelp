@@ -28,9 +28,9 @@
 
 namespace BootHelp\Tests;
 
-use BootHelp\ButtonToolbar;
-use BootHelp\ButtonGroup;
-use BootHelp\Button;
+use cobisja\BootHelp\ButtonToolbar;
+use cobisja\BootHelp\ButtonGroup;
+use cobisja\BootHelp\Button;
 
 class ButtonToolbarTest extends \PHPUnit_Framework_TestCase  {
     public function testWithNoOptions() {

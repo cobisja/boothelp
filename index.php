@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>Bootstrap 101 Template</title>
+        <title>BootHelp - PHP Helpers for Bootstrap</title>
 
         <!-- Bootstrap -->
         <link href="Guide/css/bootstrap.min.css" rel="stylesheet">
@@ -81,8 +81,8 @@ require('Guide/panel.php');
 require('Guide/panel_rows.php');
 require('Guide/progress_bar.php');
 
-use BootHelp\Nav;
-use BootHelp\Helpers\LinkTo;
+use cobisja\BootHelp\Nav;
+use cobisja\BootHelp\Helpers\LinkTo;
 ?>
                 </div>
                 <div class="col-md-3">

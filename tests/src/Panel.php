@@ -28,7 +28,7 @@
 
 namespace BootHelp\Tests;
 
-use BootHelp\Panel;
+use cobisja\BootHelp\Panel;
 
 
 class PanelTest extends \PHPUnit_Framework_TestCase {

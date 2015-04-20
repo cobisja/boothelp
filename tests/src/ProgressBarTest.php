@@ -28,7 +28,7 @@
 
 namespace BootHelp\Tests;
 
-use BootHelp\ProgressBar;
+use cobisja\BootHelp\ProgressBar;
 
 
 class ProgressBarTest extends \PHPUnit_Framework_TestCase {
