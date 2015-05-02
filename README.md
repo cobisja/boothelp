@@ -180,6 +180,10 @@ Feel free to contribute!!!. Welcome aboard!!!
 ## Misc
 ### Version history
 
+**0.3.2** (Friday, 1st May 2015)
+
+* Fix minor bug in progress bar label.
+
 **0.3.1** (Monday, 20th April 2015)
 
 * Adding full customizing options for modal button.
