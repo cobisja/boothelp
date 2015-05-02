@@ -108,7 +108,7 @@ class ProgressBar extends Base {
             $text1 = null;
         }
 
-        $text = "$percentage%" . $text1;
+        $text = "$percentage%";
         $label = isset($options['label']) ? $options['label'] : false;
 
         if (is_bool($label)) {
