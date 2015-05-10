@@ -43,6 +43,7 @@ use cobisja\BootHelp\ProgressBar;
 use cobisja\BootHelp\Button;
 use cobisja\BootHelp\ButtonGroup;
 use cobisja\BootHelp\ButtonToolbar;
+use cobisja\BootHelp\Label;
 
 /**
  * Class that exposes methods to interact with any BootHelp object.
@@ -178,6 +179,17 @@ abstract class BootHelp {
      */
     public static function icon($name = null, $options = []) {
         return new Icon($name, $options);
+    }
+    
+    /**
+     * Gets a Label component instance.
+     * 
+     * @param mixed $content_or_options_with_block the content to display into the label.
+     * @param mixed $options [optional] the display options for the label.
+     * @return Label a Label instance
+     */
+    public static function label($content_or_options_with_block = null, $options = null) {
+        return new Label($content_or_options_with_block, $options);
     }
 
     /**
