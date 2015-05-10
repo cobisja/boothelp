@@ -169,6 +169,8 @@ class LinkTo extends Base {
     }
 
     /**
+     * @codeCoverageIgnore
+     * 
      * Tells if current page (requested page) match with the link's href attribute.
      *
      * @param string $href href value.

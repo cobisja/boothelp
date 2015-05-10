@@ -74,6 +74,7 @@ require('Guide/button_group.php');
 require('Guide/button_toolbar.php');
 require('Guide/dropdown.php');
 require('Guide/icon.php');
+require('Guide/label.php');
 require('Guide/modal.php');
 require('Guide/nav.php');
 require('Guide/navbar.php');
@@ -97,6 +98,7 @@ use cobisja\BootHelp\Helpers\LinkTo;
                                 new LinkTo('Button Toolbar', ['href'=>'#button-toolbar']),
                                 new LinkTo('Dropdowns', ['href'=>'#dropdowns']),
                                 new LinkTo('Icons', ['href'=>'#icons']),
+                                new LinkTo('Labels', ['href'=>'#labels']),
                                 new LinkTo('Modals', ['href'=>'#modals']),
                                 new LinkTo('Navs', ['href'=>'#navs']),
                                 new LinkTo('Navbars', ['href'=>'#navbars']),

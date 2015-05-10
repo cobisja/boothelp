@@ -122,10 +122,12 @@ class Html {
      * Returns the indicated attribute's value
      *
      * @param string $name attribute's name.
+     * @param array $options options to specify format of the value to return.
      * @return mixed value of specific attribute.
      */
-    public function get_attribute($name) {
-        return $this->get_attribute_with_value($name);
+    public function get_attribute($name, array $options=[]) {
+        $attribute_value = $this->get_attribute_with_value($name);
+        return isset($options['as']) && 'array' === $options['as'] ? explode(self::SPACE, $attribute_value) : $attribute_value;
     }
 
     /**
