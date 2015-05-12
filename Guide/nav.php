@@ -154,6 +154,29 @@ Additionally, if any link matches the current URL, its <code>li</code> tag autom
 </ul>'
         ],
         [
+            'name'=> 'Navs with badge support',
+            'description'=>'Use <code>["badge"=>value]</code> with any of nav items option to display a badge.',
+            'php_code'=> "echo BootHelp::nav(['as'=>'pills'], function(){
+    return [
+        BootHelp::link_to('Home', ['href'=>'/', 'badge'=>42]),
+        BootHelp::link_to('Profile'),
+        BootHelp::link_to('Messages', ['badge'=>3])
+    ];
+});",
+            'result'=> BootHelp::nav(['as'=>'pills'], function() use ($href) {
+    return [
+        BootHelp::link_to('Home', ['href'=>$href, 'badge'=>42]),
+        BootHelp::link_to('Profile'),
+        BootHelp::link_to('Messages', ['badge'=>3])
+    ];
+}),
+            'html_code'=>'<ul class="nav nav-pills nav-stacked">
+    <li class="active"><a href="/">Home</a></li>
+    <li><a href="#">Users</a></li>
+    <li><a href="#">Profile</a></li>
+</ul>'
+        ],        
+        [
             'name'=> 'Navs with Dropdowns - Option 1',
             'description'=>'Dropdowns into Navs has a different behaviour. Instead to build a Button to trigger the
     the dropdown menu, a Link (<code>"a" tag</code>) is generated. So, to get a Dropdown into a Nav just define the dropdown

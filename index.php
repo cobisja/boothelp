@@ -69,6 +69,7 @@ require 'vendor/autoload.php';
 
 require('Guide/overview.php');
 require('Guide/alert.php');
+require('Guide/badge.php');
 require('Guide/button.php');
 require('Guide/button_group.php');
 require('Guide/button_toolbar.php');
@@ -93,6 +94,7 @@ use cobisja\BootHelp\Helpers\LinkTo;
                             return [
                                 new LinkTo('Overview', ['href'=>'#overview']),
                                 new LinkTo('Alerts', ['href'=>'#alerts']),
+                                new LinkTo('Badges', ['href'=>'#badges']),
                                 new LinkTo('Buttons', ['href'=>'#buttons']),
                                 new LinkTo('Button Group', ['href'=>'#button-group']),
                                 new LinkTo('Button Toolbar', ['href'=>'#button-toolbar']),

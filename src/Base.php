@@ -263,7 +263,7 @@ class Base {
      */
     public static function append_class(&$hash, $new_class, $attribute = 'class') {
         $existing_class = isset($hash[$attribute]) ? $hash[$attribute] : null;
-        $hash[$attribute] = join(self::SPACE, array_filter([$existing_class, $new_class], 'strlen' ));
+        $hash[$attribute] = join(self::SPACE, array_filter([$existing_class, $new_class], 'strlen'));
     }
 
     /**
