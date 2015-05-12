@@ -44,6 +44,7 @@ use cobisja\BootHelp\Button;
 use cobisja\BootHelp\ButtonGroup;
 use cobisja\BootHelp\ButtonToolbar;
 use cobisja\BootHelp\Label;
+use cobisja\BootHelp\Helpers\Badge;
 
 /**
  * Class that exposes methods to interact with any BootHelp object.
@@ -96,7 +97,7 @@ abstract class BootHelp {
      * @param callable $block closure that generates the content to be surrounding to.
      * @return LinkTo a LinkTo instance.
      */
-    public static function link_to($name = null, $options = [], callable $block = null) {
+    public static function link_to($name = null, $options = null, callable $block = null) {
         return new LinkTo($name, $options, $block);
     }
 
@@ -110,6 +111,17 @@ abstract class BootHelp {
      */
     public static function vertical($content_or_options_with_block = null, $options = null, callable $block = null) {
         return new Vertical($content_or_options_with_block, $options, $block);
+    }
+    
+    /**
+     * Gets a Badge helper instance to be used with links, buttons, navs and anything you want.
+     * 
+     * @param string $text Badge's text.
+     * @param array $options Badge's options
+     * @return Badge a Badge Helper instance.
+     */
+    public static function badge($text, $options=[]) {
+        return new Badge($text, $options);
     }
 
     /**

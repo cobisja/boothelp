@@ -70,6 +70,16 @@ Available contexts are <code>"default"</code> (default), <code>"primary"</code>,
 </button>'
         ],
         [
+            'name'=> 'Buttons with badge support',
+            'description'=>'Use button with the <code>["badge"=>value]</code> option to display a badge inside the button.',
+            'php_code'=> "echo BootHelp::button('Messages', ['context'=>'primary', 'badge'=>42]);",
+            'result'=> BootHelp::button('Messages', ['context'=>'primary', 'badge'=>42]),
+            'html_code'=>'<button class="btn btn-primary">
+    Messages 
+    <span class="badge">42</span>
+</button>'
+        ],        
+        [
             'name'=> 'Complex buttons',
             'description'=>'To include HTML tags or a long text in the button, pass the caption as a closure.
 You can also specify custom options which will be added to the <code>button</code> tag.',
