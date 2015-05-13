@@ -180,6 +180,13 @@ Feel free to contribute!!!. Welcome aboard!!!
 ## Misc
 ### Version history
 
+**0.4.0** (Tuesday, 12th May 2015)
+
+* Added support for labels, images and thumbnails components.
+* Refactoring of few Base methods.
+* Guide updating.
+* Fix minor bugs.
+
 **0.3.1** (Monday, 20th April 2015)
 
 * Adding full customizing options for modal button.
