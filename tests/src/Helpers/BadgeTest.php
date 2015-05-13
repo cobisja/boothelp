@@ -26,28 +26,28 @@
  * THE SOFTWARE.
  */
 
-namespace cobisja\BootHelp\Helpers;
+namespace Tests\BootHelpHelpers;
 
-use cobisja\BootHelp\Base;
-use cobisja\BootHelp\Helpers\ContentTag;
+use cobisja\BootHelp\Helpers\Badge;
 
-/**
- * Class helper to build a Nav divider.
- */
-class Divider extends Base {
-    /**
-     * Initialize a Divider instance.
-     */
-    public function __construct() {
-        $this->set_html_object($this->build_divider());
+class BadgeTest extends \PHPUnit_Framework_TestCase {
+    public function testWithNoOptions() {
+        /**
+         * It should generates:
+         * 
+         * <span class="badge">42</span>
+         */        
+        $badge = new Badge('42');
+        $this->assertEquals('<span class="badge">42</span>', $badge->to_string());        
     }
-
-    /**
-     * Returns the Divider object built.
-     *
-     * @return mixed a ContentTag instance or null.
-     */
-    private function build_divider() {
-        return Base::get_dropdown_link() ? new ContentTag('li', '', ['class'=>'divider']) : null;
+    
+    public function testWithExtraOptions() {
+        /**
+         * It should generates:
+         * 
+         * <span id="my-badge" class="en badge">42</span>
+         */
+        $badge = new Badge('42', ['id'=>'my-badge', 'class'=>'en']);
+        $this->assertEquals('<span id="my-badge" class="en badge">42</span>', $badge->to_string());           
     }
 }

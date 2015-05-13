@@ -87,3 +87,7 @@ THE SOFTWARE.
 .subtitle {
     margin-top: 25px;
 }
+
+.bs-docs-sidenav > li > a {
+    padding: 5px 15px;
+}

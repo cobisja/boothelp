@@ -79,7 +79,8 @@ class LinkTo extends Base {
                 if (!is_null($block)) {
                     $link = new ContentTag('a', $options, $block);
                 } else {
-                    $link = new ContentTag('a', is_array($name) ? '' : $name, $options);
+//                    $link = new ContentTag('a', is_array($name) ? '' : $name, $options);
+                    $link = new ContentTag('a', $name, $options);
                 }
                 break;
             case 2:
@@ -91,7 +92,7 @@ class LinkTo extends Base {
                 break;
         }
 
-      return $link;
+        return $link;
     }
 
     /**
@@ -99,7 +100,9 @@ class LinkTo extends Base {
      *
      * @param array $options options associated with the link.
      */
-    private function select_link_class(&$options = []) {
+    private function select_link_class(&$options) {
+        is_null($options) ? $options = [] : null;
+
         if($this->get_alert_link()){
             $this->append_class($options, 'alert-link');
         } elseif($this->get_navbar_vertical()){
@@ -124,8 +127,8 @@ class LinkTo extends Base {
         return new ContentTag(
             'li',
             function() use ($num_args, $name, $options, $block) {
-                 return $this->build_standard_link($num_args, $name, $options, $block);
-             }
+                return $this->build_standard_link($num_args, $name, $options, $block);
+            }
         );
     }
 
@@ -151,10 +154,10 @@ class LinkTo extends Base {
 
         return new ContentTag(
             'li',
-             is_null($nav_item_class) && is_null($disabled) ? [] : ['class'=>trim($nav_item_class . ' ' . $disabled)],
-             function() use ($num_args, $name, $options, $block) {
-                 return $this->build_standard_link($num_args, $name, $options, $block);
-             }
+            is_null($nav_item_class) && is_null($disabled) ? [] : ['class'=>trim($nav_item_class . ' ' . $disabled)],
+            function() use ($num_args, $name, $options, $block) {
+                return $this->build_standard_link($num_args, $name, $options, $block);
+            }
         );
     }
 
@@ -167,8 +170,10 @@ class LinkTo extends Base {
     private function link_href($options = []) {
         return isset($options['href']) ? $options['href'] : '#';
     }
-
+    
     /**
+     * @codeCoverageIgnore
+     * 
      * Tells if current page (requested page) match with the link's href attribute.
      *
      * @param string $href href value.

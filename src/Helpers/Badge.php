@@ -1,11 +1,9 @@
 <?php
 
 /*
- * BootHelp - PHP Helpers for Bootstrap
+ * The MIT License
  *
- * (The MIT License)
- *
- * Copyright (c) 2015 Jorge Cobis <jcobis@gmail.com / http://twitter.com/cobisja>.
+ * Copyright 2015 cobisja.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,22 +30,23 @@ use cobisja\BootHelp\Base;
 use cobisja\BootHelp\Helpers\ContentTag;
 
 /**
- * Class helper to build a Nav divider.
+ * Generates an HTML block tag that follows the Bootstrap documentation
+ * on how to display <strong>Badges</strong>.
+ *
+ * See {@link http://getbootstrap.com/components/#badges} for more information.
  */
-class Divider extends Base {
+class Badge extends Base {
     /**
-     * Initialize a Divider instance.
+     * Initializes Badge component.
+     * 
+     * @param type $text Badge's text.
+     * @param array $options Badge's options
+     * @return ContentTag instance of ContentTag object representing an Html Badge.
      */
-    public function __construct() {
-        $this->set_html_object($this->build_divider());
-    }
-
-    /**
-     * Returns the Divider object built.
-     *
-     * @return mixed a ContentTag instance or null.
-     */
-    private function build_divider() {
-        return Base::get_dropdown_link() ? new ContentTag('li', '', ['class'=>'divider']) : null;
+    public function __construct($text, array $options=[]) {
+        $this->append_class($options, 'badge');
+        
+        $badge = new ContentTag('span', $text, $options);
+        $this->set_html_object($badge->get_html_object());
     }
 }

@@ -94,6 +94,22 @@ class ButtonTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($html->is_a('button', ['class'=>'btn en btn-warning', 'data-js'=>1, 'id'=>'button']));
         $this->assertEquals('Your <em>personal</em> menu', $html->get_child(0));
     }
+    
+    public function testWithBadgeOption() {
+        /**
+         * It should generates:
+         * 
+         * <button class="btn btn-primary">
+         *     Messages 
+         *     <span class="badge">4</span>
+         * </button>
+         */
+        $button = new Button('Messages', ['badge'=>4, 'context'=>'primary']);
+        $html = $button->get_html();
+        
+        $this->assertTrue($html->is_a('button'));
+        $this->assertTrue($html->has_a_child_of_type('span', ['class'=>'badge']));
+    }
 
 
     public function get_contexts() {

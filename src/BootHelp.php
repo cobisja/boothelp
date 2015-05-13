@@ -33,6 +33,7 @@ use cobisja\BootHelp\AlertBox;
 use cobisja\BootHelp\Panel;
 use cobisja\BootHelp\PanelRow;
 use cobisja\BootHelp\Icon;
+use cobisja\BootHelp\Image;
 use cobisja\BootHelp\Modal;
 use cobisja\BootHelp\Nav;
 use cobisja\BootHelp\Helpers\Vertical;
@@ -43,6 +44,9 @@ use cobisja\BootHelp\ProgressBar;
 use cobisja\BootHelp\Button;
 use cobisja\BootHelp\ButtonGroup;
 use cobisja\BootHelp\ButtonToolbar;
+use cobisja\BootHelp\Label;
+use cobisja\BootHelp\Helpers\Badge;
+use cobisja\BootHelp\Thumbnail;
 
 /**
  * Class that exposes methods to interact with any BootHelp object.
@@ -95,7 +99,7 @@ abstract class BootHelp {
      * @param callable $block closure that generates the content to be surrounding to.
      * @return LinkTo a LinkTo instance.
      */
-    public static function link_to($name = null, $options = [], callable $block = null) {
+    public static function link_to($name = null, $options = null, callable $block = null) {
         return new LinkTo($name, $options, $block);
     }
 
@@ -109,6 +113,17 @@ abstract class BootHelp {
      */
     public static function vertical($content_or_options_with_block = null, $options = null, callable $block = null) {
         return new Vertical($content_or_options_with_block, $options, $block);
+    }
+    
+    /**
+     * Gets a Badge helper instance to be used with links, buttons, navs and anything you want.
+     * 
+     * @param string $text Badge's text.
+     * @param array $options Badge's options
+     * @return Badge a Badge Helper instance.
+     */
+    public static function badge($text, $options=[]) {
+        return new Badge($text, $options);
     }
 
     /**
@@ -179,6 +194,21 @@ abstract class BootHelp {
     public static function icon($name = null, $options = []) {
         return new Icon($name, $options);
     }
+    
+    public static function image($options, $block=null) {
+        return new Image($options, $block);
+    }
+    
+    /**
+     * Gets a Label component instance.
+     * 
+     * @param mixed $content_or_options_with_block the content to display into the label.
+     * @param mixed $options [optional] the display options for the label.
+     * @return Label a Label instance
+     */
+    public static function label($content_or_options_with_block = null, $options = null) {
+        return new Label($content_or_options_with_block, $options);
+    }
 
     /**
      * Gets a Modal instance.
@@ -246,5 +276,9 @@ abstract class BootHelp {
      */
     public static function progress_bar($options = [], $container_options = []) {
         return new ProgressBar($options, $container_options);
+    }
+    
+    public static function thumbnail($options, $block=null) {
+        return new Thumbnail($options, $block);
     }
 }

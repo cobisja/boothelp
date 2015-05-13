@@ -83,6 +83,19 @@ class LinkToTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($html, $link->to_string());
     }
+    
+    public function testLinkWithBadgeOption() {
+        /**
+         * It should generates:
+         * 
+         * <a href="#">Inbox <span class="badge">42</span></a>
+         */
+        $link = new LinkTo('Inbox', ['badge'=>42]);
+        $html = $link->get_html();
+        
+        $this->assertTrue($html->is_a('a'));
+        $this->assertTrue($html->has_a_child_of_type('span', ['class'=>'badge']));
+    }
 
     public function testLinkWithOptionsAndClosure() {
         /**
