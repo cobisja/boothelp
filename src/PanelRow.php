@@ -54,6 +54,7 @@ class PanelRow extends Base {
 
     /**
      * Add the class 'row' to indicates that this object has to be built like a PanelRow.
+     * 
      * @param array $options Panel information.
      * @return array options processed.
      */

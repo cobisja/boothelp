@@ -33,6 +33,7 @@ use cobisja\BootHelp\AlertBox;
 use cobisja\BootHelp\Panel;
 use cobisja\BootHelp\PanelRow;
 use cobisja\BootHelp\Icon;
+use cobisja\BootHelp\Image;
 use cobisja\BootHelp\Modal;
 use cobisja\BootHelp\Nav;
 use cobisja\BootHelp\Helpers\Vertical;
@@ -45,6 +46,7 @@ use cobisja\BootHelp\ButtonGroup;
 use cobisja\BootHelp\ButtonToolbar;
 use cobisja\BootHelp\Label;
 use cobisja\BootHelp\Helpers\Badge;
+use cobisja\BootHelp\Thumbnail;
 
 /**
  * Class that exposes methods to interact with any BootHelp object.
@@ -193,6 +195,10 @@ abstract class BootHelp {
         return new Icon($name, $options);
     }
     
+    public static function image($options, $block=null) {
+        return new Image($options, $block);
+    }
+    
     /**
      * Gets a Label component instance.
      * 
@@ -270,5 +276,9 @@ abstract class BootHelp {
      */
     public static function progress_bar($options = [], $container_options = []) {
         return new ProgressBar($options, $container_options);
+    }
+    
+    public static function thumbnail($options, $block=null) {
+        return new Thumbnail($options, $block);
     }
 }

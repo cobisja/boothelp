@@ -294,6 +294,24 @@ class Base {
             !isset($options[$key]) && $options[$key] = $default;
         }
     }
+    
+    /**
+     * Helper method to get and unset an array item by its key.
+     * 
+     * @param string $key key to look for.
+     * @param array $array array to look in.
+     * @return mixed key value or null.
+     */
+    public static function get_and_unset($key, &$array) {
+        if(isset($array[$key])) {
+            $value = $array[$key];
+            unset($array[$key]);
+        } else {
+            $value = null;
+        }
+        
+        return $value;
+    }    
 
     /**
      * Tells the number of arguments passed to a method.

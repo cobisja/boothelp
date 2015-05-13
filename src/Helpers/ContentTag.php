@@ -68,7 +68,6 @@ class ContentTag extends Base {
      * @param mixed $options options to build the html object.
      */
     private function build_content_tag($name, $content, $options) {
-//        ('a' === $name) && $this->get_alert_link() && $this->append_class($options, 'alert-link');
         $content = is_object($content) ? $content->get_html_object() : $content;        
         $badge = $this->check_for_badge($options);        
         $this->set_html_object($name, $options, is_null($badge) ? $content : [$content, Base::SPACE, $badge]);
@@ -81,13 +80,7 @@ class ContentTag extends Base {
      * @return Badge a instance of Badge component.
      */
     private function check_for_badge(&$options) {
-        if (isset($options['badge'])) {
-            $badge = new Badge($options['badge']);
-            unset($options['badge']);
-        } else {
-            $badge = null;
-        }
-        
-        return $badge;
+        $badge = Base::get_and_unset('badge', $options);        
+        return !is_null($badge) ? new Badge($badge) : null;
     }    
 }
