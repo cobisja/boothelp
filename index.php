@@ -75,6 +75,7 @@ require('Guide/button_group.php');
 require('Guide/button_toolbar.php');
 require('Guide/dropdown.php');
 require('Guide/icon.php');
+require('Guide/image.php');
 require('Guide/label.php');
 require('Guide/modal.php');
 require('Guide/nav.php');
@@ -82,6 +83,7 @@ require('Guide/navbar.php');
 require('Guide/panel.php');
 require('Guide/panel_rows.php');
 require('Guide/progress_bar.php');
+require('Guide/thumbnail.php');
 
 use cobisja\BootHelp\Nav;
 use cobisja\BootHelp\Helpers\LinkTo;
@@ -100,13 +102,15 @@ use cobisja\BootHelp\Helpers\LinkTo;
                                 new LinkTo('Button Toolbar', ['href'=>'#button-toolbar']),
                                 new LinkTo('Dropdowns', ['href'=>'#dropdowns']),
                                 new LinkTo('Icons', ['href'=>'#icons']),
+                                new LinkTo('Images', ['href'=>'#images']),
                                 new LinkTo('Labels', ['href'=>'#labels']),
                                 new LinkTo('Modals', ['href'=>'#modals']),
                                 new LinkTo('Navs', ['href'=>'#navs']),
                                 new LinkTo('Navbars', ['href'=>'#navbars']),
                                 new LinkTo('Panels', ['href'=>'#panels']),
                                 new LinkTo('Panel rows', ['href'=>'#panel-rows']),
-                                new LinkTo('Progress bars', ['href'=>'#progress-bar'])
+                                new LinkTo('Progress bars', ['href'=>'#progress-bar']),
+                                new LinkTo('Thumbnails', ['href'=>'#thumbnails'])
                             ];
                         });
                         ?>

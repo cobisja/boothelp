@@ -29,7 +29,7 @@
 use cobisja\BootHelp\BootHelp;
 use cobisja\BootHelp\Guide\Sample;
 
-$labels = [
+$images = [
     'title'=>'Labels',
     'samples'=>[
         [
@@ -110,4 +110,4 @@ Actually, you can combine <code>label</code> with others components to get inter
  * Label samples.
  */
 
-echo new Sample($labels);
+echo new Sample($images);
