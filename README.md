@@ -182,7 +182,7 @@ Feel free to contribute!!!. Welcome aboard!!!
 
 **0.4.0** (Tuesday, 12th May 2015)
 
-* Added support for labels, images and thumbnails components.
+* Added support for badges, labels, images and thumbnails components.
 * Refactoring of few Base methods.
 * Guide updating.
 * Fix minor bugs.
